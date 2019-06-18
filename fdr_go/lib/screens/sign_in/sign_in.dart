@@ -2,7 +2,15 @@ import 'package:fdr_go/screens/sign_in/signInBloc.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  var _obscure = true;
+  FocusNode focusPassword = FocusNode();
+
   changeThePage(BuildContext context) {
 //    Navigator.of(context)
 //        .push(MaterialPageRoute(builder: (context) => PageTwo()));
@@ -83,6 +91,10 @@ class SignInPage extends StatelessWidget {
                           onChanged: signInBloc.emailChanged,
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(color: Colors.white),
+                          textInputAction: TextInputAction.next,
+                          onSubmitted: (value) {
+                            FocusScope.of(context).requestFocus(focusPassword);
+                          },
                           decoration: InputDecoration(
                               prefixIcon: _getPrefixIcon(
                                   'assets/images/signin_user.png'),
@@ -102,12 +114,25 @@ class SignInPage extends StatelessWidget {
                     stream: signInBloc.password,
                     builder: (context, snapshot) => TextField(
                           onChanged: signInBloc.passwordChanged,
+                          focusNode: focusPassword,
                           keyboardType: TextInputType.text,
-                          obscureText: true,
+                          obscureText: _obscure,
                           style: TextStyle(color: Colors.white),
+                          onSubmitted: (value) {},
                           decoration: InputDecoration(
                               prefixIcon: _getPrefixIcon(
                                   'assets/images/signin_padlock.png'),
+                              suffixIcon: IconButton(
+                                icon: _obscure
+                                    ? Icon(Icons.visibility)
+                                    : Icon(Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscure = !_obscure;
+                                  });
+                                },
+                                color: primarySwatch['white70'],
+                              ),
                               focusedBorder: border,
                               enabledBorder: border,
                               border: border,
@@ -135,7 +160,8 @@ class SignInPage extends StatelessWidget {
                                   ? () => changeThePage(context)
                                   : null,
                               child: Text(
-                                "Submit",
+                                "Ingresar",
+                                style: TextStyle(fontSize: 20.0),
                               ),
                             ),
                           )),
@@ -167,5 +193,13 @@ class SignInPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    focusPassword.dispose();
+
+    super.dispose();
   }
 }

@@ -15,10 +15,8 @@ mixin Validators {
 
   var passwordValidator = StreamTransformer<String, String>.fromHandlers(
       handleData: (password, sink) {
-    if (password.length > 4) {
+    if (password.length > 0) {
       sink.add(password);
-    } else {
-      sink.addError("Password length should be greater than 4 chars.");
     }
   });
 }

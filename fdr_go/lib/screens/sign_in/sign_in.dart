@@ -1,3 +1,4 @@
+import 'package:fdr_go/screens/landing/landing.dart';
 import 'package:fdr_go/screens/sign_in/signInBloc.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,8 @@ class _SignInPageState extends State<SignInPage> {
   FocusNode focusPassword = FocusNode();
 
   changeThePage(BuildContext context) {
-//    Navigator.of(context)
-//        .push(MaterialPageRoute(builder: (context) => PageTwo()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => LandingPage()));
   }
 
   Widget _getPrefixIcon(String icon) {

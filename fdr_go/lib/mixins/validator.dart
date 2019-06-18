@@ -9,7 +9,7 @@ mixin Validators {
     if (regExp.hasMatch(email) || email.isEmpty) {
       sink.add(email);
     } else {
-      sink.addError("Email is not valid");
+      sink.addError("Email inválido");
     }
   });
 

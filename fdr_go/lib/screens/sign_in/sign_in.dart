@@ -1,6 +1,8 @@
+import 'package:fdr_go/dialogs/create_account.dart';
 import 'package:fdr_go/screens/landing/landing.dart';
 import 'package:fdr_go/screens/sign_in/signInBloc.dart';
 import 'package:fdr_go/util/colors.dart';
+import 'package:fdr_go/util/consts.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -150,7 +152,7 @@ class _SignInPageState extends State<SignInPage> {
                       stream: signInBloc.submitCheck,
                       builder: (context, snapshot) => new SizedBox(
                             width: double.infinity,
-                            height: 60.0,
+                            height: Consts.commonButtonHeight,
                             child: RaisedButton(
                               disabledColor: primarySwatch['redDisabled'],
                               disabledTextColor: primarySwatch['whiteDisabled'],
@@ -179,19 +181,31 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Text(
-                    "Agregar cuenta",
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
+                  addAccountWidget()
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget addAccountWidget() {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CreateAccountDialog(),
+        );
+      },
+      child: Text(
+        "Agregar cuenta",
+        style: TextStyle(
+          color: Colors.white,
+          decoration: TextDecoration.underline,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

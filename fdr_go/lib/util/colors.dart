@@ -23,4 +23,5 @@ const primarySwatch = ColorSwatch(0xff002664, {
   'whiteDisabled': Color(0xffD1D1D1),
   'white70': Color(0xB3FFFFFF),
   'dividerColor': Color(0xffF2F3F7),
+  'textFieldBorder': Color(0xff8D8C8C),
 });

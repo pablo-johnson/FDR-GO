@@ -214,7 +214,6 @@ class _SignInPageState extends State<SignInPage> {
   void dispose() {
     // Clean up the focus node when the Form is disposed.
     focusPassword.dispose();
-
     super.dispose();
   }
 }

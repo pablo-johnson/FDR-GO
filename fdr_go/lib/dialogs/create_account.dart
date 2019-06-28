@@ -3,6 +3,7 @@ import 'package:fdr_go/data/responses/create_account_response.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
+import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -165,18 +166,15 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
   }
 
   _validateEmail(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
+    _isValidEmail = validateEmail(value);
     setState(() {
-      _isValidEmail = regex.hasMatch(value);
       checkIt = false;
     });
   }
 
   Widget _getResponseArea() {
     var request = new CreateAccountRequest();
-    request.appId = "10034";
+    request.appId = Consts.appId;
     request.username = myController.text;
     if (_isValidEmail && checkIt) {
       return FutureBuilder<CreateAccountResponse>(

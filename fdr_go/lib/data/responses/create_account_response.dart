@@ -3,7 +3,6 @@
 //     final createAccountResponse = createAccountResponseFromJson(jsonString);
 
 import 'dart:convert';
-
 import 'package:fdr_go/data/error.dart';
 
 CreateAccountResponse createAccountResponseFromJson(String str) =>

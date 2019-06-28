@@ -1,8 +1,10 @@
+import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/dialogs/create_account.dart';
 import 'package:fdr_go/screens/landing/landing.dart';
-import 'package:fdr_go/screens/sign_in/signInBloc.dart';
+import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
+import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -13,11 +15,11 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   var _obscure = true;
   FocusNode focusPassword = FocusNode();
-
-  changeThePage(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LandingPage()));
-  }
+  bool _isValidEmail = true;
+  bool _passwordOk = false;
+  bool _isLoginButtonEnabled = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Widget _getPrefixIcon(String icon) {
     return Container(
@@ -29,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final signInBloc = SignInBloc();
+//    final signInBloc = SignInBloc();
     final border = const UnderlineInputBorder(
       borderSide: const BorderSide(
         color: const Color(0xffBECCDA),
@@ -88,86 +90,79 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  StreamBuilder<String>(
-                    stream: signInBloc.email,
-                    builder: (context, snapshot) => TextField(
-                          onChanged: signInBloc.emailChanged,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(color: Colors.white),
-                          textInputAction: TextInputAction.next,
-                          onSubmitted: (value) {
-                            FocusScope.of(context).requestFocus(focusPassword);
-                          },
-                          decoration: InputDecoration(
-                              prefixIcon: _getPrefixIcon(
-                                  'assets/images/signin_user.png'),
-                              focusedBorder: border,
-                              enabledBorder: border,
-                              border: border,
-                              hintStyle: TextStyle(color: Colors.white70),
-                              labelStyle: TextStyle(color: Colors.white70),
-                              labelText: "Email",
-                              errorText: snapshot.error),
-                        ),
+                  TextField(
+                    onChanged: _validateEmail,
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(color: Colors.white),
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (value) {
+                      FocusScope.of(context).requestFocus(focusPassword);
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon:
+                          _getPrefixIcon('assets/images/signin_user.png'),
+                      focusedBorder: border,
+                      enabledBorder: border,
+                      border: border,
+                      hintStyle: TextStyle(color: Colors.white70),
+                      labelStyle: TextStyle(color: Colors.white70),
+                      labelText: "Email",
+                      errorText: _isValidEmail ? null : "Email inválido",
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  StreamBuilder<String>(
-                    stream: signInBloc.password,
-                    builder: (context, snapshot) => TextField(
-                          onChanged: signInBloc.passwordChanged,
-                          focusNode: focusPassword,
-                          keyboardType: TextInputType.text,
-                          obscureText: _obscure,
-                          style: TextStyle(color: Colors.white),
-                          onSubmitted: (value) {},
-                          decoration: InputDecoration(
-                              prefixIcon: _getPrefixIcon(
-                                  'assets/images/signin_padlock.png'),
-                              suffixIcon: IconButton(
-                                icon: _obscure
-                                    ? Icon(Icons.visibility)
-                                    : Icon(Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscure = !_obscure;
-                                  });
-                                },
-                                color: primarySwatch['white70'],
-                              ),
-                              focusedBorder: border,
-                              enabledBorder: border,
-                              border: border,
-                              labelText: "Contraseña",
-                              hintStyle: TextStyle(color: Colors.white70),
-                              labelStyle: TextStyle(color: Colors.white70),
-                              errorText: snapshot.error),
-                        ),
+                  TextField(
+                    onChanged: _validatePassword,
+                    controller: passwordController,
+                    focusNode: focusPassword,
+                    keyboardType: TextInputType.text,
+                    obscureText: _obscure,
+                    style: TextStyle(color: Colors.white),
+                    onSubmitted: (value) {},
+                    decoration: InputDecoration(
+                      prefixIcon:
+                          _getPrefixIcon('assets/images/signin_padlock.png'),
+                      suffixIcon: IconButton(
+                        icon: _obscure
+                            ? Icon(Icons.visibility)
+                            : Icon(Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _obscure = !_obscure;
+                          });
+                        },
+                        color: primarySwatch['white70'],
+                      ),
+                      focusedBorder: border,
+                      enabledBorder: border,
+                      border: border,
+                      labelText: "Contraseña",
+                      hintStyle: TextStyle(color: Colors.white70),
+                      labelStyle: TextStyle(color: Colors.white70),
+                    ),
                   ),
                   SizedBox(
                     height: 40.0,
                   ),
-                  StreamBuilder<bool>(
-                      stream: signInBloc.submitCheck,
-                      builder: (context, snapshot) => new SizedBox(
-                            width: double.infinity,
-                            height: Consts.commonButtonHeight,
-                            child: RaisedButton(
-                              disabledColor: primarySwatch['redDisabled'],
-                              disabledTextColor: primarySwatch['whiteDisabled'],
-                              textColor: Colors.white,
-                              color: primarySwatch['red'],
-                              splashColor: primarySwatch['redPressed'],
-                              onPressed: snapshot.hasData
-                                  ? () => changeThePage(context)
-                                  : null,
-                              child: Text(
-                                "Ingresar",
-                                style: TextStyle(fontSize: 20.0),
-                              ),
-                            ),
-                          )),
+                  new SizedBox(
+                    width: double.infinity,
+                    height: Consts.commonButtonHeight,
+                    child: RaisedButton(
+                      color: primarySwatch['red'],
+                      textColor: Colors.white,
+                      disabledColor: primarySwatch['redDisabled'],
+                      disabledTextColor: primarySwatch['whiteDisabled'],
+                      splashColor: primarySwatch['redPressed'],
+                      onPressed: _isLoginButtonEnabled ? () => _login() : null,
+                      child: Text(
+                        "Ingresar",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 40.0,
                   ),
@@ -210,10 +205,49 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  _validateEmail(String value) {
+    setState(() {
+      _isValidEmail = validateEmail(value);
+      _enableLoginButton();
+    });
+  }
+
+  _validatePassword(String value) {
+    setState(() {
+      _passwordOk = validatePassword(value);
+      _enableLoginButton();
+    });
+  }
+
+  void _enableLoginButton() {
+    _isLoginButtonEnabled = _isValidEmail && _passwordOk;
+  }
+
+  _login() {
+    login(emailController.text, passwordController.text).then((loginResponse) {
+      if (loginResponse.error != null) {
+        _showErrorMessage();
+      } else if (loginResponse.success) {
+        _changeThePage(loginResponse);
+      }
+    }).catchError((error) {
+      print('error : $error');
+    });
+  }
+
+  _changeThePage(LoginResponse loginResponse) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => LandingPage(loginResponse)));
+  }
+
   @override
   void dispose() {
     // Clean up the focus node when the Form is disposed.
     focusPassword.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 }
+
+class _showErrorMessage {}

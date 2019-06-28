@@ -6,6 +6,7 @@ import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   bool _isLoginButtonEnabled = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  var _loading = false;
 
   Widget _getPrefixIcon(String icon) {
     return Container(
@@ -147,22 +149,7 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  new SizedBox(
-                    width: double.infinity,
-                    height: Consts.commonButtonHeight,
-                    child: RaisedButton(
-                      color: primarySwatch['red'],
-                      textColor: Colors.white,
-                      disabledColor: primarySwatch['redDisabled'],
-                      disabledTextColor: primarySwatch['whiteDisabled'],
-                      splashColor: primarySwatch['redPressed'],
-                      onPressed: _isLoginButtonEnabled ? () => _login() : null,
-                      child: Text(
-                        "Ingresar",
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    ),
-                  ),
+                  showLoginButtonOrLoading(),
                   SizedBox(
                     height: 40.0,
                   ),
@@ -184,6 +171,27 @@ class _SignInPageState extends State<SignInPage> {
         ],
       ),
     );
+  }
+
+  Widget showLoginButtonOrLoading() {
+    return _loading
+        ? CircularProgressIndicator()
+        : new SizedBox(
+            width: double.infinity,
+            height: Consts.commonButtonHeight,
+            child: RaisedButton(
+              color: primarySwatch['red'],
+              textColor: Colors.white,
+              disabledColor: primarySwatch['redDisabled'],
+              disabledTextColor: primarySwatch['whiteDisabled'],
+              splashColor: primarySwatch['redPressed'],
+              onPressed: _isLoginButtonEnabled ? () => _login() : null,
+              child: Text(
+                "Ingresar",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+          );
   }
 
   Widget addAccountWidget() {
@@ -224,20 +232,41 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   _login() {
+    setState(() {
+      _loading = true;
+    });
     login(emailController.text, passwordController.text).then((loginResponse) {
       if (loginResponse.error != null) {
-        _showErrorMessage();
+        setState(() {
+          _loading = false;
+          _showErrorMessage(loginResponse.error.detail);
+        });
       } else if (loginResponse.success) {
+        setState(() {
+          _loading = false;
+        });
         _changeThePage(loginResponse);
       }
     }).catchError((error) {
+      _showErrorMessage("Error");
       print('error : $error');
     });
   }
 
   _changeThePage(LoginResponse loginResponse) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LandingPage(loginResponse)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => LandingPage(loginResponse: loginResponse)));
+  }
+
+  void _showErrorMessage(String error) {
+    Fluttertoast.showToast(
+        msg: error,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIos: 1,
+        backgroundColor: primarySwatch['red'],
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   @override
@@ -249,5 +278,3 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 }
-
-class _showErrorMessage {}

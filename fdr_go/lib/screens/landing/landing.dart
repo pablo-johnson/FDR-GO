@@ -1,9 +1,13 @@
 import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/util/colors.dart';
+import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
-  LandingPage(LoginResponse loginResponse);
+  final LoginResponse loginResponse;
+
+  const LandingPage({@required this.loginResponse})
+      : assert(loginResponse != null);
 
   @override
   State<StatefulWidget> createState() => _LandingPageState();
@@ -18,6 +22,91 @@ class _LandingPageState extends State<LandingPage> {
         title: Text("Alumnos"),
       ),
       drawer: buildDrawer(context),
+      backgroundColor: primarySwatch['blue'],
+      body: Container(
+        margin: EdgeInsets.all(10.0),
+        child: ListView.builder(
+          itemCount: widget.loginResponse.families[0].students.length,
+          itemBuilder: (context, index) {
+            return buildStudentsList(index);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget buildStudentsList(int index) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.0),
+      child: Card(
+        color: Colors.white,
+        elevation: 10.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: Text(
+                  widget.loginResponse.families[0].students[index].name +
+                      ' ' +
+                      widget.loginResponse.families[0].students[index].lastName,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Grado: " +
+                      widget.loginResponse.families[0].students[index].grade,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: RaisedButton(
+                  color: primarySwatch['blue'],
+                  textColor: Colors.white,
+                  disabledColor: primarySwatch['blueDisabled'],
+                  disabledTextColor: primarySwatch['whiteDisabled'],
+                  splashColor: primarySwatch['bluePressed'],
+                  onPressed: () => null,
+                  child: Text(
+                    "Solicitar Bus",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -28,15 +117,14 @@ class _LandingPageState extends State<LandingPage> {
         children: <Widget>[
           UserAccountsDrawerHeader(
             margin: EdgeInsets.zero,
-            accountName: Text("Pablo Johnson"),
-            accountEmail: Text("pablo.johnson@gmail.com"),
+            accountName: Text(widget.loginResponse.name),
+            accountEmail: Text(widget.loginResponse.email),
             currentAccountPicture: CircleAvatar(
-              backgroundColor:
-                  Theme.of(context).platform == TargetPlatform.iOS
-                      ? primarySwatch['blue']
-                      : Colors.white,
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+                  ? primarySwatch['blue']
+                  : Colors.white,
               child: Text(
-                "PJ",
+                getShortName(widget.loginResponse.name),
                 style: TextStyle(fontSize: 30.0),
               ),
             ),
@@ -84,18 +172,18 @@ class _LandingPageState extends State<LandingPage> {
             color: primarySwatch['dividerColor'],
             child: Divider(),
           ),
-          ListTile(
-            title: Text(
-              "Item 2",
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: primarySwatch['blue'],
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+//          ListTile(
+//            title: Text(
+//              "Item 2",
+//            ),
+//            trailing: Icon(
+//              Icons.arrow_forward_ios,
+//              color: primarySwatch['blue'],
+//            ),
+//            onTap: () {
+//              Navigator.pop(context);
+//            },
+//          ),
         ],
       ),
     );

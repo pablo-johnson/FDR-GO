@@ -15,6 +15,7 @@ String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
   String name;
+  String email;
   String token;
   String type;
   int expireMinutes;
@@ -27,11 +28,13 @@ class LoginResponse {
 
   LoginResponse({
     this.name,
+    this.email,
     this.token,
     this.type,
     this.expireMinutes,
     this.profiles,
     this.references,
+    this.families,
     this.error,
     this.success,
     this.targetUrl,
@@ -40,6 +43,7 @@ class LoginResponse {
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       new LoginResponse(
         name: json["name"],
+        email: json["email"],
         token: json["token"],
         type: json["type"],
         expireMinutes: json["expireMinutes"],
@@ -51,6 +55,10 @@ class LoginResponse {
             ? new List<Reference>.from(
                 json["references"].map((x) => Reference.fromJson(x)))
             : null,
+        families: json["families"] != null
+            ? new List<Family>.from(
+                json["families"].map((x) => Family.fromJson(x)))
+            : null,
         error: json["error"] != null ? Error.fromJson(json["error"]) : null,
         success: json["success"],
         targetUrl: json["targetUrl"],
@@ -58,6 +66,7 @@ class LoginResponse {
 
   Map<String, dynamic> toJson() => {
         "name": name,
+        "email": email,
         "token": token,
         "type": type,
         "expireMinutes": expireMinutes,

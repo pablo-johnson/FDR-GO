@@ -1,7 +1,11 @@
 import 'package:fdr_go/data/responses/login_response.dart';
+import 'package:fdr_go/data/service.dart';
+import 'package:fdr_go/data/student.dart';
+import 'package:fdr_go/screens/absence/absenseWidget.dart';
 import 'package:fdr_go/util/colors.dart';
-import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
+
+import 'menu.dart';
 
 class LandingPage extends StatefulWidget {
   final LoginResponse loginResponse;
@@ -14,6 +18,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  var _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +27,50 @@ class _LandingPageState extends State<LandingPage> {
         backgroundColor: primarySwatch['red'],
         title: Text("Alumnos"),
       ),
-      drawer: buildDrawer(context),
+      drawer: new MenuWidget(),
       backgroundColor: primarySwatch['blue'],
       body: Container(
         margin: EdgeInsets.all(10.0),
         child: ListView.builder(
-          itemCount: widget.loginResponse.families[0].students.length,
+          itemCount: widget.loginResponse.services.length,
           itemBuilder: (context, index) {
-            return buildStudentsList(index);
+            return _buildServicesListItem(index);
           },
         ),
       ),
+      bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 
-  Widget buildStudentsList(int index) {
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.directions_bus),
+          title: Text('BUS'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_activity),
+          title: Text('ASA'),
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: primarySwatch['red'],
+      unselectedItemColor: Colors.black,
+      onTap: _onItemTapped,
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  Widget _buildServicesListItem(int index) {
+    Service service = widget.loginResponse.services[index];
+    int id = service.id;
     return Container(
       margin: EdgeInsets.only(bottom: 10.0),
       child: Card(
@@ -45,7 +80,7 @@ class _LandingPageState extends State<LandingPage> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -54,52 +89,39 @@ class _LandingPageState extends State<LandingPage> {
               SizedBox(
                 height: 10.0,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0),
-                child: Text(
-                  widget.loginResponse.families[0].students[index].name +
-                      ' ' +
-                      widget.loginResponse.families[0].students[index].lastName,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Grado: " +
-                      widget.loginResponse.families[0].students[index].grade,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: RaisedButton(
-                  color: primarySwatch['blue'],
-                  textColor: Colors.white,
-                  disabledColor: primarySwatch['blueDisabled'],
-                  disabledTextColor: primarySwatch['whiteDisabled'],
-                  splashColor: primarySwatch['bluePressed'],
-                  onPressed: () => null,
+              Material(
+                color: Colors.transparent,
+                child: Hero(
+                  tag: "hero$id",
                   child: Text(
-                    "Solicitar Bus",
-                    style: TextStyle(fontSize: 16.0),
+                    widget.loginResponse.services[index].student.name +
+                        ' ' +
+                        widget.loginResponse.services[index].student.lastName,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.0,
+                    ),
                   ),
                 ),
               ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Grado: " + widget.loginResponse.services[index].student.grade,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              service.route == null
+                  ? _buildAskServiceButton(index)
+                  : _buildAskAbsenceButton(index),
               SizedBox(
                 height: 10.0,
               ),
@@ -110,81 +132,45 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Drawer buildDrawer(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: const EdgeInsets.all(0.0),
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            margin: EdgeInsets.zero,
-            accountName: Text(widget.loginResponse.name),
-            accountEmail: Text(widget.loginResponse.email),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-                  ? primarySwatch['blue']
-                  : Colors.white,
-              child: Text(
-                getShortName(widget.loginResponse.name),
-                style: TextStyle(fontSize: 30.0),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.notifications,
-              color: primarySwatch['blue'],
-            ),
-            title: Align(
-              child: new Text("Notificaciones"),
-              alignment: Alignment(-1.5, 0),
-            ),
-            trailing: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  height: 30.0,
-                  width: 30.0,
-                  margin: EdgeInsets.only(right: 5.0),
-                  decoration: new BoxDecoration(
-                      color: primarySwatch['blue'],
-                      borderRadius:
-                          new BorderRadius.all(Radius.circular(30.0))),
-                  child: new Center(
-                    child: new Text(
-                      "5",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: primarySwatch['blue'],
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          Container(
-            height: 1.0,
-            color: primarySwatch['dividerColor'],
-            child: Divider(),
-          ),
-//          ListTile(
-//            title: Text(
-//              "Item 2",
-//            ),
-//            trailing: Icon(
-//              Icons.arrow_forward_ios,
-//              color: primarySwatch['blue'],
-//            ),
-//            onTap: () {
-//              Navigator.pop(context);
-//            },
-//          ),
-        ],
+  Align _buildAskServiceButton(int index) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        color: primarySwatch['blue'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['blueDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        splashColor: primarySwatch['bluePressed'],
+        onPressed: () =>
+            _openAbsencePage(widget.loginResponse.services[index].student),
+        child: Text(
+          "Solicitar Bus",
+          style: TextStyle(fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
+  _openAbsencePage(Student student) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => AbsencePage(student: student)));
+  }
+
+  Widget _buildAskAbsenceButton(int index) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        color: primarySwatch['red'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['redDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        splashColor: primarySwatch['redPressed'],
+        onPressed: () =>
+            _openAbsencePage(widget.loginResponse.services[index].student),
+        child: Text(
+          "Inasistencia",
+          style: TextStyle(fontSize: 16.0),
+        ),
       ),
     );
   }

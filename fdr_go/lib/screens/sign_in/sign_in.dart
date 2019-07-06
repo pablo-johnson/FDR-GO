@@ -7,6 +7,7 @@ import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -33,7 +34,6 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-//    final signInBloc = SignInBloc();
     final border = const UnderlineInputBorder(
       borderSide: const BorderSide(
         color: const Color(0xffBECCDA),
@@ -149,7 +149,7 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  showLoginButtonOrLoading(),
+                  _buildLoginButton(),
                   SizedBox(
                     height: 40.0,
                   ),
@@ -168,30 +168,38 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
+          _loading
+              ? Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: primarySwatch['progressBackground'],
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+              : Container(),
         ],
       ),
     );
   }
 
-  Widget showLoginButtonOrLoading() {
-    return _loading
-        ? CircularProgressIndicator()
-        : new SizedBox(
-            width: double.infinity,
-            height: Consts.commonButtonHeight,
-            child: RaisedButton(
-              color: primarySwatch['red'],
-              textColor: Colors.white,
-              disabledColor: primarySwatch['redDisabled'],
-              disabledTextColor: primarySwatch['whiteDisabled'],
-              splashColor: primarySwatch['redPressed'],
-              onPressed: _isLoginButtonEnabled ? () => _login() : null,
-              child: Text(
-                "Ingresar",
-                style: TextStyle(fontSize: 20.0),
-              ),
-            ),
-          );
+  Widget _buildLoginButton() {
+    return new SizedBox(
+      width: double.infinity,
+      height: Consts.commonButtonHeight,
+      child: RaisedButton(
+        color: primarySwatch['red'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['redDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        splashColor: primarySwatch['redPressed'],
+        onPressed: _isLoginButtonEnabled && !_loading ? () => _login() : null,
+        child: Text(
+          "Ingresar",
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+    );
   }
 
   Widget addAccountWidget() {
@@ -254,6 +262,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   _changeThePage(LoginResponse loginResponse) {
+    _savePersonalData(loginResponse);
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => LandingPage(loginResponse: loginResponse)));
   }
@@ -271,10 +280,15 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed.
     focusPassword.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  Future _savePersonalData(LoginResponse loginResponse) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', loginResponse.name);
+    await prefs.setString('userEmail', loginResponse.email);
   }
 }

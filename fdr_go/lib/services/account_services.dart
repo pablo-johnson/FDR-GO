@@ -34,8 +34,8 @@ Future<LoginResponse> login(String username, String password) async {
         HttpHeaders.authorizationHeader: ''
       },
       body: loginRequestToJson(request));
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   LoginResponse loginResponse = loginResponseFromJson(response.body);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('authToken', loginResponse.token);
   return loginResponse;
 }

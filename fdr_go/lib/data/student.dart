@@ -4,6 +4,8 @@ class Student {
   String name;
   String lastName;
   String grade;
+  String address;
+  String photoUrl;
   bool isAdd;
 
   Student({
@@ -12,6 +14,8 @@ class Student {
     this.name,
     this.lastName,
     this.grade,
+    this.address,
+    this.photoUrl,
     this.isAdd,
   });
 
@@ -21,6 +25,8 @@ class Student {
         name: json["name"],
         lastName: json["lastName"],
         grade: json["grade"],
+        address: json["address"],
+        photoUrl: json["photoUrl"],
         isAdd: json["isAdd"],
       );
 
@@ -30,6 +36,8 @@ class Student {
         "name": name,
         "lastName": lastName,
         "grade": grade,
+        "address": address,
+        "photoUrl": photoUrl,
         "isAdd": isAdd,
       };
 }

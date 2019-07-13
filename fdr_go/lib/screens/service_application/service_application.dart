@@ -294,7 +294,6 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
                     readOnly: true,
                     enabled: false,
                     decoration: InputDecoration(
-                      labelText: "",
                       disabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
                           color: const Color(0xffBECCDA),
@@ -333,7 +332,6 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
                       suffixIcon: IconButton(
                         icon: Icon(Icons.arrow_forward_ios),
                       ),
-                      labelText: "",
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(
                           color: const Color(0xffBECCDA),

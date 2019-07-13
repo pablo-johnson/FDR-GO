@@ -21,6 +21,7 @@ class _AbsencePageState extends State<AbsencePage> {
   final absenceReasonController = TextEditingController();
 
   bool _loading = false;
+  bool _isSubmitButtonEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +115,9 @@ class _AbsencePageState extends State<AbsencePage> {
                   controller: absenceReasonController,
                   maxLines: 10,
                   minLines: 10,
+                  onChanged: (text) {
+                    _enableSubmitButton();
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: const BorderSide(
@@ -265,7 +269,9 @@ class _AbsencePageState extends State<AbsencePage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.zero),
               ),
-              onPressed: _loading ? null : () => _registerAbsence(),
+              onPressed: _loading || !_isSubmitButtonEnabled
+                  ? null
+                  : () => _registerAbsence(),
             ),
           ),
         ),
@@ -294,6 +300,7 @@ class _AbsencePageState extends State<AbsencePage> {
         firstDate: new DateTime.now().add(new Duration(days: -1)),
         lastDate: new DateTime(2020));
     if (picked != null && picked.length == 2) {
+      _enableSubmitButton();
       fromDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
       toDateController.text = new DateFormat("dd/MM/yyyy").format(picked[1]);
     }
@@ -311,6 +318,16 @@ class _AbsencePageState extends State<AbsencePage> {
         _dismiss();
       }
     });
+  }
+
+  void _enableSubmitButton() {
+    _isSubmitButtonEnabled = fromDateController.text != null &&
+        fromDateController.text.isNotEmpty &&
+        toDateController.text != null &&
+        toDateController.text.isNotEmpty &&
+        absenceReasonController.text != null &&
+        absenceReasonController.text.isNotEmpty;
+    setState(() {});
   }
 
   _dismiss() {

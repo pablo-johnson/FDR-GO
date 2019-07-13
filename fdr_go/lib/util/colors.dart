@@ -25,4 +25,5 @@ const primarySwatch = ColorSwatch(0xff002664, {
   'dividerColor': Color(0xffF2F3F7),
   'textFieldBorder': Color(0xff8D8C8C),
   'progressBackground': Color(0x4D8D8C8C),
+  'disabledTextFieldBackground': Color(0xF8D8C8C),
 });

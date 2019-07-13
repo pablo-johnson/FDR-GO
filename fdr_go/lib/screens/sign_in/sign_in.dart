@@ -54,7 +54,6 @@ class _SignInPageState extends State<SignInPage> {
           ),
           SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height,
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 30.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -170,13 +169,13 @@ class _SignInPageState extends State<SignInPage> {
           ),
           _loading
               ? Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: primarySwatch['progressBackground'],
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: primarySwatch['progressBackground'],
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : Container(),
         ],
       ),
@@ -207,7 +206,8 @@ class _SignInPageState extends State<SignInPage> {
       onTap: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) => CreateAccountDialog(),
+          builder: (_) =>
+              CreateAccountDialog(), //(BuildContext context) => CreateAccountDialog(),
         );
       },
       child: Text(
@@ -271,7 +271,7 @@ class _SignInPageState extends State<SignInPage> {
     Fluttertoast.showToast(
         msg: error,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
         backgroundColor: primarySwatch['red'],
         textColor: Colors.white,

@@ -2,6 +2,7 @@ import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/data/service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/absence/absenseWidget.dart';
+import 'package:fdr_go/screens/service_application/service_application.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -141,8 +142,8 @@ class _LandingPageState extends State<LandingPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         splashColor: primarySwatch['bluePressed'],
-        onPressed: () =>
-            _openAbsencePage(widget.loginResponse.services[index].student),
+        onPressed: () => _openApplicationServicePage(
+            widget.loginResponse.services[index].student),
         child: Text(
           "Solicitar Bus",
           style: TextStyle(fontSize: 16.0),
@@ -151,9 +152,10 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _openAbsencePage(Student student) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => AbsencePage(student: student)));
+  _openApplicationServicePage(Student student) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ServiceApplicationPage(
+            parentName: widget.loginResponse.name, student: student)));
   }
 
   Widget _buildAskAbsenceButton(int index) {
@@ -173,5 +175,10 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+  }
+
+  _openAbsencePage(Student student) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => AbsencePage(student: student)));
   }
 }

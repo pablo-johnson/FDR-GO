@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
+import 'package:fdr_go/util/dialog.dart' as MyDialog;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -1188,8 +1189,9 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
       ],
     );
 
-    final Dialog dialog = new Dialog(child: new OrientationBuilder(
-        builder: (BuildContext context, Orientation orientation) {
+    final MyDialog.Dialog dialog = new MyDialog.Dialog(child:
+        new OrientationBuilder(
+            builder: (BuildContext context, Orientation orientation) {
       assert(orientation != null);
       final Widget header = new _DatePickerHeader(
         selectedFirstDate: _selectedFirstDate,
@@ -1340,7 +1342,7 @@ Future<List<DateTime>> showDatePicker({
     );
   }
 
-  return await showDialog<List<DateTime>>(
+  return await MyDialog.showDialog<List<DateTime>>(
     context: context,
     builder: (BuildContext context) => child,
   );

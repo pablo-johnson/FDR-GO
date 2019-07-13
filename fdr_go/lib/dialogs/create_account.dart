@@ -4,6 +4,7 @@ import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/validations.dart';
+import 'package:fdr_go/util/dialog.dart' as MyDialog;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +21,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return MyDialog.Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Consts.dialogBackgroundRadio),
       ),
@@ -29,20 +30,21 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
   }
 
   dialogContent(BuildContext context) {
-    return Container(
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(Consts.dialogBackgroundRadio),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min, // To make the card compact
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(Consts.padding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // To make the card compact
-              children: <Widget>[
+    return SingleChildScrollView(
+      child: Container(
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(Consts.dialogBackgroundRadio),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(Consts.padding),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // To make the card compact
+                children: <Widget>[
 //                Align(
 //                  alignment: Alignment.bottomRight,
 //                  child: FlatButton(
@@ -52,48 +54,50 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
 //                    child: Text(""),
 //                  ),
 //                ),
-                Text(
-                  "Agregar Cuenta",
+                  Text(
+                    "Agregar Cuenta",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w700,
+                      color: primarySwatch['blue'],
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  getTextFieldContainer(),
+                  SizedBox(height: 20.0),
+                  _getResponseArea(),
+                  SizedBox(height: 24.0),
+                ],
+              ),
+            ),
+            new SizedBox(
+              width: double.infinity,
+              height: Consts.commonButtonHeight,
+              child: RaisedButton(
+                onPressed: _isValidEmail ? () => callCreateAccount() : null,
+                disabledColor: primarySwatch['redDisabled'],
+                disabledTextColor: primarySwatch['whiteDisabled'],
+                textColor: Colors.white,
+                color: primarySwatch['red'],
+                splashColor: primarySwatch['redPressed'],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.zero,
+                      topRight: Radius.zero,
+                      bottomLeft: Radius.circular(Consts.dialogBackgroundRadio),
+                      bottomRight:
+                          Radius.circular(Consts.dialogBackgroundRadio)),
+                ),
+                child: Text(
+                  "ENVIAR",
                   style: TextStyle(
                     fontSize: 20.0,
-                    fontWeight: FontWeight.w700,
-                    color: primarySwatch['blue'],
                   ),
                 ),
-                SizedBox(height: 40.0),
-                getTextFieldContainer(),
-                SizedBox(height: 20.0),
-                _getResponseArea(),
-                SizedBox(height: 24.0),
-              ],
-            ),
-          ),
-          new SizedBox(
-            width: double.infinity,
-            height: Consts.commonButtonHeight,
-            child: RaisedButton(
-              onPressed: _isValidEmail ? () => callCreateAccount() : null,
-              disabledColor: primarySwatch['redDisabled'],
-              disabledTextColor: primarySwatch['whiteDisabled'],
-              textColor: Colors.white,
-              color: primarySwatch['red'],
-              splashColor: primarySwatch['redPressed'],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.zero,
-                    topRight: Radius.zero,
-                    bottomLeft: Radius.circular(Consts.dialogBackgroundRadio),
-                    bottomRight: Radius.circular(Consts.dialogBackgroundRadio)),
-              ),
-              child: Text(
-                "ENVIAR",
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

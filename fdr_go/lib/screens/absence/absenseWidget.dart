@@ -1,5 +1,5 @@
 import 'package:fdr_go/data/student.dart';
-import 'package:fdr_go/screens/calendar/calendar.dart' as DateRangePicker;
+import 'package:fdr_go/dialogs/range_calendar.dart' as DateRangePicker;
 import 'package:fdr_go/services/student_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -60,14 +60,11 @@ class _AbsencePageState extends State<AbsencePage> {
               margin: EdgeInsets.symmetric(horizontal: 20.0),
               child: Material(
                 color: Colors.transparent,
-                child: Hero(
-                  tag: "hero$id",
-                  child: Text(
-                    student.name + " " + student.lastName,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
+                child: Text(
+                  student.name + " " + student.lastName,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -75,7 +72,7 @@ class _AbsencePageState extends State<AbsencePage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                student.grade,
+                "Grado: " + student.grade,
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.black,

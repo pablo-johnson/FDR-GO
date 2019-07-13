@@ -9,8 +9,8 @@ class MenuWidget extends StatefulWidget {
 }
 
 class _MenuWidgetPageState extends State<MenuWidget> {
-  String userName;
-  String userEmail;
+  String userName = "";
+  String userEmail = "";
 
   @override
   void initState() {

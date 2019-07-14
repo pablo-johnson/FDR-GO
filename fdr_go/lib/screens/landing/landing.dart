@@ -3,6 +3,7 @@ import 'package:fdr_go/data/service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/absence/absenseWidget.dart';
 import 'package:fdr_go/screens/service_application/service_application.dart';
+import 'package:fdr_go/services/service_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   var _selectedIndex = 0;
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +32,32 @@ class _LandingPageState extends State<LandingPage> {
       ),
       drawer: new MenuWidget(),
       backgroundColor: primarySwatch['blue'],
-      body: Container(
-        margin: EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemCount: widget.loginResponse.services.length,
-          itemBuilder: (context, index) {
-            return _buildServicesListItem(index);
-          },
-        ),
+      body: Stack(
+        children: <Widget>[
+          _loading ? _buildProgressBarWidget() : Container(),
+          Container(
+            margin: EdgeInsets.all(10.0),
+            child: ListView.builder(
+              itemCount: widget.loginResponse.services.length,
+              itemBuilder: (context, index) {
+                return _buildServicesListItem(index);
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(),
+    );
+  }
+
+  Container _buildProgressBarWidget() {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: primarySwatch['progressBackground'],
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -120,9 +138,7 @@ class _LandingPageState extends State<LandingPage> {
               SizedBox(
                 height: 10.0,
               ),
-              service.route == null
-                  ? _buildAskServiceButton(index)
-                  : _buildAskAbsenceButton(index),
+              _buildActionButton(service, index),
               SizedBox(
                 height: 10.0,
               ),
@@ -131,6 +147,16 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+  }
+
+  _buildActionButton(service, index) {
+    if (service.route == null && service.requestService == null) {
+      return _buildAskServiceButton(index);
+    } else if (service.requestService != null) {
+      return _buildInProcessButton();
+    } else {
+      return _buildAskAbsenceButton(index);
+    }
   }
 
   Align _buildAskServiceButton(int index) {
@@ -152,10 +178,21 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _openApplicationServicePage(Student student) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ServiceApplicationPage(
-            parentName: widget.loginResponse.name, student: student)));
+  Widget _buildInProcessButton() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        color: primarySwatch['blueDisabled'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['blueDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        onPressed: null,
+        child: Text(
+          "En Proceso",
+          style: TextStyle(fontSize: 16.0),
+        ),
+      ),
+    );
   }
 
   Widget _buildAskAbsenceButton(int index) {
@@ -177,8 +214,40 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _openAbsencePage(Student student) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => AbsencePage(student: student)));
+  _openApplicationServicePage(Student student) async {
+    final bool refresh = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ServiceApplicationPage(
+            parentName: widget.loginResponse.name, student: student),
+      ),
+    );
+
+    if (refresh) {
+      _refreshData();
+    }
+  }
+
+  _openAbsencePage(Student student) async {
+    final bool refresh = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AbsencePage(student: student),
+      ),
+    );
+
+    if (refresh) {
+      _refreshData();
+    }
+  }
+
+  void _refreshData() {
+    setState(() {
+      _loading = true;
+    });
+    getServices().then((servicesResponse) {
+      widget.loginResponse.services = servicesResponse.services;
+      setState(() {
+        _loading = false;
+      });
+    });
   }
 }

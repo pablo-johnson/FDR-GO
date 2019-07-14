@@ -2,11 +2,11 @@ import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/dialogs/create_account.dart';
 import 'package:fdr_go/screens/landing/landing.dart';
 import 'package:fdr_go/services/account_services.dart';
+import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatefulWidget {
@@ -59,6 +59,9 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     height: 110,
                     width: 160,
@@ -268,14 +271,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _showErrorMessage(String error) {
-    Fluttertoast.showToast(
-        msg: error,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: primarySwatch['red'],
-        textColor: Colors.white,
-        fontSize: 16.0);
+    showErrorToast(error);
   }
 
   @override

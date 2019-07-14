@@ -1,10 +1,9 @@
 import 'package:fdr_go/data/requests/create_account_request.dart';
-import 'package:fdr_go/data/responses/create_account_response.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
-import 'package:fdr_go/util/validations.dart';
 import 'package:fdr_go/util/dialog.dart' as MyDialog;
+import 'package:fdr_go/util/validations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +15,10 @@ class CreateAccountDialog extends StatefulWidget {
 
 class _CreateAccountDialogState extends State<CreateAccountDialog> {
   bool _isValidEmail = false;
-  bool checkIt = false;
+  bool _isDone = false;
+  bool _loading = false;
+  String _confirmationMessage = "";
+
   final myController = TextEditingController();
 
   @override
@@ -45,15 +47,6 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               child: Column(
                 mainAxisSize: MainAxisSize.min, // To make the card compact
                 children: <Widget>[
-//                Align(
-//                  alignment: Alignment.bottomRight,
-//                  child: FlatButton(
-//                    onPressed: () {
-//                      Navigator.of(context).pop(); // To close the dialog
-//                    },
-//                    child: Text(""),
-//                  ),
-//                ),
                   Text(
                     "Agregar Cuenta",
                     style: TextStyle(
@@ -65,7 +58,9 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                   SizedBox(height: 20.0),
                   getTextFieldContainer(),
                   SizedBox(height: 20.0),
-                  _getResponseArea(),
+                  _loading
+                      ? CircularProgressIndicator()
+                      : _showConfirmationMessage(_confirmationMessage),
                   SizedBox(height: 24.0),
                 ],
               ),
@@ -74,11 +69,14 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               width: double.infinity,
               height: Consts.commonButtonHeight,
               child: RaisedButton(
-                onPressed: _isValidEmail ? () => callCreateAccount() : null,
+                onPressed: _isValidEmail
+                    ? () =>
+                        _isDone ? Navigator.pop(context) : _callCreateAccount()
+                    : null,
                 disabledColor: primarySwatch['redDisabled'],
                 disabledTextColor: primarySwatch['whiteDisabled'],
                 textColor: Colors.white,
-                color: primarySwatch['red'],
+                color: _isDone ? primarySwatch['blue'] : primarySwatch['red'],
                 splashColor: primarySwatch['redPressed'],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -89,7 +87,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                           Radius.circular(Consts.dialogBackgroundRadio)),
                 ),
                 child: Text(
-                  "ENVIAR",
+                  _isDone ? "ACEPTAR" : "ENVIAR",
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -123,6 +121,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               child: TextField(
                 controller: myController,
                 onChanged: _validateEmail,
+                readOnly: _isDone,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -171,35 +170,35 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
 
   _validateEmail(String value) {
     _isValidEmail = validateEmail(value);
-    setState(() {
-      checkIt = false;
-    });
+    setState(() {});
   }
 
-  Widget _getResponseArea() {
+  void _callCreateAccount() {
+    setState(() {
+      _loading = true;
+    });
     var request = new CreateAccountRequest();
     request.appId = Consts.appId;
     request.username = myController.text;
-    if (_isValidEmail && checkIt) {
-      return FutureBuilder<CreateAccountResponse>(
-          future: createAccount(request),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError || snapshot.data.error != null) {
-                return showConfirmationMessage(
-                    "No existe una familia con el correo determinado");
-              }
-              return showConfirmationMessage(
-                  "Revise la bandeja de entrada de su correo electrónico y siga las instrucciones");
-            } else
-              return CircularProgressIndicator();
+    if (_isValidEmail) {
+      createAccount(request).then((createAccountResponse) {
+        if (createAccountResponse.error != null) {
+          _confirmationMessage = createAccountResponse.error.detail;
+          setState(() {
+            _loading = false;
           });
-    } else {
-      return Container();
+          return;
+        }
+        setState(() {
+          _loading = false;
+          _isDone = true;
+          _confirmationMessage = createAccountResponse.successful.message;
+        });
+      });
     }
   }
 
-  Widget showConfirmationMessage(String text) {
+  Widget _showConfirmationMessage(String text) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Text(
@@ -212,11 +211,5 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
         ),
       ),
     );
-  }
-
-  void callCreateAccount() {
-    setState(() {
-      checkIt = true;
-    });
   }
 }

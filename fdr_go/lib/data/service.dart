@@ -1,4 +1,5 @@
 import 'package:fdr_go/data/error.dart';
+import 'package:fdr_go/data/request_service.dart';
 import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
 
@@ -11,6 +12,7 @@ class Service {
   String statusDescription;
   String locationStatus;
   String locationStatusDescription;
+  RequestService requestService;
   Error error;
   bool success;
   String targetUrl;
@@ -24,6 +26,7 @@ class Service {
     this.statusDescription,
     this.locationStatus,
     this.locationStatusDescription,
+    this.requestService,
     this.error,
     this.success,
     this.targetUrl,
@@ -38,6 +41,9 @@ class Service {
         statusDescription: json["statusDescription"] == null
             ? null
             : json["statusDescription"],
+        requestService: json["requestService"] == null
+            ? null
+            : RequestService.fromJson(json["requestService"]),
         locationStatus:
             json["locationStatus"] == null ? null : json["locationStatus"],
         locationStatusDescription: json["locationStatusDescription"] == null
@@ -56,6 +62,8 @@ class Service {
         "status": status,
         "statusDescription":
             statusDescription == null ? null : statusDescription,
+        "requestService":
+            requestService == null ? null : requestService.toJson(),
         "locationStatus": locationStatus == null ? null : locationStatus,
         "locationStatusDescription": locationStatusDescription == null
             ? null

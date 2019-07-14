@@ -53,7 +53,7 @@ class Error {
         "field": field,
         "ticket": ticket,
         "validationErrors":
-            new List<dynamic>.from(validationErrors.map((x) => x.toJson())),
+            new List<ValidationError>.from(validationErrors.map((x) => x.toJson())),
         "ref": ref,
       };
 }

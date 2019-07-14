@@ -2,6 +2,7 @@ import 'package:fdr_go/data/service_mode.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/dialogs/date_calendar.dart' as DatePicker;
 import 'package:fdr_go/services/service_services.dart';
+import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
 
   @override
   void initState() {
+    super.initState();
     _getServiceModes();
   }
 
@@ -289,17 +291,14 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
                   height: 40.0,
                   margin: EdgeInsets.only(top: 10.0, right: 10.0),
                   decoration: boxDecoration,
+                  padding: EdgeInsets.only(left: 5.0),
                   child: TextField(
                     controller: requestedDateController,
                     readOnly: true,
                     enabled: false,
+                    textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: const Color(0xffBECCDA),
-                          width: 0.0,
-                        ),
-                      ),
+                      border: InputBorder.none,
                     ),
                   ),
                 ),
@@ -326,11 +325,19 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
                   margin: EdgeInsets.only(top: 10.0, left: 10.0),
                   child: TextField(
                     controller: requiredDateController,
+                    textAlignVertical: TextAlignVertical.center,
                     readOnly: true,
+                    style: TextStyle(fontSize: 15.0),
                     onTap: _selectDate,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 5.0),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.arrow_forward_ios),
+                        color: Colors.red,
+                        padding: EdgeInsets.all(0.0),
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15.0,
+                        ),
                       ),
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -371,7 +378,7 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.zero),
               ),
-              onPressed: _loading ? null : () => _dismiss(),
+              onPressed: _loading ? null : () => _dismiss(false),
             ),
           ),
         ),
@@ -409,15 +416,36 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
         requiredDateController.text.isNotEmpty;
   }
 
-  _sendServiceApplication() {}
+  _sendServiceApplication() {
+    setState(() {
+      _loading = true;
+    });
+    requestService(widget.student.id, requiredDateController.text,
+            requestedDateController.text, _selectedMode.code)
+        .then((requestServiceResponse) {
+      if (requestServiceResponse.success) {
+        showSuccessToast(requestServiceResponse.successful.message);
+        setState(() {
+          _loading = false;
+        });
+        _dismiss(true);
+      }
+    }).catchError((error) {
+      print(error);
+    });
+  }
 
   @override
   void dispose() {
+    requiredDateController.dispose();
+    requestedDateController.dispose();
+    requestedByController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
-  _dismiss() {
-    Navigator.pop(context);
+  _dismiss(bool refresh) {
+    Navigator.pop(context, refresh);
   }
 
   Future _selectDate() async {

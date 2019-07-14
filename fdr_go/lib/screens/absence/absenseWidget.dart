@@ -36,7 +36,6 @@ class _AbsencePageState extends State<AbsencePage> {
   }
 
   Widget buildAbsenceWidget(Student student) {
-    int id = student.id;
     return Stack(
       children: <Widget>[
         _loading
@@ -54,85 +53,98 @@ class _AbsencePageState extends State<AbsencePage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Material(
-                color: Colors.transparent,
-                child: Text(
-                  student.name + " " + student.lastName,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                "Grado: " + student.grade,
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              width: double.infinity,
-              height: 1.0,
-              color: _loading
-                  ? primarySwatch['progressBackground']
-                  : primarySwatch['white70'],
-              child: Divider(),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            _buildDateFields(),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                "Motivo de Inasistencia*",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-            ),
             Expanded(
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 10.0,
-                ),
-                child: TextField(
-                  controller: absenceReasonController,
-                  maxLines: 10,
-                  minLines: 10,
-                  onChanged: (text) {
-                    _enableSubmitButton();
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: const Color(0xffBECCDA),
-                        width: 0.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              child: _buildMainForm(student),
             ),
             _buildActionButtons(),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildMainForm(Student student) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Material(
+              color: Colors.transparent,
+              child: Text(
+                student.name + " " + student.lastName,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              "Grado: " + student.grade,
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            width: double.infinity,
+            height: 1.0,
+            color: _loading
+                ? primarySwatch['progressBackground']
+                : primarySwatch['white70'],
+            child: Divider(),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          _buildDateFields(),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              "Motivo de Inasistencia*",
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
+            ),
+            child: TextField(
+              controller: absenceReasonController,
+              maxLines: 10,
+              minLines: 10,
+              onChanged: (text) {
+                _enableSubmitButton();
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: const Color(0xffBECCDA),
+                    width: 0.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -150,7 +162,7 @@ class _AbsencePageState extends State<AbsencePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Fecha Desde*",
+                  "Fecha Desde *",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 15.0,
@@ -164,11 +176,15 @@ class _AbsencePageState extends State<AbsencePage> {
                     controller: fromDateController,
                     readOnly: true,
                     onTap: () => _showCalendar(),
+                    style: TextStyle(fontSize: 15.0),
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 5.0),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.arrow_forward_ios),
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15.0,
+                        ),
                       ),
-                      labelText: "Desde",
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(
                           color: const Color(0xffBECCDA),
@@ -189,7 +205,7 @@ class _AbsencePageState extends State<AbsencePage> {
                 Container(
                   margin: EdgeInsets.only(left: 10.0),
                   child: Text(
-                    "Fecha Hasta*",
+                    "Fecha Hasta *",
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -203,11 +219,15 @@ class _AbsencePageState extends State<AbsencePage> {
                     controller: toDateController,
                     readOnly: true,
                     onTap: () => _showCalendar(),
+                    style: TextStyle(fontSize: 15.0),
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 5.0),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.arrow_forward_ios),
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15.0,
+                        ),
                       ),
-                      labelText: "Hasta",
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(
                           color: const Color(0xffBECCDA),
@@ -247,7 +267,7 @@ class _AbsencePageState extends State<AbsencePage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.zero),
               ),
-              onPressed: _loading ? null : () => _dismiss(),
+              onPressed: _loading ? null : () => _dismiss(false),
             ),
           ),
         ),
@@ -315,7 +335,7 @@ class _AbsencePageState extends State<AbsencePage> {
         .then((absenceResponse) {
       if (absenceResponse.success) {
         _loading = false;
-        _dismiss();
+        _dismiss(true);
       }
     });
   }
@@ -330,7 +350,7 @@ class _AbsencePageState extends State<AbsencePage> {
     setState(() {});
   }
 
-  _dismiss() {
-    Navigator.pop(context);
+  _dismiss(bool refresh) {
+    Navigator.pop(context, refresh);
   }
 }

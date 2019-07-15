@@ -3,6 +3,7 @@ import 'package:fdr_go/data/service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/absence/absenseWidget.dart';
 import 'package:fdr_go/screens/service_application/service_application.dart';
+import 'package:fdr_go/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:fdr_go/services/service_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -89,11 +90,12 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget _buildServicesListItem(int index) {
     Service service = widget.loginResponse.services[index];
+    Color textColor = service.isAbsence ? Colors.white : Colors.black;
     int id = service.id;
     return Container(
       margin: EdgeInsets.only(bottom: 10.0),
       child: Card(
-        color: Colors.white,
+        color: service.isAbsence ? primarySwatch['red'] : Colors.white,
         elevation: 10.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
@@ -118,7 +120,7 @@ class _LandingPageState extends State<LandingPage> {
                         widget.loginResponse.services[index].student.lastName,
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: textColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
                     ),
@@ -131,14 +133,16 @@ class _LandingPageState extends State<LandingPage> {
               Text(
                 "Grado: " + widget.loginResponse.services[index].student.grade,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: textColor,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               SizedBox(
                 height: 10.0,
               ),
-              _buildActionButton(service, index),
+              service.isAbsence
+                  ? _buildAbsenceWidget(service)
+                  : _buildActionButton(service, index),
               SizedBox(
                 height: 10.0,
               ),
@@ -153,7 +157,14 @@ class _LandingPageState extends State<LandingPage> {
     if (service.route == null && service.requestService == null) {
       return _buildAskServiceButton(index);
     } else if (service.requestService != null) {
-      return _buildInProcessButton();
+      if (service.status == "PR") {
+        //TODO: Check this comparison
+        return _buildInProcessButton(index);
+      } else if (service.status == "PC") {
+        return _buildConfirmTermsButton(index);
+      } else {
+        return _buildInProcessButton2(index);
+      }
     } else {
       return _buildAskAbsenceButton(index);
     }
@@ -178,7 +189,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildInProcessButton() {
+  Widget _buildInProcessButton(int index) {
     return Align(
       alignment: Alignment.centerRight,
       child: RaisedButton(
@@ -187,6 +198,7 @@ class _LandingPageState extends State<LandingPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         onPressed: null,
+        //() => _openTermsAndConditions(widget.loginResponse.services[index].student),
         child: Text(
           "En Proceso",
           style: TextStyle(fontSize: 16.0),
@@ -208,7 +220,9 @@ class _LandingPageState extends State<LandingPage> {
             _openAbsencePage(widget.loginResponse.services[index].student),
         child: Text(
           "Inasistencia",
-          style: TextStyle(fontSize: 16.0),
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
         ),
       ),
     );
@@ -249,5 +263,73 @@ class _LandingPageState extends State<LandingPage> {
         _loading = false;
       });
     });
+  }
+
+  _openTermsAndConditions(Service service) async {
+    final bool refresh = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TermsPage(service: service),
+      ),
+    );
+
+    if (refresh != null && refresh) {
+      _refreshData();
+    }
+  }
+
+  Widget _buildAbsenceWidget(Service service) {
+    return Row(
+      children: <Widget>[
+        Icon(
+          Icons.do_not_disturb_alt,
+          color: Colors.white,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10.0),
+          child: Text(
+            "Inasistencia",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildConfirmTermsButton(index) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        color: primarySwatch['blue'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['blueDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        onPressed: () =>
+            _openTermsAndConditions(widget.loginResponse.services[index]),
+        child: Text(
+          "Confirmar",
+          style: TextStyle(fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
+  _buildInProcessButton2(index) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: RaisedButton(
+        color: primarySwatch['blueDisabled'],
+        textColor: Colors.white,
+        disabledColor: primarySwatch['blueDisabled'],
+        disabledTextColor: primarySwatch['whiteDisabled'],
+        onPressed: null,
+        child: Text(
+          "En Proceso (2)",
+          style: TextStyle(fontSize: 16.0),
+        ),
+      ),
+    );
   }
 }

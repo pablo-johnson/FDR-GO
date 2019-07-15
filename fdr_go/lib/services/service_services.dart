@@ -29,18 +29,16 @@ Future<RequestServiceResponse> requestService(int studentId, String dateFrom,
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
   RequestServiceRequest request = new RequestServiceRequest(
-    studentId: studentId,
-    dateFrom: dateFrom,
-    dateRequest: dateRequest,
-    serviceMode: serviceMode
-  );
-  final response =
-      await http.post('$url/trasportation/services/request',
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer ' + token
-          },
-          body: requestServiceRequestToJson(request));
+      studentId: studentId,
+      dateFrom: dateFrom,
+      dateRequest: dateRequest,
+      serviceMode: serviceMode);
+  final response = await http.post('$url/trasportation/services/request',
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer ' + token
+      },
+      body: requestServiceRequestToJson(request));
   return requestServiceResponseFromJson(response.body);
 }
 
@@ -55,4 +53,31 @@ Future<ServicesResponse> getServices() async {
     },
   );
   return servicesResponseFromJson(response.body);
+}
+
+Future<String> getTermsAndConditions(int serviceRequestId) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("authToken");
+  final response = await http.get(
+    '$url/trasportation/services/request/$serviceRequestId/contract/html',
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    },
+  );
+  return response.body;
+}
+
+Future<RequestServiceResponse> acceptTerms(
+    int serviceRequestId, bool accept) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("authToken");
+  final response = await http.put(
+    '$url/trasportation/services/request/$serviceRequestId/accept?accept=$accept',
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    },
+  );
+  return requestServiceResponseFromJson(response.body);
 }

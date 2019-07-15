@@ -3,6 +3,8 @@ import 'package:fdr_go/data/request_service.dart';
 import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
 
+enum ServiceStatus { PC, PR, AC, DE }
+
 class Service {
   int id;
   int studentId;
@@ -15,6 +17,7 @@ class Service {
   RequestService requestService;
   Error error;
   bool success;
+  bool isAbsence;
   String targetUrl;
 
   Service({
@@ -29,6 +32,7 @@ class Service {
     this.requestService,
     this.error,
     this.success,
+    this.isAbsence,
     this.targetUrl,
   });
 
@@ -51,6 +55,7 @@ class Service {
             : json["locationStatusDescription"],
         error: json["error"],
         success: json["success"],
+        isAbsence: json["isAbsence"],
         targetUrl: json["targetUrl"],
       );
 
@@ -70,6 +75,7 @@ class Service {
             : locationStatusDescription,
         "error": error == null ? null : error.toJson(),
         "success": success,
+        "isAbsence": isAbsence,
         "targetUrl": targetUrl,
       };
 }

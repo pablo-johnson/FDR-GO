@@ -320,9 +320,13 @@ class _AbsencePageState extends State<AbsencePage> {
         firstDate: new DateTime.now().add(new Duration(days: -1)),
         lastDate: new DateTime(2020));
     if (picked != null && picked.length == 2) {
-      _enableSubmitButton();
       fromDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
       toDateController.text = new DateFormat("dd/MM/yyyy").format(picked[1]);
+      _enableSubmitButton();
+    }else if(picked != null && picked.length == 1){
+      fromDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
+      toDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
+      _enableSubmitButton();
     }
   }
 

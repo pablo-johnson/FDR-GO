@@ -51,3 +51,14 @@ Future<LoginResponse> login(String username, String password) async {
   await prefs.setString('authToken', loginResponse.token);
   return loginResponse;
 }
+
+Future<CommonResponse> logout(
+    CreateAccountRequest request) async {
+  final response = await http.post('$url/education/accounts/logout',
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: ''
+      },
+      body: createAccountRequestToJson(request));
+  return commonResponseFromJson(response.body);
+}

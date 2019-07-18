@@ -1,5 +1,8 @@
+import 'package:fdr_go/data/requests/create_account_request.dart';
 import 'package:fdr_go/screens/sign_in/sign_in.dart';
+import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
+import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -110,7 +113,6 @@ class _MenuWidgetPageState extends State<MenuWidget> {
             ),
             onTap: () {
               _logout();
-              Navigator.pop(context);
             },
           ),
         ],
@@ -125,9 +127,24 @@ class _MenuWidgetPageState extends State<MenuWidget> {
   }
 
   Future _logout() async {
+    setState(() {
+//      _loading = true;
+    });
+    var request = new CreateAccountRequest();
+    request.appId = Consts.appId;
+    request.username = userEmail;
+    logout(request).then((logoutResponse){
+//      setState(() {
+//      _loading = false;
+//      });
+      _deleteCache();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SignInPage()));
+    });
+  }
+
+  Future _deleteCache() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => SignInPage()));
   }
 }

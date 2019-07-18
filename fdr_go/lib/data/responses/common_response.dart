@@ -7,27 +7,27 @@ import 'dart:convert';
 import '../error.dart';
 import '../successful.dart';
 
-RequestServiceResponse requestServiceResponseFromJson(String str) =>
-    RequestServiceResponse.fromJson(json.decode(str));
+CommonResponse commonResponseFromJson(String str) =>
+    CommonResponse.fromJson(json.decode(str));
 
-String requestServiceResponseToJson(RequestServiceResponse data) =>
+String commonResponseToJson(CommonResponse data) =>
     json.encode(data.toJson());
 
-class RequestServiceResponse {
+class CommonResponse {
   Error error;
   bool success;
   Successful successful;
   String targetUrl;
 
-  RequestServiceResponse({
+  CommonResponse({
     this.error,
     this.success,
     this.successful,
     this.targetUrl,
   });
 
-  factory RequestServiceResponse.fromJson(Map<String, dynamic> json) =>
-      new RequestServiceResponse(
+  factory CommonResponse.fromJson(Map<String, dynamic> json) =>
+      new CommonResponse(
         error: json["error"] != null ? Error.fromJson(json["error"]) : null,
         success: json["success"],
         successful: json["successful"] != null

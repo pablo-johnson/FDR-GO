@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:fdr_go/data/requests/create_account_request.dart';
+import 'package:fdr_go/data/requests/forgot_password_request.dart';
 import 'package:fdr_go/data/requests/login_request.dart';
+import 'package:fdr_go/data/responses/common_response.dart';
 import 'package:fdr_go/data/responses/create_account_response.dart';
 import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -20,6 +22,16 @@ Future<CreateAccountResponse> createAccount(
       },
       body: createAccountRequestToJson(request));
   return createAccountResponseFromJson(response.body);
+}
+
+Future<CommonResponse> forgotPassword(ForgotPasswordRequest request) async {
+  final response = await http.post('$url/education/accounts/recovery',
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: ''
+      },
+      body: forgotPasswordRequestToJson(request));
+  return commonResponseFromJson(response.body);
 }
 
 Future<LoginResponse> login(String username, String password) async {

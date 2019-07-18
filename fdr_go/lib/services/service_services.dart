@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:fdr_go/data/requests/service_request.dart';
-import 'package:fdr_go/data/responses/request_service_response.dart';
+import 'package:fdr_go/data/responses/common_response.dart';
 import 'package:fdr_go/data/responses/service_mode_response.dart';
 import 'package:fdr_go/data/responses/services_response.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -24,7 +24,7 @@ Future<ServiceModeResponse> getServiceModes() async {
   return serviceModeResponseFromJson(response.body);
 }
 
-Future<RequestServiceResponse> requestService(int studentId, String dateFrom,
+Future<CommonResponse> requestService(int studentId, String dateFrom,
     String dateRequest, String serviceMode) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
@@ -39,7 +39,7 @@ Future<RequestServiceResponse> requestService(int studentId, String dateFrom,
         HttpHeaders.authorizationHeader: 'Bearer ' + token
       },
       body: requestServiceRequestToJson(request));
-  return requestServiceResponseFromJson(response.body);
+  return commonResponseFromJson(response.body);
 }
 
 Future<ServicesResponse> getServices() async {
@@ -68,7 +68,7 @@ Future<String> getTermsAndConditions(int serviceRequestId) async {
   return response.body;
 }
 
-Future<RequestServiceResponse> acceptTerms(
+Future<CommonResponse> acceptTerms(
     int serviceRequestId, bool accept) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
@@ -79,5 +79,5 @@ Future<RequestServiceResponse> acceptTerms(
       HttpHeaders.authorizationHeader: 'Bearer ' + token
     },
   );
-  return requestServiceResponseFromJson(response.body);
+  return commonResponseFromJson(response.body);
 }

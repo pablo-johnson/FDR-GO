@@ -1,5 +1,6 @@
 import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/dialogs/create_account.dart';
+import 'package:fdr_go/dialogs/forgot_password.dart';
 import 'package:fdr_go/screens/landing/landing.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
@@ -155,13 +156,7 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  Text(
-                    "¿Has olvidado tu contraseña?",
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
+                  _forgotPasswordWidget(),
                   SizedBox(
                     height: 30.0,
                   ),
@@ -219,6 +214,25 @@ class _SignInPageState extends State<SignInPage> {
           color: Colors.white,
           decoration: TextDecoration.underline,
           fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _forgotPasswordWidget() {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (_) =>
+              ForgotPasswordDialog(), //(BuildContext context) => CreateAccountDialog(),
+        );
+      },
+      child: Text(
+        "¿Has olvidado tu contraseña?",
+        style: TextStyle(
+          color: Colors.white,
+          decoration: TextDecoration.underline,
         ),
       ),
     );

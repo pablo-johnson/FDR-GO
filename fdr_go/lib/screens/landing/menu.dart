@@ -83,18 +83,47 @@ class _MenuWidgetPageState extends State<MenuWidget> {
             color: primarySwatch['dividerColor'],
             child: Divider(),
           ),
-//          ListTile(
-//            title: Text(
-//              "Item 2",
-//            ),
-//            trailing: Icon(
-//              Icons.arrow_forward_ios,
-//              color: primarySwatch['blue'],
-//            ),
-//            onTap: () {
-//              Navigator.pop(context);
-//            },
-//          ),
+          Expanded(
+            child: Container(),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.notifications,
+              color: primarySwatch['blue'],
+            ),
+            title: Align(
+              child: new Text("Salir"),
+              alignment: Alignment(-1.5, 0),
+            ),
+            trailing: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  height: 30.0,
+                  width: 30.0,
+                  margin: EdgeInsets.only(right: 5.0),
+                  decoration: new BoxDecoration(
+                      color: primarySwatch['blue'],
+                      borderRadius:
+                      new BorderRadius.all(Radius.circular(30.0))),
+                  child: new Center(
+                    child: new Text(
+                      "5",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: primarySwatch['blue'],
+                ),
+              ],
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
     );

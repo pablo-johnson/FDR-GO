@@ -6,6 +6,7 @@ import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsPage extends StatefulWidget {
@@ -83,7 +84,15 @@ class _TermsPageState extends State<TermsPage> {
   }
 
   _loadHtml(serviceRequestId) async {
-//    String fileText = await rootBundle.loadString('assets/test.html');
+//    String html = await rootBundle.loadString('assets/test.html');
+//    _controller.loadUrl(Uri.dataFromString(
+//      html,
+//      mimeType: 'text/html',
+//      encoding: Encoding.getByName('utf-8'),
+//    ).toString());
+//    setState(() {
+//      _loading = false;
+//    });
     getTermsAndConditions(serviceRequestId).then((html) {
       _controller.loadUrl(Uri.dataFromString(
         html,

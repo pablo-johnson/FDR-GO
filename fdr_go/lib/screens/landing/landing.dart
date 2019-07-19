@@ -290,7 +290,10 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildAbsenceWidget(Service service) {
+    var dateFrom = service.absences.first.dateFrom;
+    var dateTo = service.absences.first.dateTo;
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Icon(
           Icons.do_not_disturb_alt,
@@ -298,12 +301,31 @@ class _LandingPageState extends State<LandingPage> {
         ),
         Padding(
           padding: EdgeInsets.only(left: 10.0),
-          child: Text(
-            "Inasistencia",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Inasistencia",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 5.0,
+                ),
+                child: Text(
+                  '$dateFrom - $dateTo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

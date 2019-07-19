@@ -3,6 +3,8 @@ import 'package:fdr_go/data/request_service.dart';
 import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
 
+import 'absence.dart';
+
 enum ServiceStatus { PC, PR, AC, DE }
 enum LocationStatus { SB, GO, SC }
 
@@ -19,6 +21,7 @@ class Service {
   Error error;
   bool success;
   bool isAbsence;
+  List<Absence> absences;
   String targetUrl;
 
   Service({
@@ -34,6 +37,7 @@ class Service {
     this.error,
     this.success,
     this.isAbsence,
+    this.absences,
     this.targetUrl,
   });
 
@@ -57,6 +61,10 @@ class Service {
         error: json["error"],
         success: json["success"],
         isAbsence: json["isAbsence"],
+        absences: json["absences"] != null
+            ? new List<Absence>.from(
+                json["absences"].map((x) => Absence.fromJson(x)))
+            : null,
         targetUrl: json["targetUrl"],
       );
 
@@ -77,6 +85,7 @@ class Service {
         "error": error == null ? null : error.toJson(),
         "success": success,
         "isAbsence": isAbsence,
+        "absences": new List<Absence>.from(absences.map((x) => x.toJson())),
         "targetUrl": targetUrl,
       };
 }

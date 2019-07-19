@@ -1,3 +1,5 @@
+enum RouteType { I, R }
+
 class Route {
   int id;
   String code;

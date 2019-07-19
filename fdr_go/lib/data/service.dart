@@ -4,6 +4,7 @@ import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
 
 enum ServiceStatus { PC, PR, AC, DE }
+enum LocationStatus { SB, GO, SC }
 
 class Service {
   int id;

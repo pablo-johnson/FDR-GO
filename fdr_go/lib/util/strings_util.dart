@@ -13,3 +13,5 @@ String getShortName(String string) {
     return "";
   }
 }
+
+String enumName(Object o) => o.toString().split('.').last;

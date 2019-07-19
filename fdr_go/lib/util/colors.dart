@@ -27,4 +27,5 @@ const primarySwatch = ColorSwatch(0xff002664, {
   'progressBackground': Color(0x4D8D8C8C),
   'disabledTextFieldBackground': Color(0xF8D8C8C),
   'successToastBackground': Color(0xff4c6792),
+  'serviceStateBorder': Color(0xffBFBFBF),
 });

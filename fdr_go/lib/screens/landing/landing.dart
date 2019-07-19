@@ -1,4 +1,5 @@
 import 'package:fdr_go/data/responses/login_response.dart';
+import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/absence/absenseWidget.dart';
@@ -6,6 +7,9 @@ import 'package:fdr_go/screens/service_application/service_application.dart';
 import 'package:fdr_go/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:fdr_go/services/service_services.dart';
 import 'package:fdr_go/util/colors.dart';
+import 'package:fdr_go/util/consts.dart';
+import 'package:fdr_go/util/line_dashed_painter.dart';
+import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
 
 import 'menu.dart';
@@ -23,6 +27,8 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   var _selectedIndex = 0;
   bool _loading = false;
+  List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
+  List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +44,14 @@ class _LandingPageState extends State<LandingPage> {
           _loading ? _buildProgressBarWidget() : Container(),
           Container(
             margin: EdgeInsets.all(10.0),
-            child: ListView.builder(
-              itemCount: widget.loginResponse.services.length,
-              itemBuilder: (context, index) {
-                return _buildServicesListItem(index);
-              },
+            child: new RefreshIndicator(
+              child: ListView.builder(
+                itemCount: widget.loginResponse.services.length,
+                itemBuilder: (context, index) {
+                  return _buildServicesListItem(index);
+                },
+              ),
+              onRefresh: getServices,
             ),
           ),
         ],
@@ -140,6 +149,9 @@ class _LandingPageState extends State<LandingPage> {
               SizedBox(
                 height: 10.0,
               ),
+              service.status == enumName(ServiceStatus.AC) && !service.isAbsence
+                  ? _buildServiceWidget(service)
+                  : Container(),
               service.isAbsence
                   ? _buildAbsenceWidget(service)
                   : _buildActionButton(service, index),
@@ -157,10 +169,9 @@ class _LandingPageState extends State<LandingPage> {
     if (service.route == null && service.requestService == null) {
       return _buildAskServiceButton(index);
     } else if (service.requestService != null) {
-      if (service.status == "PR") {
-        //TODO: Check this comparison
+      if (service.status == enumName(ServiceStatus.PR)) {
         return _buildInProcessButton(index);
-      } else if (service.status == "PC") {
+      } else if (service.status == enumName(ServiceStatus.PC)) {
         return _buildConfirmTermsButton(index);
       } else {
         return _buildInProcessButton2(index);
@@ -248,12 +259,12 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
 
-    if (refresh) {
+    if (refresh != null && refresh) {
       _refreshData();
     }
   }
 
-  void _refreshData() {
+  Future<void> _refreshData() {
     setState(() {
       _loading = true;
     });
@@ -263,6 +274,7 @@ class _LandingPageState extends State<LandingPage> {
         _loading = false;
       });
     });
+    return null;
   }
 
   _openTermsAndConditions(Service service) async {
@@ -329,6 +341,232 @@ class _LandingPageState extends State<LandingPage> {
           "En Proceso (2)",
           style: TextStyle(fontSize: 16.0),
         ),
+      ),
+    );
+  }
+
+  Widget _buildServiceWidget(Service service) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 10.0,
+        bottom: 10.0,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  left: 30.0,
+                  right: 10.0,
+                ),
+                child: Icon(
+                  Icons.directions_bus,
+                  color: primarySwatch['red'],
+                ),
+              ),
+              Text(
+                service.statusDescription,
+                style: TextStyle(
+                  color: primarySwatch['red'],
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  left: 30.0,
+                  right: 10.0,
+                ),
+                child: Icon(
+                  Icons.location_on,
+                  color: primarySwatch['red'],
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  service.student.address,
+                  style: TextStyle(
+                    color: primarySwatch['red'],
+                    fontSize: 14.0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          _buildStudentLocationWidget(service),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStudentLocationWidget(Service service) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 10.0,
+        bottom: 20.0,
+        left: Consts.routeStateSize,
+        right: Consts.routeStateSize,
+      ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(
+              top: Consts.routeStateSize / 2,
+              right: Consts.routeStateSize / 2,
+              left: Consts.routeStateSize / 2,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 125,
+                  child: CustomPaint(
+                    painter: LineDashedPainter(color: primarySwatch['blue']),
+                  ),
+                ),
+                Container(
+                  width: 125,
+                  child: CustomPaint(
+                    painter: LineDashedPainter(
+                        color: primarySwatch[service.locationStatus ==
+                                enumName(LocationStatus.GO)
+                            ? 'serviceStateBorder'
+                            : 'blue']),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      right: Consts.routeStateSize / 2,
+                      left: Consts.routeStateSize / 2,
+                    ),
+                    width: Consts.routeStateSize,
+                    height: Consts.routeStateSize,
+                    decoration: new BoxDecoration(
+                      color: primarySwatch['blue'],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      size: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      right: Consts.routeStateSize / 2,
+                      left: Consts.routeStateSize / 2,
+                    ),
+                    width: Consts.routeStateSize,
+                    height: Consts.routeStateSize,
+                    decoration: new BoxDecoration(
+                      color: primarySwatch[
+                          service.locationStatus == enumName(LocationStatus.GO)
+                              ? 'red'
+                              : 'blue'],
+                      shape: BoxShape.circle,
+                    ),
+                    child: service.locationStatus == enumName(LocationStatus.SC)
+                        ? Icon(
+                            Icons.check,
+                            size: 15.0,
+                            color: Colors.white,
+                          )
+                        : Container(),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      right: Consts.routeStateSize / 2,
+                      left: Consts.routeStateSize / 2,
+                    ),
+                    width: Consts.routeStateSize,
+                    height: Consts.routeStateSize,
+                    decoration: new BoxDecoration(
+                      color:
+                          service.locationStatus == enumName(LocationStatus.GO)
+                              ? Colors.white
+                              : primarySwatch['red'],
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: primarySwatch[service.locationStatus ==
+                                enumName(LocationStatus.GO)
+                            ? 'serviceStateBorder'
+                            : 'red'],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 5.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        goSteps[service.route.typeTrip == enumName(RouteType.I)
+                            ? 0
+                            : 2],
+                        style: TextStyle(
+                          color: primarySwatch['blue'],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        goSteps[1],
+                        style: TextStyle(
+                          color: primarySwatch[service.locationStatus ==
+                                  enumName(LocationStatus.GO)
+                              ? 'red'
+                              : 'blue'],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        goSteps[service.route.typeTrip == enumName(RouteType.I)
+                            ? 2
+                            : 0],
+                        style: TextStyle(
+                          color: primarySwatch[service.locationStatus ==
+                                  enumName(LocationStatus.GO)
+                              ? 'serviceStateBorder'
+                              : 'red'],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -8,5 +8,4 @@ class Consts {
   static var commonButtonHeight = 60.0;
   static String baseUrl = 'http://161.132.77.41/Synergy.Tra.App/api/v1';
   static String appId = "10034";
-  static double routeStateSize = 24;
 }

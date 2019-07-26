@@ -273,6 +273,9 @@ class _SignInPageState extends State<SignInPage> {
         _changeThePage(loginResponse);
       }
     }).catchError((error) {
+      setState(() {
+        _loading = false;
+      });
       _showErrorMessage("Error");
       print('error : $error');
     });

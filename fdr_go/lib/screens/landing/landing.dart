@@ -7,7 +7,6 @@ import 'package:fdr_go/screens/service_application/service_application.dart';
 import 'package:fdr_go/screens/terms_and_conditions/terms_and_conditions.dart';
 import 'package:fdr_go/services/service_services.dart';
 import 'package:fdr_go/util/colors.dart';
-import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/line_dashed_painter.dart';
 import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,7 @@ import 'menu.dart';
 class LandingPage extends StatefulWidget {
   final LoginResponse loginResponse;
 
-  const LandingPage({@required this.loginResponse})
-      : assert(loginResponse != null);
+  const LandingPage({this.loginResponse});
 
   @override
   State<StatefulWidget> createState() => _LandingPageState();
@@ -29,6 +27,17 @@ class _LandingPageState extends State<LandingPage> {
   bool _loading = false;
   List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
   List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
+  List<Service> services = new List();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.loginResponse == null) {
+      _refreshData(false);
+    } else {
+      services = widget.loginResponse.services;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +55,7 @@ class _LandingPageState extends State<LandingPage> {
             margin: EdgeInsets.all(10.0),
             child: new RefreshIndicator(
               child: ListView.builder(
-                itemCount: widget.loginResponse.services.length,
+                itemCount: services.length,
                 itemBuilder: (context, index) {
                   return _buildServicesListItem(index);
                 },
@@ -98,7 +107,7 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildServicesListItem(int index) {
-    Service service = widget.loginResponse.services[index];
+    Service service = services[index];
     Color textColor = service.isAbsence ? Colors.white : Colors.black;
     int id = service.id;
     return Container(
@@ -124,9 +133,9 @@ class _LandingPageState extends State<LandingPage> {
                 child: Hero(
                   tag: "hero$id",
                   child: Text(
-                    widget.loginResponse.services[index].student.name +
+                    services[index].student.name +
                         ' ' +
-                        widget.loginResponse.services[index].student.lastName,
+                        services[index].student.lastName,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: textColor,
@@ -140,7 +149,7 @@ class _LandingPageState extends State<LandingPage> {
                 height: 10.0,
               ),
               Text(
-                "Grado: " + widget.loginResponse.services[index].student.grade,
+                "Grado: " + services[index].student.grade,
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w500,
@@ -190,8 +199,7 @@ class _LandingPageState extends State<LandingPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         splashColor: primarySwatch['bluePressed'],
-        onPressed: () => _openApplicationServicePage(
-            widget.loginResponse.services[index].student),
+        onPressed: () => _openApplicationServicePage(services[index].student),
         child: Text(
           "Solicitar Bus",
           style: TextStyle(fontSize: 16.0),
@@ -209,7 +217,7 @@ class _LandingPageState extends State<LandingPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         onPressed: null,
-        //() => _openTermsAndConditions(widget.loginResponse.services[index].student),
+        //() => _openTermsAndConditions(services[index].student),
         child: Text(
           "En Proceso",
           style: TextStyle(fontSize: 16.0),
@@ -227,8 +235,7 @@ class _LandingPageState extends State<LandingPage> {
         disabledColor: primarySwatch['redDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         splashColor: primarySwatch['redPressed'],
-        onPressed: () =>
-            _openAbsencePage(widget.loginResponse.services[index].student),
+        onPressed: () => _openAbsencePage(services[index].student),
         child: Text(
           "Inasistencia",
           style: TextStyle(
@@ -242,13 +249,12 @@ class _LandingPageState extends State<LandingPage> {
   _openApplicationServicePage(Student student) async {
     final bool refresh = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ServiceApplicationPage(
-            parentName: widget.loginResponse.name, student: student),
+        builder: (context) => ServiceApplicationPage(student: student),
       ),
     );
 
-    if (refresh) {
-      _refreshData();
+    if (refresh != null && refresh) {
+      _refreshData(true);
     }
   }
 
@@ -260,16 +266,18 @@ class _LandingPageState extends State<LandingPage> {
     );
 
     if (refresh != null && refresh) {
-      _refreshData();
+      _refreshData(true);
     }
   }
 
-  Future<void> _refreshData() {
-    setState(() {
-      _loading = true;
-    });
+  Future<void> _refreshData(bool showLoading) {
+    if (showLoading) {
+      setState(() {
+        _loading = true;
+      });
+    }
     getServices().then((servicesResponse) {
-      widget.loginResponse.services = servicesResponse.services;
+      services = servicesResponse.services;
       setState(() {
         _loading = false;
       });
@@ -285,7 +293,7 @@ class _LandingPageState extends State<LandingPage> {
     );
 
     if (refresh != null && refresh) {
-      _refreshData();
+      _refreshData(false);
     }
   }
 
@@ -340,8 +348,7 @@ class _LandingPageState extends State<LandingPage> {
         textColor: Colors.white,
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
-        onPressed: () =>
-            _openTermsAndConditions(widget.loginResponse.services[index]),
+        onPressed: () => _openTermsAndConditions(services[index]),
         child: Text(
           "Confirmar",
           style: TextStyle(fontSize: 16.0),
@@ -437,33 +444,40 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildStudentLocationWidget(Service service) {
+    double width = 250;
+    double routeStateSize = 24;
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 360) {
+      width = 200;
+      routeStateSize = 20;
+    }
     return Container(
       margin: EdgeInsets.only(
         top: 10.0,
         bottom: 20.0,
-        left: Consts.routeStateSize,
-        right: Consts.routeStateSize,
+        left: routeStateSize,
+        right: routeStateSize,
       ),
       child: Stack(
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-              top: Consts.routeStateSize / 2,
-              right: Consts.routeStateSize / 2,
-              left: Consts.routeStateSize / 2,
+              top: routeStateSize / 2,
+              right: routeStateSize / 2,
+              left: routeStateSize / 2,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: 125,
+                  width: width / 2,
                   child: CustomPaint(
                     painter: LineDashedPainter(color: primarySwatch['blue']),
                   ),
                 ),
                 Container(
-                  width: 125,
+                  width: width / 2,
                   child: CustomPaint(
                     painter: LineDashedPainter(
                         color: primarySwatch[service.locationStatus ==
@@ -483,11 +497,11 @@ class _LandingPageState extends State<LandingPage> {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(
-                      right: Consts.routeStateSize / 2,
-                      left: Consts.routeStateSize / 2,
+                      right: routeStateSize / 2,
+                      left: routeStateSize / 2,
                     ),
-                    width: Consts.routeStateSize,
-                    height: Consts.routeStateSize,
+                    width: routeStateSize,
+                    height: routeStateSize,
                     decoration: new BoxDecoration(
                       color: primarySwatch['blue'],
                       shape: BoxShape.circle,
@@ -500,11 +514,11 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      right: Consts.routeStateSize / 2,
-                      left: Consts.routeStateSize / 2,
+                      right: routeStateSize / 2,
+                      left: routeStateSize / 2,
                     ),
-                    width: Consts.routeStateSize,
-                    height: Consts.routeStateSize,
+                    width: routeStateSize,
+                    height: routeStateSize,
                     decoration: new BoxDecoration(
                       color: primarySwatch[
                           service.locationStatus == enumName(LocationStatus.GO)
@@ -522,11 +536,11 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      right: Consts.routeStateSize / 2,
-                      left: Consts.routeStateSize / 2,
+                      right: routeStateSize / 2,
+                      left: routeStateSize / 2,
                     ),
-                    width: Consts.routeStateSize,
-                    height: Consts.routeStateSize,
+                    width: routeStateSize,
+                    height: routeStateSize,
                     decoration: new BoxDecoration(
                       color:
                           service.locationStatus == enumName(LocationStatus.GO)

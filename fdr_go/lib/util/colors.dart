@@ -28,4 +28,9 @@ const primarySwatch = ColorSwatch(0xff002664, {
   'disabledTextFieldBackground': Color(0xF8D8C8C),
   'successToastBackground': Color(0xff4c6792),
   'serviceStateBorder': Color(0xffBFBFBF),
+  'notificationBackground': Color(0xff404650),
+  'notificationUnreadBackground': Color(0xff2A487B),
+  'notificationSeparator': Color(0x47404650),
+  'notificationAvatar': Color(0xff707070),
+  'readOnlyFieldBackground': Color(0xffE0EBFD),
 });

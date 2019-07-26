@@ -7,13 +7,12 @@ import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceApplicationPage extends StatefulWidget {
   final Student student;
-  final String parentName;
 
-  const ServiceApplicationPage(
-      {@required this.student, @required this.parentName})
+  const ServiceApplicationPage({@required this.student})
       : assert(student != null);
 
   @override
@@ -29,12 +28,14 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
 
   bool _loading = false;
   bool _isContinueButtonEnabled = false;
+  String parentName;
 
   ServiceMode _selectedMode;
 
   @override
   void initState() {
     super.initState();
+    _getParentName();
     _getServiceModes();
   }
 
@@ -51,7 +52,7 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
   }
 
   Widget _buildServiceApplicationWidget(Student student) {
-    requestedByController.text = widget.parentName;
+    requestedByController.text = parentName;
     addressController.text = widget.student.address;
     BoxDecoration boxDecoration = new BoxDecoration(
         color: primarySwatch['disabledTextFieldBackground'],
@@ -474,5 +475,10 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
         });
       }
     });
+  }
+
+  Future _getParentName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    parentName = prefs.getString("userName");
   }
 }

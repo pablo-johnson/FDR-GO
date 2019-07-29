@@ -29,6 +29,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
 
   @override
   Widget build(BuildContext context) {
+    int notificationsNumber = 5;
     return Drawer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -58,7 +59,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
                 color: primarySwatch['dividerColor'],
                 child: Divider(),
               ),
-              _buildNotificationsOption(context),
+              _buildNotificationsOption(context, notificationsNumber),
               Container(
                 height: 1.0,
                 color: primarySwatch['dividerColor'],
@@ -92,7 +93,8 @@ class _MenuWidgetPageState extends State<MenuWidget> {
     );
   }
 
-  Widget _buildNotificationsOption(BuildContext context) {
+  Widget _buildNotificationsOption(
+      BuildContext context, int notificationsNumber) {
     return ListTile(
       leading: Icon(
         Icons.notifications,
@@ -106,17 +108,20 @@ class _MenuWidgetPageState extends State<MenuWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            height: 30.0,
-            width: 30.0,
-            margin: EdgeInsets.only(right: 5.0),
-            decoration: new BoxDecoration(
-                color: primarySwatch['blue'],
-                borderRadius: new BorderRadius.all(Radius.circular(30.0))),
-            child: new Center(
-              child: new Text(
-                "5",
-                style: TextStyle(color: Colors.white),
+          Visibility(
+            visible: notificationsNumber > 0,
+            child: Container(
+              height: 30.0,
+              width: 30.0,
+              margin: EdgeInsets.only(right: 5.0),
+              decoration: new BoxDecoration(
+                  color: primarySwatch['red'],
+                  borderRadius: new BorderRadius.all(Radius.circular(30.0))),
+              child: new Center(
+                child: new Text(
+                  notificationsNumber.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),
@@ -129,7 +134,6 @@ class _MenuWidgetPageState extends State<MenuWidget> {
       onTap: () {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => NotificationsPage()));
-//                  Navigator.pop(context);
       },
     );
   }

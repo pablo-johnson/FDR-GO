@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "97669020024",
+    "firebase_url": "https://evercom-synergy-app-tra.firebaseio.com",
+    "project_id": "evercom-synergy-app-tra",
+    "storage_bucket": "evercom-synergy-app-tra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97669020024:android:12a6b18770d46ef6",
+        "android_client_info": {
+          "package_name": "com.evercom.synergy.tra.app.fdrgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97669020024-cbpu5antamoml0ip8bpidbiq0vkluc2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM2z_AvavOzSPVTI-Jg15-uEs3akPwPPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97669020024-cbpu5antamoml0ip8bpidbiq0vkluc2u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "97669020024-ldheft2ilec050k0b295akent53ratk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "evercom-synergy-app-tra",
+                "app_store_id": "1474259311"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97669020024:android:ec0f493953683307",
+        "android_client_info": {
+          "package_name": "com.synergy.fdr_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97669020024-cbpu5antamoml0ip8bpidbiq0vkluc2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM2z_AvavOzSPVTI-Jg15-uEs3akPwPPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97669020024-cbpu5antamoml0ip8bpidbiq0vkluc2u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "97669020024-ldheft2ilec050k0b295akent53ratk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "evercom-synergy-app-tra",
+                "app_store_id": "1474259311"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

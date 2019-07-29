@@ -1,7 +1,7 @@
 import 'package:fdr_go/data/notification.dart' as MyNotification;
 import 'package:fdr_go/screens/landing/menu.dart';
 import 'package:fdr_go/services/notification_services.dart';
-import 'package:fdr_go/services/service_services.dart';
+import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   return _buildSeparator();
                 },
               ),
-              onRefresh: getServices,
+              onRefresh: getBusServices,
             ),
           ),
         ],

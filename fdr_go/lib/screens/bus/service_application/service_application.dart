@@ -1,7 +1,7 @@
 import 'package:fdr_go/data/service_mode.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/dialogs/date_calendar.dart' as DatePicker;
-import 'package:fdr_go/services/service_services.dart';
+import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -421,7 +421,7 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
     setState(() {
       _loading = true;
     });
-    requestService(widget.student.id, requiredDateController.text,
+    requestBusService(widget.student.id, requiredDateController.text,
             requestedDateController.text, _selectedMode.code)
         .then((requestServiceResponse) {
       if (requestServiceResponse.success) {
@@ -467,7 +467,7 @@ class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
     setState(() {
       _loading = true;
     });
-    getServiceModes().then((serviceModesResponse) {
+    getBusServiceModes().then((serviceModesResponse) {
       if (serviceModesResponse.success) {
         setState(() {
           _loading = false;

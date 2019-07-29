@@ -5,32 +5,32 @@
 import 'dart:convert';
 
 import '../error.dart';
-import '../service.dart';
+import '../bus_service.dart';
 
-ServicesResponse servicesResponseFromJson(String str) =>
-    ServicesResponse.fromJson(json.decode(str));
+BusServicesResponse servicesResponseFromJson(String str) =>
+    BusServicesResponse.fromJson(json.decode(str));
 
-String servicesResponseToJson(ServicesResponse data) =>
+String servicesResponseToJson(BusServicesResponse data) =>
     json.encode(data.toJson());
 
-class ServicesResponse {
-  List<Service> services;
+class BusServicesResponse {
+  List<BusService> services;
   Error error;
   bool success;
   String targetUrl;
 
-  ServicesResponse({
+  BusServicesResponse({
     this.services,
     this.error,
     this.success,
     this.targetUrl,
   });
 
-  factory ServicesResponse.fromJson(Map<String, dynamic> json) =>
-      new ServicesResponse(
+  factory BusServicesResponse.fromJson(Map<String, dynamic> json) =>
+      new BusServicesResponse(
         services: json["services"] != null
-            ? new List<Service>.from(
-                json["services"].map((x) => Service.fromJson(x)))
+            ? new List<BusService>.from(
+                json["services"].map((x) => BusService.fromJson(x)))
             : null,
         error: json["error"],
         success: json["success"],
@@ -38,7 +38,7 @@ class ServicesResponse {
       );
 
   Map<String, dynamic> toJson() => {
-        "services": new List<Service>.from(services.map((x) => x.toJson())),
+        "services": new List<BusService>.from(services.map((x) => x.toJson())),
         "error": error,
         "success": success,
         "targetUrl": targetUrl,

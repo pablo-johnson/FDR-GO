@@ -1,16 +1,15 @@
 import 'dart:convert';
 
-import 'package:fdr_go/data/service.dart';
-import 'package:fdr_go/services/service_services.dart';
+import 'package:fdr_go/data/bus_service.dart';
+import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsPage extends StatefulWidget {
-  final Service service;
+  final BusService service;
 
   const TermsPage({@required this.service}) : assert(service != null);
 
@@ -36,7 +35,7 @@ class _TermsPageState extends State<TermsPage> {
     );
   }
 
-  Widget buildAbsenceWidget(Service service) {
+  Widget buildAbsenceWidget(BusService service) {
     return Stack(
       children: <Widget>[
         _loading
@@ -64,7 +63,7 @@ class _TermsPageState extends State<TermsPage> {
     );
   }
 
-  Widget _buildMainForm(Service service) {
+  Widget _buildMainForm(BusService service) {
     return WebView(
       initialUrl: '',
       javascriptMode: JavascriptMode.unrestricted,

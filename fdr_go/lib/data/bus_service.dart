@@ -5,10 +5,10 @@ import 'package:fdr_go/data/student.dart';
 
 import 'absence.dart';
 
-enum ServiceStatus { PC, PR, AC, DE }
+enum BusServiceStatus { PC, PR, AC, DE }
 enum LocationStatus { SB, GO, SC }
 
-class Service {
+class BusService {
   int id;
   int studentId;
   Student student;
@@ -24,7 +24,7 @@ class Service {
   List<Absence> absences;
   String targetUrl;
 
-  Service({
+  BusService({
     this.id,
     this.studentId,
     this.student,
@@ -41,7 +41,7 @@ class Service {
     this.targetUrl,
   });
 
-  factory Service.fromJson(Map<String, dynamic> json) => new Service(
+  factory BusService.fromJson(Map<String, dynamic> json) => new BusService(
         id: json["id"],
         studentId: json["studentId"],
         student: Student.fromJson(json["student"]),

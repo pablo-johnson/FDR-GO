@@ -36,13 +36,18 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
   Widget build(BuildContext context) {
     _notificationType = widget.notification.type;
     String title = _getTitle(_notificationType);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primarySwatch['red'],
-        title: Text(title),
+    return new WillPopScope(
+      onWillPop: () {
+        return _dismiss();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primarySwatch['red'],
+          title: Text(title),
+        ),
+        backgroundColor: Colors.white,
+        body: _buildNotificationWidget(widget.notification),
       ),
-      backgroundColor: Colors.white,
-      body: _buildNotificationWidget(widget.notification),
     );
   }
 
@@ -366,7 +371,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
 
   void _markNotificationAsRead(MyNotification.Notification notification) {
     markNotificationAsRead(notification.id).then((response) {
-      if(response.success){
+      if (response.success) {
         _refresh = true;
       }
     });

@@ -7,7 +7,7 @@ import 'package:fdr_go/util/consts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-String url = Consts.baseUrl;
+String url = Consts.busBaseUrl;
 
 Future<NotificationsResponse> getNotifications() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

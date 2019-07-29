@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:fdr_go/data/error.dart';
 
 import '../family.dart';
-import '../service.dart';
+import '../bus_service.dart';
 
 LoginResponse loginResponseFromJson(String str) =>
     LoginResponse.fromJson(json.decode(str));
@@ -20,7 +20,7 @@ class LoginResponse {
   String token;
   String type;
   int expireMinutes;
-  List<Service> services;
+  List<BusService> services;
   List<Profile> profiles;
   List<Reference> references;
   List<Family> families;
@@ -51,8 +51,8 @@ class LoginResponse {
         type: json["type"],
         expireMinutes: json["expireMinutes"],
         services: json["services"] != null
-            ? new List<Service>.from(
-                json["services"].map((x) => Service.fromJson(x)))
+            ? new List<BusService>.from(
+                json["services"].map((x) => BusService.fromJson(x)))
             : null,
         profiles: json["profiles"] != null
             ? new List<Profile>.from(
@@ -77,7 +77,7 @@ class LoginResponse {
         "token": token,
         "type": type,
         "expireMinutes": expireMinutes,
-        "services": new List<Service>.from(services.map((x) => x.toJson())),
+        "services": new List<BusService>.from(services.map((x) => x.toJson())),
         "profiles": new List<dynamic>.from(profiles.map((x) => x.toJson())),
         "references": new List<dynamic>.from(references.map((x) => x.toJson())),
         "families": new List<Family>.from(families.map((x) => x.toJson())),

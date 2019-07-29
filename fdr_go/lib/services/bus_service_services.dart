@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:fdr_go/data/requests/service_request.dart';
 import 'package:fdr_go/data/responses/common_response.dart';
 import 'package:fdr_go/data/responses/service_mode_response.dart';
-import 'package:fdr_go/data/responses/services_response.dart';
+import 'package:fdr_go/data/responses/bus_services_response.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-String url = Consts.baseUrl;
+String url = Consts.busBaseUrl;
 
-Future<ServiceModeResponse> getServiceModes() async {
+Future<ServiceModeResponse> getBusServiceModes() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
   final response = await http.get(
@@ -24,7 +24,7 @@ Future<ServiceModeResponse> getServiceModes() async {
   return serviceModeResponseFromJson(response.body);
 }
 
-Future<CommonResponse> requestService(int studentId, String dateFrom,
+Future<CommonResponse> requestBusService(int studentId, String dateFrom,
     String dateRequest, String serviceMode) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
@@ -42,7 +42,7 @@ Future<CommonResponse> requestService(int studentId, String dateFrom,
   return commonResponseFromJson(response.body);
 }
 
-Future<ServicesResponse> getServices() async {
+Future<BusServicesResponse> getBusServices() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
   final response = await http.get(

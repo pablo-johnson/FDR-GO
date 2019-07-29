@@ -9,17 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ServiceApplicationPage extends StatefulWidget {
+class BusServiceApplicationPage extends StatefulWidget {
   final Student student;
 
-  const ServiceApplicationPage({@required this.student})
+  const BusServiceApplicationPage({@required this.student})
       : assert(student != null);
 
   @override
-  State<StatefulWidget> createState() => _ServiceApplicationPageState();
+  State<StatefulWidget> createState() => _BusServiceApplicationPageState();
 }
 
-class _ServiceApplicationPageState extends State<ServiceApplicationPage> {
+class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
   final requestedDateController = TextEditingController();
   final requiredDateController = TextEditingController();
   final requestedByController = TextEditingController();

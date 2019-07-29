@@ -1,7 +1,8 @@
 import 'package:fdr_go/data/asa_service.dart';
 import 'package:fdr_go/data/student.dart';
-import 'package:fdr_go/screens/bus/service_application/service_application.dart';
+import 'package:fdr_go/screens/asa/service_application/service_application.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
+import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,6 @@ class AsaServicesPage extends StatefulWidget {
 
 class _AsaServicesPageState extends State<AsaServicesPage> {
   bool _loading = true;
-  List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
-  List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
   List<AsaService> _services = new List();
 
   @override
@@ -216,12 +215,16 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
   _openApplicationServicePage(Student student) async {
     final bool refresh = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ServiceApplicationPage(student: student),
+        builder: (context) => AsaServiceApplicationPage(
+          student: student,
+          frequency: AsaServiceApplicationPage.LUN_JUE_FREQ,
+        ),
       ),
     );
 
     if (refresh != null && refresh) {
       _refreshData(true);
+      showSuccessToast("Actividades ASA guardadas exitosamente");
     }
   }
 
@@ -240,5 +243,6 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
     return null;
   }
 
-  _openChangeAsaServicePage(Student student) {}
+  _openChangeAsaServicePage(Student student) {
+  }
 }

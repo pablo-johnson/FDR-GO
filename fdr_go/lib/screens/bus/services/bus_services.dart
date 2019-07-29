@@ -2,7 +2,7 @@ import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/bus_service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/bus/absence/absenseWidget.dart';
-import 'package:fdr_go/screens/bus/service_application/service_application.dart';
+import 'package:fdr_go/screens/bus/service_application/bus_service_application.dart';
 import 'package:fdr_go/screens/bus/terms_and_conditions/terms_and_conditions.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -212,7 +212,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
   _openApplicationServicePage(Student student) async {
     final bool refresh = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ServiceApplicationPage(student: student),
+        builder: (context) => BusServiceApplicationPage(student: student),
       ),
     );
 

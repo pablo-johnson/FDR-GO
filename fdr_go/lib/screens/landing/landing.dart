@@ -1,7 +1,7 @@
 import 'package:fdr_go/data/bus_service.dart';
 import 'package:fdr_go/data/responses/login_response.dart';
-import 'package:fdr_go/screens/asa/asa_services.dart';
-import 'package:fdr_go/screens/bus/bus_services/bus_services.dart';
+import 'package:fdr_go/screens/asa/services/asa_services.dart';
+import 'package:fdr_go/screens/bus/services/bus_services.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';

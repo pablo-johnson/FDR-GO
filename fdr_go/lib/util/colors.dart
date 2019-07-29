@@ -33,4 +33,5 @@ const primarySwatch = ColorSwatch(0xff002664, {
   'notificationSeparator': Color(0x47404650),
   'notificationAvatar': Color(0xff707070),
   'readOnlyFieldBackground': Color(0xffE0EBFD),
+  'electricBlue': Color(0xff0048BE),
 });

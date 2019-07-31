@@ -1,3 +1,4 @@
+import 'package:fdr_go/data/activity.dart';
 import 'package:fdr_go/data/asa_service.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/asa/service_application/service_application.dart';
@@ -136,9 +137,11 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
     } else if (service.serviceStatus == enumName(AsaServiceStatus.PR)) {
       return _buildInProcessButton(index);
     } else if (service.serviceStatus == enumName(AsaServiceStatus.ER)) {
-      return _buildChangeAsaServiceWidget(index);
+      return _services[index].activities.length > 0
+          ? _buildChangeAsaServiceWidget(index)
+          : Container();
     } else {
-      return _buildAsaServiceInformationWidget(index);
+      return _buildAsaServicesInformationWidget(index);
     }
   }
 
@@ -179,20 +182,93 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
   }
 
   Widget _buildChangeAsaServiceWidget(index) {
+    List<Activity> _activities = _services[index].activities;
     return Column(
       mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildAsaServiceInformationWidget(index),
-        _buildChangeAsaServiceButton(index),
+        SizedBox(
+          height: 10.0,
+        ),
+        Visibility(
+          visible: _activities.length > 0,
+          child: _buildAsaServiceInformationWidget(index, _activities[0]),
+        ),
+//        Visibility(
+//          visible: _activities.length > 0,
+//          child: _buildChangeAsaServiceButton(index, _activities[0]),
+//        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Visibility(
+          visible: _activities.length > 1,
+          child: _buildAsaServiceInformationWidget(index, _activities[1]),
+        ),
+//        Visibility(
+//          visible: _activities.length > 1,
+//          child: _buildChangeAsaServiceButton(index, _activities[1]),
+//        ),
+        SizedBox(
+          height: 10.0,
+        ),
       ],
     );
   }
 
-  _buildAsaServiceInformationWidget(index) {
-    return Container();
+  Widget _buildAsaServicesInformationWidget(index) {
+    List<Activity> _activities = _services[index].activities;
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        SizedBox(
+          height: 10.0,
+        ),
+        Visibility(
+          visible: _activities.length > 0,
+          child: _buildAsaServiceInformationWidget(index, _activities[0]),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Visibility(
+          visible: _activities.length > 1,
+          child: _buildAsaServiceInformationWidget(index, _activities[1]),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+      ],
+    );
   }
 
-  Widget _buildChangeAsaServiceButton(int index) {
+  Widget _buildAsaServiceInformationWidget(index, Activity activity) {
+    String frequency = activity.frequency;
+    String startDate = activity.startTime;
+    String endDate = activity.endTime;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          activity.description,
+          style: TextStyle(
+            color: primarySwatch['red'],
+            fontSize: 18.0,
+          ),
+        ),
+        Text(
+          '$frequency $startDate - $endDate',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 13.0,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildChangeAsaServiceButton(int index, Activity activity) {
     return Align(
       alignment: Alignment.centerRight,
       child: RaisedButton(
@@ -243,6 +319,5 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
     return null;
   }
 
-  _openChangeAsaServicePage(Student student) {
-  }
+  _openChangeAsaServicePage(Student student) {}
 }

@@ -35,3 +35,16 @@ Future<CommonResponse> markNotificationAsRead(
   );
   return commonResponseFromJson(response.body);
 }
+
+Future<CommonResponse> getNotificationsCount() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("authToken");
+  final response = await http.get(
+    '$url/education/notifications/countnew',
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    },
+  );
+  return commonResponseFromJson(response.body);
+}

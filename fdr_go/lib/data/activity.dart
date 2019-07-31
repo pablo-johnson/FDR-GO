@@ -5,6 +5,8 @@ class Activity {
   String frequency;
   String selected;
   int priority;
+  String startTime;
+  String endTime;
 
   Activity({
     this.id,
@@ -13,6 +15,8 @@ class Activity {
     this.frequency,
     this.selected,
     this.priority,
+    this.startTime,
+    this.endTime,
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) => new Activity(
@@ -22,6 +26,8 @@ class Activity {
         frequency: json["frequency"],
         selected: json["selected"],
         priority: json["priority"],
+        startTime: json["startTime"],
+        endTime: json["endTime"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,5 +37,7 @@ class Activity {
         "frequency": frequency,
         "selected": selected,
         "priority": priority,
+        "startTime": startTime,
+        "endTime": endTime,
       };
 }

@@ -1,0 +1,3 @@
+class NotificationMenu{
+  int notifications;
+}

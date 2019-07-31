@@ -1,3 +1,4 @@
+import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/data/requests/create_account_request.dart';
 import 'package:fdr_go/screens/notifications/notifications.dart';
 import 'package:fdr_go/screens/sign_in/sign_in.dart';
@@ -11,6 +12,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'landing.dart';
 
 class MenuWidget extends StatefulWidget {
+  final NotificationMenu notificationMenu;
+
+  const MenuWidget({@required this.notificationMenu})
+      : assert(notificationMenu != null);
+
   @override
   State<StatefulWidget> createState() => _MenuWidgetPageState();
 }
@@ -29,7 +35,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int notificationsNumber = 5;
+    int notificationsNumber = widget.notificationMenu.notifications;
     return Drawer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -145,7 +151,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
         color: primarySwatch['blue'],
       ),
       title: Align(
-        child: new Text("Servicio de Bus"),
+        child: new Text("Alumnos"),
         alignment: Alignment.centerLeft,
       ),
       trailing: Icon(

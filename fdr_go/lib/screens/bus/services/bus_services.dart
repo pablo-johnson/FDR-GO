@@ -1,5 +1,5 @@
-import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/bus_service.dart';
+import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/screens/bus/absence/absenseWidget.dart';
 import 'package:fdr_go/screens/bus/service_application/bus_service_application.dart';
@@ -23,12 +23,16 @@ class _BusServicesPageState extends State<BusServicesPage> {
   bool _loading = false;
   List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
   List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
-  List<BusService> _services;
+  List<BusService> _services = new List();
 
   @override
   void initState() {
     super.initState();
-    _services = widget.services;
+    if (widget.services != null) {
+      _services = widget.services;
+    } else {
+      _refreshData(false);
+    }
   }
 
   @override
@@ -121,7 +125,8 @@ class _BusServicesPageState extends State<BusServicesPage> {
               SizedBox(
                 height: 10.0,
               ),
-              service.status == enumName(BusServiceStatus.AC) && !service.isAbsence
+              service.status == enumName(BusServiceStatus.AC) &&
+                      !service.isAbsence
                   ? _buildServiceWidget(service)
                   : Container(),
               service.isAbsence
@@ -466,55 +471,103 @@ class _BusServicesPageState extends State<BusServicesPage> {
                     width: routeStateSize,
                     height: routeStateSize,
                     decoration: new BoxDecoration(
-                      color: primarySwatch['blue'],
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.check,
-                      size: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      right: routeStateSize / 2,
-                      left: routeStateSize / 2,
-                    ),
-                    width: routeStateSize,
-                    height: routeStateSize,
-                    decoration: new BoxDecoration(
-                      color: primarySwatch[
-                          service.locationStatus == enumName(LocationStatus.GO)
-                              ? 'red'
-                              : 'blue'],
-                      shape: BoxShape.circle,
-                    ),
-                    child: service.locationStatus == enumName(LocationStatus.SC)
-                        ? Icon(
-                            Icons.check,
-                            size: 15.0,
-                            color: Colors.white,
-                          )
-                        : Container(),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      right: routeStateSize / 2,
-                      left: routeStateSize / 2,
-                    ),
-                    width: routeStateSize,
-                    height: routeStateSize,
-                    decoration: new BoxDecoration(
-                      color:
-                          service.locationStatus == enumName(LocationStatus.GO)
-                              ? Colors.white
-                              : primarySwatch['red'],
+                      color: service.locationStatus != null &&
+                              service.locationStatus.isNotEmpty
+                          ? primarySwatch['blue']
+                          : Colors.white,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: primarySwatch[service.locationStatus ==
-                                enumName(LocationStatus.GO)
-                            ? 'serviceStateBorder'
-                            : 'red'],
+                        color: primarySwatch[service.locationStatus != null &&
+                                service.locationStatus.isNotEmpty
+                            ? 'blue'
+                            : 'serviceStateBorder'],
+                      ),
+                    ),
+                    child: Visibility(
+                      visible: service.locationStatus != null &&
+                          service.locationStatus.isNotEmpty,
+                      child: Icon(
+                        Icons.check,
+                        size: 15.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      right: routeStateSize / 2,
+                      left: routeStateSize / 2,
+                    ),
+                    width: routeStateSize,
+                    height: routeStateSize,
+                    decoration: new BoxDecoration(
+                      color: service.locationStatus != null &&
+                              service.locationStatus.isNotEmpty
+                          ? primarySwatch[service.locationStatus ==
+                                      enumName(LocationStatus.GO) ||
+                                  service.locationStatus ==
+                                      enumName(LocationStatus.SC) ||
+                                  service.locationStatus ==
+                                      enumName(LocationStatus.SB)
+                              ? 'red'
+                              : 'blue']
+                          : Colors.white,
+                      shape: BoxShape.circle,
+                      border: service.locationStatus != null &&
+                              service.locationStatus.isNotEmpty
+                          ? null
+                          : Border.all(
+                              color: primarySwatch['serviceStateBorder'],
+                            ),
+                    ),
+                    child: Visibility(
+                      visible: service.locationStatus ==
+                              enumName(LocationStatus.SC) ||
+                          service.locationStatus ==
+                              enumName(LocationStatus.GO) ||
+                          service.locationStatus == enumName(LocationStatus.SB),
+                      child: Icon(
+                        Icons.check,
+                        size: 15.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      right: routeStateSize / 2,
+                      left: routeStateSize / 2,
+                    ),
+                    width: routeStateSize,
+                    height: routeStateSize,
+                    decoration: new BoxDecoration(
+                      color: service.locationStatus != null &&
+                              service.locationStatus.isNotEmpty
+                          ? service.locationStatus ==
+                                  enumName(LocationStatus.GO)
+                              ? Colors.white
+                              : primarySwatch['blue']
+                          : Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: service.locationStatus != null &&
+                                service.locationStatus.isNotEmpty
+                            ? primarySwatch[service.locationStatus ==
+                                    enumName(LocationStatus.GO)
+                                ? 'serviceStateBorder'
+                                : 'blue']
+                            : primarySwatch['serviceStateBorder'],
+                      ),
+                    ),
+                    child: Visibility(
+                      visible:
+                          service.locationStatus == enumName(LocationStatus.SC)||
+                              service.locationStatus ==
+                                  enumName(LocationStatus.SB),
+                      child: Icon(
+                        Icons.check,
+                        size: 15.0,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -532,7 +585,10 @@ class _BusServicesPageState extends State<BusServicesPage> {
                             ? 0
                             : 2],
                         style: TextStyle(
-                          color: primarySwatch['blue'],
+                          color: primarySwatch[service.locationStatus != null &&
+                                  service.locationStatus.isNotEmpty
+                              ? 'blue'
+                              : 'serviceStateBorder'],
                         ),
                       ),
                     ),
@@ -540,10 +596,17 @@ class _BusServicesPageState extends State<BusServicesPage> {
                       child: Text(
                         goSteps[1],
                         style: TextStyle(
-                          color: primarySwatch[service.locationStatus ==
-                                  enumName(LocationStatus.GO)
-                              ? 'red'
-                              : 'blue'],
+                          color: service.locationStatus != null &&
+                                  service.locationStatus.isNotEmpty
+                              ? primarySwatch[service.locationStatus ==
+                                          enumName(LocationStatus.GO) ||
+                                      service.locationStatus ==
+                                          enumName(LocationStatus.SC) ||
+                                      service.locationStatus ==
+                                          enumName(LocationStatus.SB)
+                                  ? 'red'
+                                  : 'blue']
+                              : primarySwatch['serviceStateBorder'],
                         ),
                       ),
                     ),
@@ -553,10 +616,13 @@ class _BusServicesPageState extends State<BusServicesPage> {
                             ? 2
                             : 0],
                         style: TextStyle(
-                          color: primarySwatch[service.locationStatus ==
-                                  enumName(LocationStatus.GO)
-                              ? 'serviceStateBorder'
-                              : 'red'],
+                          color: service.locationStatus != null &&
+                                  service.locationStatus.isNotEmpty
+                              ? primarySwatch[service.locationStatus ==
+                                      enumName(LocationStatus.GO)
+                                  ? 'serviceStateBorder'
+                                  : 'blue']
+                              : primarySwatch['serviceStateBorder'],
                         ),
                       ),
                     ),

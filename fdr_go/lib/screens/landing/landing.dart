@@ -1,4 +1,5 @@
 import 'package:fdr_go/data/bus_service.dart';
+import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/screens/asa/services/asa_services.dart';
 import 'package:fdr_go/screens/bus/services/bus_services.dart';
@@ -25,26 +26,31 @@ class _LandingPageState extends State<LandingPage> {
   bool _loading = false;
   List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
   List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
-  List<BusService> services = new List();
+  List<BusService> services;
+  String _title = "Servicio de bus";
+
+  NotificationMenu notificationMenu;
 
   @override
   void initState() {
     super.initState();
-    if (widget.loginResponse == null) {
-      _refreshData(false);
-    } else {
+    if (widget.loginResponse != null) {
       services = widget.loginResponse.services;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    notificationMenu = new NotificationMenu();
+    notificationMenu.notifications = 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Alumnos"),
+        title: Text(_title),
       ),
-      drawer: new MenuWidget(),
+      drawer: new MenuWidget(
+        notificationMenu: notificationMenu,
+      ),
       backgroundColor: primarySwatch['blue'],
       body: _selectedIndex == BUS_SERVICE
           ? new BusServicesPage(services: services)
@@ -76,6 +82,9 @@ class _LandingPageState extends State<LandingPage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _selectedIndex == BUS_SERVICE
+          ? _title = "Servicio de Bus"
+          : _title = "Actividades ASA";
     });
   }
 

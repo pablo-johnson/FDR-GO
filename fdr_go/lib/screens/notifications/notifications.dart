@@ -1,7 +1,8 @@
 import 'package:fdr_go/data/notification.dart' as MyNotification;
+import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/screens/landing/menu.dart';
-import 'package:fdr_go/services/notification_services.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
+import 'package:fdr_go/services/notification_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/strings_util.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
   bool _loading = true;
   List<MyNotification.Notification> notifications = new List();
 
+  NotificationMenu notificationMenu;
+
   @override
   void initState() {
     super.initState();
+    notificationMenu = new NotificationMenu();
+    notificationMenu.notifications = 0;
     _getNotifications(false);
+    _getNotificationsCount();
   }
 
   @override
@@ -30,7 +36,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
         backgroundColor: primarySwatch['red'],
         title: Text("Notificaciones"),
       ),
-      drawer: new MenuWidget(),
+      drawer: new MenuWidget(
+        notificationMenu: notificationMenu,
+      ),
       backgroundColor: primarySwatch['blue'],
       body: Stack(
         children: <Widget>[
@@ -174,6 +182,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
     if (refresh != null && refresh) {
       _getNotifications(true);
+      _getNotificationsCount();
     }
+  }
+
+  void _getNotificationsCount() {
+    getNotificationsCount().then((response) {
+      if (response.success) {
+        notificationMenu.notifications = int.parse(response.successful.ref);
+      }
+    });
   }
 }

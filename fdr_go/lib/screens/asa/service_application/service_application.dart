@@ -95,7 +95,6 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
 
     return Stack(
       children: <Widget>[
-        _loading ? _buildProgressBarWidget() : Container(),
         Column(
           children: <Widget>[
             _buildMainForm(student, boxDecoration),
@@ -107,6 +106,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
             _buildActionButtons(),
           ],
         ),
+        _loading ? _buildProgressBarWidget() : Container(),
       ],
     );
   }

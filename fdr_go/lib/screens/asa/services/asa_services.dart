@@ -1,6 +1,7 @@
 import 'package:fdr_go/data/activity.dart';
 import 'package:fdr_go/data/asa_service.dart';
 import 'package:fdr_go/data/student.dart';
+import 'package:fdr_go/screens/asa/change_activity/change_activity.dart';
 import 'package:fdr_go/screens/asa/service_application/service_application.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
@@ -194,10 +195,10 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
           visible: _activities.length > 0,
           child: _buildAsaServiceInformationWidget(index, _activities[0]),
         ),
-//        Visibility(
-//          visible: _activities.length > 0,
-//          child: _buildChangeAsaServiceButton(index, _activities[0]),
-//        ),
+        Visibility(
+          visible: _activities.length > 0,
+          child: _buildChangeAsaServiceButton(index, _activities[0]),
+        ),
         SizedBox(
           height: 10.0,
         ),
@@ -205,10 +206,10 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
           visible: _activities.length > 1,
           child: _buildAsaServiceInformationWidget(index, _activities[1]),
         ),
-//        Visibility(
-//          visible: _activities.length > 1,
-//          child: _buildChangeAsaServiceButton(index, _activities[1]),
-//        ),
+        Visibility(
+          visible: _activities.length > 1,
+          child: _buildChangeAsaServiceButton(index, _activities[1]),
+        ),
         SizedBox(
           height: 10.0,
         ),
@@ -277,7 +278,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         disabledColor: primarySwatch['redDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         splashColor: primarySwatch['redPressed'],
-        onPressed: () => _openChangeAsaServicePage(_services[index].student),
+        onPressed: () => _openChangeAsaServicePage(_services[index].student, activity),
         child: Text(
           "Cambiar",
           style: TextStyle(
@@ -300,7 +301,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
 
     if (refresh != null && refresh) {
       _refreshData(true);
-      showSuccessToast("Actividades ASA guardadas exitosamente");
+      showSuccessToast("Actividades ASA guardadas exitósamente");
     }
   }
 
@@ -319,5 +320,19 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
     return null;
   }
 
-  _openChangeAsaServicePage(Student student) {}
+  _openChangeAsaServicePage(Student student, Activity activity) async {
+    final bool refresh = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ChangeActivityPage(
+          student: student,
+          frequency: activity.frequencyId,
+        ),
+      ),
+    );
+
+    if (refresh != null && refresh) {
+      _refreshData(true);
+      showSuccessToast("Actividades ASA guardadas exitósamente");
+    }
+  }
 }

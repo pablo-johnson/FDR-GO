@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fdr_go/data/requests/save_activities_request.dart';
+import 'package:fdr_go/data/requests/save_activity_request.dart';
 import 'package:fdr_go/data/responses/activities_response.dart';
 import 'package:fdr_go/data/responses/asa_services_response.dart';
 import 'package:fdr_go/data/responses/common_response.dart';
@@ -48,5 +49,19 @@ Future<CommonResponse> saveAsaActivities(int studentId, int frequency,
         HttpHeaders.authorizationHeader: 'Bearer $token'
       },
       body: saveActivitiesRequestToJson(saveActivitiesRequest));
+  return commonResponseFromJson(response.body);
+}
+
+Future<CommonResponse> saveAsaActivity(
+    int studentId, int frequency, SaveActivityRequest activityRequest) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("authToken");
+  final response = await http.post(
+      '$url/afterschool/services/$studentId/registration/$frequency',
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      },
+      body: saveActivityRequestToJson(activityRequest));
   return commonResponseFromJson(response.body);
 }

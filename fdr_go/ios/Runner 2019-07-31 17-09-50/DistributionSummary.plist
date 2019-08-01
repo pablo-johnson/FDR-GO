@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Runner.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+				<key>dateExpires</key>
+				<string>7/30/20</string>
+				<key>type</key>
+				<string>iOS Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>App.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>Flutter.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>GoogleUtilities.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>Protobuf.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>fluttertoast.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>nanopb.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>shared_preferences.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>6E335C80966B07A1A361BB4B9130CA49316D2626</string>
+						<key>dateExpires</key>
+						<string>7/30/20</string>
+						<key>type</key>
+						<string>iOS Development</string>
+					</dict>
+					<key>name</key>
+					<string>webview_flutter.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XHDPL375P2</string>
+						<key>name</key>
+						<string>POOL VASQUEZ CARHUAMACA</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>XHDPL375P2.com.synergy.fdrGo</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>XHDPL375P2</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>XHDPL375P2.com.synergy.fdrGo</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>Runner.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>9bc227ca-c0e1-47d6-8242-3a793d8608f7</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>XHDPL375P2</string>
+				<key>name</key>
+				<string>POOL VASQUEZ CARHUAMACA</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

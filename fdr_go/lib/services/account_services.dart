@@ -15,26 +15,34 @@ String url = Consts.busBaseUrl;
 
 Future<CreateAccountResponse> createAccount(
     CreateAccountRequest request) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String languageCode = prefs.getString("languageCode");
   final response = await http.post('$url/education/accounts/add',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: ''
+        HttpHeaders.authorizationHeader: '',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: createAccountRequestToJson(request));
   return createAccountResponseFromJson(response.body);
 }
 
 Future<CommonResponse> forgotPassword(ForgotPasswordRequest request) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String languageCode = prefs.getString("languageCode");
   final response = await http.post('$url/education/accounts/recovery',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: ''
+        HttpHeaders.authorizationHeader: '',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: forgotPasswordRequestToJson(request));
   return commonResponseFromJson(response.body);
 }
 
 Future<LoginResponse> login(String username, String password) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String languageCode = prefs.getString("languageCode");
   LoginRequest request = new LoginRequest(
     username: username,
     password: password,
@@ -43,21 +51,23 @@ Future<LoginResponse> login(String username, String password) async {
   final response = await http.post('$url/education/accounts/authenticate',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: ''
+        HttpHeaders.authorizationHeader: '',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: loginRequestToJson(request));
   LoginResponse loginResponse = loginResponseFromJson(response.body);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('authToken', loginResponse.token);
   return loginResponse;
 }
 
-Future<CommonResponse> logout(
-    CreateAccountRequest request) async {
+Future<CommonResponse> logout(CreateAccountRequest request) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String languageCode = prefs.getString("languageCode");
   final response = await http.post('$url/education/accounts/logout',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: ''
+        HttpHeaders.authorizationHeader: '',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: createAccountRequestToJson(request));
   return commonResponseFromJson(response.body);

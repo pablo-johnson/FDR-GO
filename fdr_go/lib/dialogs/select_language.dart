@@ -5,6 +5,7 @@ import 'package:fdr_go/util/dialog.dart' as MyDialog;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLanguageDialog extends StatefulWidget {
   @override
@@ -57,7 +58,11 @@ class _SelectLanguageDialogState extends State<SelectLanguageDialog> {
                 Expanded(
                   flex: 1,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setString('languageCode', "en");
+                      await prefs.setString('countryCode', "US");
                       new FdrLocalizationsDelegate().load(Locale("en", "US"));
                       Navigator.pop(context);
                     },
@@ -100,7 +105,11 @@ class _SelectLanguageDialogState extends State<SelectLanguageDialog> {
                 Expanded(
                   flex: 1,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setString('languageCode', "es");
+                      await prefs.setString('countryCode', "ES");
                       new FdrLocalizationsDelegate().load(Locale("es", "ES"));
                       Navigator.pop(context);
                     },

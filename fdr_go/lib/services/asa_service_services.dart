@@ -14,11 +14,13 @@ String url = Consts.asaBaseUrl;
 Future<AsaServicesResponse> getAsaServices() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.get(
     '$url/afterschool/services',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer $token'
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      HttpHeaders.acceptLanguageHeader: languageCode
     },
   );
   return asaServicesResponseFromJson(response.body);
@@ -28,11 +30,13 @@ Future<ActivitiesResponse> getAsaActivities(
     int studentId, int frequency) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.get(
     '$url/afterschool/services/$studentId/applications/$frequency',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer $token'
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      HttpHeaders.acceptLanguageHeader: languageCode
     },
   );
   return activitiesResponseFromJson(response.body);
@@ -42,11 +46,13 @@ Future<CommonResponse> saveAsaActivities(int studentId, int frequency,
     SaveActivitiesRequest saveActivitiesRequest) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.post(
       '$url/afterschool/services/$studentId/applications/$frequency',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: 'Bearer $token'
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: saveActivitiesRequestToJson(saveActivitiesRequest));
   return commonResponseFromJson(response.body);
@@ -56,11 +62,13 @@ Future<CommonResponse> saveAsaActivity(
     int studentId, int frequency, SaveActivityRequest activityRequest) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.post(
       '$url/afterschool/services/$studentId/registration/$frequency',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: 'Bearer $token'
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+        HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: saveActivityRequestToJson(activityRequest));
   return commonResponseFromJson(response.body);

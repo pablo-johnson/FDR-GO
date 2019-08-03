@@ -69,234 +69,239 @@ class FdrLocalizations {
       );
 
   String get createAccountEmailHint => Intl.message(
-    'Email',
-    name: 'createAccountEmailHint',
-  );
+        'Email',
+        name: 'createAccountEmailHint',
+      );
 
   String get forgotPasswordTitle => Intl.message(
-    'Recover Password',
-    name: 'forgotPasswordTitle',
-  );
+        'Recover Password',
+        name: 'forgotPasswordTitle',
+      );
 
   String get landingBusTitle => Intl.message(
-    'Bus Service',
-    name: 'landingBusTitle',
-  );
+        'Bus Service',
+        name: 'landingBusTitle',
+      );
 
   String get landingAsaTitle => Intl.message(
-    'ASA Activities',
-    name: 'landingAsaTitle',
-  );
+        'ASA Activities',
+        name: 'landingAsaTitle',
+      );
 
   String get menuStudents => Intl.message(
-    'Students',
-    name: 'menuStudents',
-  );
+        'Students',
+        name: 'menuStudents',
+      );
 
   String get menuNotifications => Intl.message(
-    'Notifications',
-    name: 'menuNotifications',
-  );
+        'Notifications',
+        name: 'menuNotifications',
+      );
 
   String get menuLogOut => Intl.message(
-    'Log Out',
-    name: 'menuLogout',
-  );
+        'Log Out',
+        name: 'menuLogout',
+      );
 
   String get notificationsTitle => Intl.message(
-    'Notifications',
-    name: 'notificationsTitle',
-  );
+        'Notifications',
+        name: 'notificationsTitle',
+      );
 
   String get notificationDetailGrade => Intl.message(
-    'Grade: ',
-    name: 'notificationDetailGrade',
-  );
+        'Grade: ',
+        name: 'notificationDetailGrade',
+      );
 
   String get notificationDetailAcademicPeriod => Intl.message(
-    'Academic Year',
-    name: 'notificationDetailAcademicPeriod',
-  );
+        'Academic Year',
+        name: 'notificationDetailAcademicPeriod',
+      );
 
   String get notificationDetailSession => Intl.message(
-    'Session',
-    name: 'notificationDetailSession',
-  );
+        'Session',
+        name: 'notificationDetailSession',
+      );
 
   String get notificationDetailActivity => Intl.message(
-    'Activity',
-    name: 'notificationDetailActivity',
-  );
+        'Activity',
+        name: 'notificationDetailActivity',
+      );
 
   String get notificationDetailCoach => Intl.message(
-    'Coach',
-    name: 'notificationDetailCoach',
-  );
+        'Coach',
+        name: 'notificationDetailCoach',
+      );
 
   String get notificationDetailMessage => Intl.message(
-    'Message',
-    name: 'notificationDetailMessage',
-  );
+        'Message',
+        name: 'notificationDetailMessage',
+      );
 
   String get absenceTitle => Intl.message(
-    'Absence Note',
-    name: 'absenceTitle',
-  );
+        'Absence Note',
+        name: 'absenceTitle',
+      );
 
   String get absenceReason => Intl.message(
-    'Reason of the absence *',
-    name: 'absenceReason',
-  );
+        'Reason of the absence *',
+        name: 'absenceReason',
+      );
 
   String get absenceDateFrom => Intl.message(
-    'From *',
-    name: 'absenceDateFrom',
-  );
+        'From *',
+        name: 'absenceDateFrom',
+      );
 
   String get absenceDateTo => Intl.message(
-    'Date up to *',
-    name: 'absenceDateTo',
-  );
+        'Date up to *',
+        name: 'absenceDateTo',
+      );
 
   String get busServicesBusStop => Intl.message(
-    'Bus stop',
-    name: 'busServicesBusStop',
-  );
+        'Bus stop',
+        name: 'busServicesBusStop',
+      );
 
   String get busServicesOnTheWay => Intl.message(
-    'In route',
-    name: 'busServicesOnTheWay',
-  );
+        'In route',
+        name: 'busServicesOnTheWay',
+      );
 
   String get busServicesSchool => Intl.message(
-    'School',
-    name: 'busServicesSchool',
-  );
+        'School',
+        name: 'busServicesSchool',
+      );
 
   String get busServicesAskBus => Intl.message(
-    'Sign up for bus service',
-    name: 'busServicesAskBus',
-  );
+        'Sign up for bus service',
+        name: 'busServicesAskBus',
+      );
 
   String get busServicesInReview => Intl.message(
-    'In Review',
-    name: 'busServicesInReview',
-  );
+        'In Review',
+        name: 'busServicesInReview',
+      );
 
   String get busServicesAbsenceButton => Intl.message(
-    'Absent',
-    name: 'busServicesAbsenceButton',
-  );
+        'Absent',
+        name: 'busServicesAbsenceButton',
+      );
 
   String get busServicesAbsence => Intl.message(
-    'Absence',
-    name: 'busServicesAbsence',
-  );
+        'Absence',
+        name: 'busServicesAbsence',
+      );
 
   String get busServicesInProcess => Intl.message(
-    'In Process',
-    name: 'busServicesInProcess',
-  );
+        'In Process',
+        name: 'busServicesInProcess',
+      );
 
   String get termsTitle => Intl.message(
-    'Bus Service Request',
-    name: 'termsTitle',
-  );
+        'Bus Service Request',
+        name: 'termsTitle',
+      );
 
   String get busServiceChooseMode => Intl.message(
-    'Type',
-    name: 'busServiceChooseMode',
-  );
+        'Type',
+        name: 'busServiceChooseMode',
+      );
 
   String get termsReject => Intl.message(
-    'Reject',
-    name: 'termsReject',
-  );
+        'Reject',
+        name: 'termsReject',
+      );
 
   String get changeAsaTitle => Intl.message(
-    'Change ASA',
-    name: 'changeAsaTitle',
-  );
+        'Change ASA',
+        name: 'changeAsaTitle',
+      );
 
   String get asaServicesSelectionButton => Intl.message(
-    'Selection of ASA',
-    name: 'asaServicesSelectionButton',
-  );
+        'Selection of ASA',
+        name: 'asaServicesSelectionButton',
+      );
 
   String get asaServicesChangeButton => Intl.message(
-    'Change',
-    name: 'asaServicesChangeButton',
-  );
+        'Change',
+        name: 'asaServicesChangeButton',
+      );
+
+  String get asaServicesSuccessSave => Intl.message(
+        'ASA activities saved successfully',
+        name: 'asaServicesSuccessSave',
+      );
 
   String get asaApplicationTitle => Intl.message(
-    'Selection of ASA',
-    name: 'asaApplicationTitle',
-  );
+        'Selection of ASA',
+        name: 'asaApplicationTitle',
+      );
 
   String get asaApplicationPreferenceDisclaimer => Intl.message(
-    'The preference will be assigned according to the order of the clicks you make on the activities',
-    name: 'asaApplicationPreferenceDisclaimer',
-  );
+        'The preference will be assigned according to the order of the clicks you make on the activities',
+        name: 'asaApplicationPreferenceDisclaimer',
+      );
 
   String get mon_thur => Intl.message(
-    'Monday - Thursday',
-    name: 'mon_thur',
-  );
+        'Monday - Thursday',
+        name: 'mon_thur',
+      );
 
   String get tue_fri => Intl.message(
-    'Tuesday - Friday',
-    name: 'tue_fri',
-  );
+        'Tuesday - Friday',
+        name: 'tue_fri',
+      );
 
   String get asaApplicationBusRequired => Intl.message(
-    'Required Bus',
-    name: 'asaApplicationBusRequired',
-  );
+        'Required Bus',
+        name: 'asaApplicationBusRequired',
+      );
 
   String get monday => Intl.message(
-    'Monday',
-    name: 'monday',
-  );
+        'Monday',
+        name: 'monday',
+      );
 
   String get tuesday => Intl.message(
-    'Tuesday',
-    name: 'tuesday',
-  );
+        'Tuesday',
+        name: 'tuesday',
+      );
 
   String get thursday => Intl.message(
-    'Thursday',
-    name: 'thursday',
-  );
+        'Thursday',
+        name: 'thursday',
+      );
 
   String get friday => Intl.message(
-    'Friday',
-    name: 'friday',
-  );
+        'Friday',
+        name: 'friday',
+      );
 
   String get next => Intl.message(
-    'Next',
-    name: 'next',
-  );
+        'Next',
+        name: 'next',
+      );
 
   String get accept => Intl.message(
-    'Accept',
-    name: 'Accept',
-  );
+        'Accept',
+        name: 'Accept',
+      );
 
   String get confirm => Intl.message(
-    'Confirm',
-    name: 'confirm',
-  );
+        'Confirm',
+        name: 'confirm',
+      );
 
   String get cancel => Intl.message(
-    'Cancel',
-    name: 'cancel',
-  );
+        'Cancel',
+        name: 'cancel',
+      );
 
   String get close => Intl.message(
-    'Close',
-    name: 'close',
-  );
+        'Close',
+        name: 'close',
+      );
 
   String get ok => Intl.message(
         'Ok',
@@ -306,5 +311,10 @@ class FdrLocalizations {
   String get send => Intl.message(
         'Send',
         name: 'send',
+      );
+
+  String get invalidEmailValidation => Intl.message(
+        'Invalid Email',
+        name: 'invalidEmailValidation',
       );
 }

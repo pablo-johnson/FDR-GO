@@ -304,7 +304,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
 
     if (refresh != null && refresh) {
       _refreshData(true);
-      showSuccessToast("Actividades ASA guardadas exitósamente");
+      showSuccessToast(FdrLocalizations.of(context).asaServicesSuccessSave);
     }
   }
 
@@ -335,7 +335,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
 
     if (refresh != null && refresh) {
       _refreshData(true);
-      showSuccessToast("Actividades ASA guardadas exitósamente");
+      showSuccessToast(FdrLocalizations.of(context).asaServicesSuccessSave);
     }
   }
 }

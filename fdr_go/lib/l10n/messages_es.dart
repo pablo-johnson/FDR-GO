@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeAsaTitle" : MessageLookupByLibrary.simpleMessage("Cambiar ASA"),
     "asaServicesSelectionButton" : MessageLookupByLibrary.simpleMessage("Inscribir"),
     "asaServicesChangeButton" : MessageLookupByLibrary.simpleMessage("Cambiar"),
+    "asaServicesSuccessSave" : MessageLookupByLibrary.simpleMessage("Actividades ASA guardadas exitósamente"),
     "asaApplicationTitle" : MessageLookupByLibrary.simpleMessage("Solicitud de Servicio de ASA"),
     "asaApplicationPreferenceDisclaimer" : MessageLookupByLibrary.simpleMessage("La preferencia se asignará según el orden de clic que haga sobre las actividades."),
     "mon_thur" : MessageLookupByLibrary.simpleMessage("Lunes - Jueves"),
@@ -75,5 +76,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "close" : MessageLookupByLibrary.simpleMessage("Cerrar"),
     "ok" : MessageLookupByLibrary.simpleMessage("Aceptar"),
     "send" : MessageLookupByLibrary.simpleMessage("Enviar"),
+    "invalidEmailValidation" : MessageLookupByLibrary.simpleMessage("Correo Inválido"),
   };
 }

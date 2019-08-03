@@ -12,25 +12,28 @@ String url = Consts.busBaseUrl;
 Future<NotificationsResponse> getNotifications() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.get(
     '$url/education/notifications',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer ' + token
+      HttpHeaders.authorizationHeader: 'Bearer ' + token,
+      HttpHeaders.acceptLanguageHeader: languageCode
     },
   );
   return notificationsResponseFromJson(response.body);
 }
 
-Future<CommonResponse> markNotificationAsRead(
-    int notificationId) async {
+Future<CommonResponse> markNotificationAsRead(int notificationId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.put(
     '$url/education/notifications/$notificationId/readed',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer ' + token
+      HttpHeaders.authorizationHeader: 'Bearer ' + token,
+      HttpHeaders.acceptLanguageHeader: languageCode
     },
   );
   return commonResponseFromJson(response.body);
@@ -39,11 +42,13 @@ Future<CommonResponse> markNotificationAsRead(
 Future<CommonResponse> getNotificationsCount() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   final response = await http.get(
     '$url/education/notifications/countnew',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer ' + token
+      HttpHeaders.authorizationHeader: 'Bearer ' + token,
+      HttpHeaders.acceptLanguageHeader: languageCode
     },
   );
   return commonResponseFromJson(response.body);

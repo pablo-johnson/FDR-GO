@@ -13,6 +13,7 @@ Future<AbsenceResponse> registerAbsence(
     int studentId, String dateFrom, String dateTo, String observation) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
+  String languageCode = prefs.getString("languageCode");
   print(token);
   AbsenceRequest request = new AbsenceRequest(
     studentId: studentId,
@@ -24,8 +25,8 @@ Future<AbsenceResponse> registerAbsence(
       await http.post('$url/trasportation/services/request/nogetbus',
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader:
-                'Bearer ' + token
+            HttpHeaders.authorizationHeader: 'Bearer ' + token,
+            HttpHeaders.acceptLanguageHeader: languageCode
           },
           body: absenceRequestToJson(request));
   return absenceResponseFromJson(response.body);

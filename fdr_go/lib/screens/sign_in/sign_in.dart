@@ -115,7 +115,7 @@ class _SignInPageState extends State<SignInPage> {
                       hintStyle: TextStyle(color: Colors.white70),
                       labelStyle: TextStyle(color: Colors.white70),
                       labelText: FdrLocalizations.of(context).signInEmailHint,
-                      errorText: _isValidEmail ? null : "Email inválido",
+                        errorText: _isValidEmail ? null : FdrLocalizations.of(context).invalidEmailValidation,
                     ),
                   ),
                   SizedBox(

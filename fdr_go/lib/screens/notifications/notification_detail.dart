@@ -1,4 +1,5 @@
 import 'package:fdr_go/data/notification.dart' as MyNotification;
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/notification_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -108,7 +109,8 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Grado: ", //+ notification.attribute.grade,
+              FdrLocalizations.of(context).notificationDetailGrade+
+              " " + notification.attribute.grade,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -142,7 +144,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Periodo Académico",
+                        FdrLocalizations.of(context).notificationDetailAcademicPeriod,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 15.0,
@@ -177,7 +179,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
                         Container(
                           margin: EdgeInsets.only(left: 10.0),
                           child: Text(
-                            "Sesión",
+                            FdrLocalizations.of(context).notificationDetailSession,
                             style: TextStyle(
                               fontSize: 15.0,
                               color: Colors.black,
@@ -212,7 +214,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
                 horizontal: 20.0,
               ),
               child: Text(
-                "Actividad",
+                FdrLocalizations.of(context).notificationDetailActivity,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontSize: 15.0,
@@ -253,7 +255,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
                 bottom: 10.0,
               ),
               child: Text(
-                "Entrenador",
+                FdrLocalizations.of(context).notificationDetailCoach,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontSize: 15.0,
@@ -288,7 +290,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
               top: 20.0,
             ),
             child: Text(
-              "Mensaje",
+              FdrLocalizations.of(context).notificationDetailMessage,
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: 15.0,
@@ -342,7 +344,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         child: Text(
-          "Cerrar",
+          FdrLocalizations.of(context).close,
           style: TextStyle(
             fontSize: 16.0,
           ),

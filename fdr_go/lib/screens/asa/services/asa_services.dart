@@ -1,6 +1,7 @@
 import 'package:fdr_go/data/activity.dart';
 import 'package:fdr_go/data/asa_service.dart';
 import 'package:fdr_go/data/student.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/asa/change_activity/change_activity.dart';
 import 'package:fdr_go/screens/asa/service_application/service_application.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
@@ -113,7 +114,8 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
                 height: 10.0,
               ),
               Text(
-                "Grado: " + _services[index].student.grade,
+                FdrLocalizations.of(context).notificationDetailGrade +
+                    _services[index].student.grade,
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w500,
@@ -157,7 +159,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         splashColor: primarySwatch['bluePressed'],
         onPressed: () => _openApplicationServicePage(_services[index].student),
         child: Text(
-          "Inscribir",
+          FdrLocalizations.of(context).asaServicesSelectionButton,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -175,7 +177,7 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         onPressed: null,
         //() => _openTermsAndConditions(services[index].student),
         child: Text(
-          "En Proceso",
+          FdrLocalizations.of(context).busServicesInProcess,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -278,9 +280,10 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         disabledColor: primarySwatch['redDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         splashColor: primarySwatch['redPressed'],
-        onPressed: () => _openChangeAsaServicePage(_services[index].student, activity),
+        onPressed: () =>
+            _openChangeAsaServicePage(_services[index].student, activity),
         child: Text(
-          "Cambiar",
+          FdrLocalizations.of(context).asaServicesChangeButton,
           style: TextStyle(
             fontSize: 16.0,
           ),

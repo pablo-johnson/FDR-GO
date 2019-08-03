@@ -1,5 +1,6 @@
 import 'package:fdr_go/data/notification.dart' as MyNotification;
 import 'package:fdr_go/data/notification_menu.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/landing/menu.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/services/notification_services.dart';
@@ -34,7 +35,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Notificaciones"),
+        title: Text(
+          FdrLocalizations.of(context).notificationsTitle,
+        ),
       ),
       drawer: new MenuWidget(
         notificationMenu: notificationMenu,

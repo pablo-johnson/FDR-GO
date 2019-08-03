@@ -1,6 +1,8 @@
 import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/dialogs/create_account.dart';
 import 'package:fdr_go/dialogs/forgot_password.dart';
+import 'package:fdr_go/dialogs/select_language.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/landing/landing.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
@@ -112,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
                       border: border,
                       hintStyle: TextStyle(color: Colors.white70),
                       labelStyle: TextStyle(color: Colors.white70),
-                      labelText: "Email",
+                      labelText: FdrLocalizations.of(context).signInEmailHint,
                       errorText: _isValidEmail ? null : "Email inválido",
                     ),
                   ),
@@ -144,7 +146,8 @@ class _SignInPageState extends State<SignInPage> {
                       focusedBorder: border,
                       enabledBorder: border,
                       border: border,
-                      labelText: "Contraseña",
+                      labelText:
+                          FdrLocalizations.of(context).signInPasswordHint,
                       hintStyle: TextStyle(color: Colors.white70),
                       labelStyle: TextStyle(color: Colors.white70),
                     ),
@@ -160,7 +163,11 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  addAccountWidget()
+                  addAccountWidget(),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  selectLanguageWidget(),
                 ],
               ),
             ),
@@ -192,7 +199,7 @@ class _SignInPageState extends State<SignInPage> {
         splashColor: primarySwatch['redPressed'],
         onPressed: _isLoginButtonEnabled && !_loading ? () => _login() : null,
         child: Text(
-          "Ingresar",
+          FdrLocalizations.of(context).signInLoginButton,
           style: TextStyle(fontSize: 20.0),
         ),
       ),
@@ -209,7 +216,7 @@ class _SignInPageState extends State<SignInPage> {
         );
       },
       child: Text(
-        "Agregar cuenta",
+        FdrLocalizations.of(context).signInAddAccount,
         style: TextStyle(
           color: Colors.white,
           decoration: TextDecoration.underline,
@@ -217,6 +224,16 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  Future _openLanguageDialog() async {
+    await showDialog(
+      context: context,
+      builder: (_) =>
+          SelectLanguageDialog(), //(BuildContext context) => CreateAccountDialog(),
+    );
+    setState(() {
+    });
   }
 
   Widget _forgotPasswordWidget() {
@@ -229,7 +246,7 @@ class _SignInPageState extends State<SignInPage> {
         );
       },
       child: Text(
-        "¿Has olvidado tu contraseña?",
+        FdrLocalizations.of(context).signInForgotPassword,
         style: TextStyle(
           color: Colors.white,
           decoration: TextDecoration.underline,
@@ -303,5 +320,20 @@ class _SignInPageState extends State<SignInPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userName', loginResponse.name);
     await prefs.setString('userEmail', loginResponse.email);
+  }
+
+  selectLanguageWidget() {
+    return GestureDetector(
+      onTap: () {
+        _openLanguageDialog();
+      },
+      child: Text(
+        FdrLocalizations.of(context).signInSelectLanguage,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
   }
 }

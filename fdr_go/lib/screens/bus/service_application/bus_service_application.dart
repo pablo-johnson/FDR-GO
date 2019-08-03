@@ -1,6 +1,7 @@
 import 'package:fdr_go/data/service_mode.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/dialogs/date_calendar.dart' as DatePicker;
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -105,7 +106,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Grado: " + student.grade,
+              FdrLocalizations.of(context).notificationDetailGrade + student.grade,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -156,7 +157,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Direccion según enrollment",
+              "Dirección según enrollment",
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -218,7 +219,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
                 value: _selectedMode,
                 hint: Padding(
                   padding: EdgeInsets.all(5.0),
-                  child: Text("Seleccionar Modalidad"),
+                  child: Text(FdrLocalizations.of(context).busServiceChooseMode),
                 ),
                 items: _modes.map((ServiceMode dropDownItem) {
                   return DropdownMenuItem<ServiceMode>(

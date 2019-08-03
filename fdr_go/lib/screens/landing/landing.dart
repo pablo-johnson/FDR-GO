@@ -1,9 +1,10 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:fdr_go/data/bus_service.dart';
 import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/data/responses/login_response.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/asa/services/asa_services.dart';
 import 'package:fdr_go/screens/bus/services/bus_services.dart';
-import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -18,16 +19,15 @@ class LandingPage extends StatefulWidget {
   State<StatefulWidget> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingPage>
+    with AfterLayoutMixin<LandingPage> {
   static const int BUS_SERVICE = 0;
   static const int ASA_SERVICE = 1;
 
   var _selectedIndex = BUS_SERVICE;
   bool _loading = false;
-  List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
-  List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
   List<BusService> services;
-  String _title = "Servicio de bus";
+  String _title = "";
 
   NotificationMenu notificationMenu;
 
@@ -83,23 +83,14 @@ class _LandingPageState extends State<LandingPage> {
     setState(() {
       _selectedIndex = index;
       _selectedIndex == BUS_SERVICE
-          ? _title = "Servicio de Bus"
-          : _title = "Actividades ASA";
+          ? _title = FdrLocalizations.of(context).landingBusTitle
+          : _title = FdrLocalizations.of(context).landingAsaTitle;
     });
   }
 
-  Future<void> _refreshData(bool showLoading) {
-    if (showLoading) {
-      setState(() {
-        _loading = true;
-      });
-    }
-    getBusServices().then((servicesResponse) {
-      services = servicesResponse.services;
-      setState(() {
-        _loading = false;
-      });
-    });
-    return null;
+  @override
+  void afterFirstLayout(BuildContext context) {
+    _title = FdrLocalizations.of(context).landingBusTitle;
+    setState(() {});
   }
 }

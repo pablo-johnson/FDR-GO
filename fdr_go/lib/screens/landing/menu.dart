@@ -1,5 +1,6 @@
 import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/data/requests/create_account_request.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/notifications/notifications.dart';
 import 'package:fdr_go/screens/sign_in/sign_in.dart';
 import 'package:fdr_go/services/account_services.dart';
@@ -87,7 +88,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
               color: primarySwatch['red'],
             ),
             title: Align(
-              child: new Text("Cerrar Sesión"),
+              child: Text(FdrLocalizations.of(context).menuLogOut),
               alignment: Alignment.centerLeft,
             ),
             onTap: () {
@@ -107,7 +108,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
         color: primarySwatch['blue'],
       ),
       title: Align(
-        child: new Text("Notificaciones"),
+        child: new Text(FdrLocalizations.of(context).menuNotifications),
         alignment: Alignment.centerLeft,
       ),
       trailing: Row(
@@ -151,7 +152,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
         color: primarySwatch['blue'],
       ),
       title: Align(
-        child: new Text("Alumnos"),
+        child: new Text(FdrLocalizations.of(context).menuStudents),
         alignment: Alignment.centerLeft,
       ),
       trailing: Icon(

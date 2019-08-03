@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fdr_go/data/bus_service.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -28,7 +29,7 @@ class _TermsPageState extends State<TermsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Contrato"),
+        title: Text(FdrLocalizations.of(context).termsTitle),
       ),
       backgroundColor: Colors.white,
       body: buildAbsenceWidget(widget.service),
@@ -118,7 +119,7 @@ class _TermsPageState extends State<TermsPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Rechazar",
+                FdrLocalizations.of(context).termsReject.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -140,7 +141,7 @@ class _TermsPageState extends State<TermsPage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Aceptar",
+                FdrLocalizations.of(context).accept.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

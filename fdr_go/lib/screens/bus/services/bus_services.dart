@@ -1,6 +1,7 @@
 import 'package:fdr_go/data/bus_service.dart';
 import 'package:fdr_go/data/route.dart';
 import 'package:fdr_go/data/student.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/bus/absence/absenseWidget.dart';
 import 'package:fdr_go/screens/bus/service_application/bus_service_application.dart';
 import 'package:fdr_go/screens/bus/terms_and_conditions/terms_and_conditions.dart';
@@ -21,8 +22,7 @@ class BusServicesPage extends StatefulWidget {
 
 class _BusServicesPageState extends State<BusServicesPage> {
   bool _loading = false;
-  List<String> goSteps = ["Paradero", "En Camino", "Colegio"];
-  List<String> returnSteps = ["Colegio", "En Camino", "Paradero"];
+  List<String> goSteps;
   List<BusService> _services = new List();
 
   @override
@@ -37,6 +37,11 @@ class _BusServicesPageState extends State<BusServicesPage> {
 
   @override
   Widget build(BuildContext context) {
+    goSteps = [
+      FdrLocalizations.of(context).busServicesBusStop,
+      FdrLocalizations.of(context).busServicesOnTheWay,
+      FdrLocalizations.of(context).busServicesSchool
+    ];
     return Stack(
       children: <Widget>[
         _loading ? _buildProgressBarWidget() : Container(),
@@ -116,7 +121,8 @@ class _BusServicesPageState extends State<BusServicesPage> {
                 height: 10.0,
               ),
               Text(
-                "Grado: " + _services[index].student.grade,
+                FdrLocalizations.of(context).notificationDetailGrade +
+                    _services[index].student.grade,
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w500,
@@ -169,7 +175,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
         splashColor: primarySwatch['bluePressed'],
         onPressed: () => _openApplicationServicePage(_services[index].student),
         child: Text(
-          "Solicitar Bus",
+          FdrLocalizations.of(context).busServicesAskBus,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -185,9 +191,8 @@ class _BusServicesPageState extends State<BusServicesPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         onPressed: null,
-        //() => _openTermsAndConditions(services[index].student),
         child: Text(
-          "En Proceso",
+          FdrLocalizations.of(context).busServicesInReview,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -205,7 +210,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
         splashColor: primarySwatch['redPressed'],
         onPressed: () => _openAbsencePage(_services[index].student),
         child: Text(
-          "Inasistencia",
+          FdrLocalizations.of(context).busServicesAbsenceButton,
           style: TextStyle(
             fontSize: 16.0,
           ),
@@ -282,7 +287,8 @@ class _BusServicesPageState extends State<BusServicesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Inasistencia",
+                FdrLocalizations.of(context)
+                    .busServicesAbsence,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
@@ -318,7 +324,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
         disabledTextColor: primarySwatch['whiteDisabled'],
         onPressed: () => _openTermsAndConditions(_services[index]),
         child: Text(
-          "Confirmar",
+          FdrLocalizations.of(context).confirm,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -335,7 +341,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
         disabledTextColor: primarySwatch['whiteDisabled'],
         onPressed: null,
         child: Text(
-          "En Proceso (2)",
+          FdrLocalizations.of(context).busServicesInProcess,
           style: TextStyle(fontSize: 16.0),
         ),
       ),
@@ -560,10 +566,9 @@ class _BusServicesPageState extends State<BusServicesPage> {
                       ),
                     ),
                     child: Visibility(
-                      visible:
-                          service.locationStatus == enumName(LocationStatus.SC)||
-                              service.locationStatus ==
-                                  enumName(LocationStatus.SB),
+                      visible: service.locationStatus ==
+                              enumName(LocationStatus.SC) ||
+                          service.locationStatus == enumName(LocationStatus.SB),
                       child: Icon(
                         Icons.check,
                         size: 15.0,

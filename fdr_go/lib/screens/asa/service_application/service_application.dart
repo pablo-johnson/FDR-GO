@@ -3,6 +3,7 @@ import 'package:fdr_go/data/requests/save_activities_request.dart';
 import 'package:fdr_go/data/responses/activities_response.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/data/transport_request_days.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -79,7 +80,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Solicitud de Servicio de ASA"),
+        title: Text(FdrLocalizations.of(context).asaApplicationTitle,)//"Solicitud de Servicio de ASA"),
       ),
       backgroundColor: Colors.white,
       body: _buildServiceApplicationWidget(widget.student),
@@ -147,7 +148,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            "Grado: " + student.grade,
+            FdrLocalizations.of(context).notificationDetailGrade + student.grade,
             style: TextStyle(
               fontSize: 15.0,
               color: Colors.black,
@@ -160,7 +161,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            "La preferencia se asignará según el orden de clic que haga sobre las actividades.",
+            FdrLocalizations.of(context).asaApplicationPreferenceDisclaimer,
+            //"La preferencia se asignará según el orden de clic que haga sobre las actividades.",
             style: TextStyle(
               fontSize: 12.0,
             ),
@@ -178,8 +180,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           child: Center(
             child: Text(
               widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                  ? "Lunes - Jueves"
-                  : "Martes - Viernes",
+                  ? FdrLocalizations.of(context).mon_thur//"Lunes - Jueves"
+                  : FdrLocalizations.of(context).tue_fri,//"Martes - Viernes",
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.white,
@@ -197,7 +199,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Requiere Bus: ",
+                FdrLocalizations.of(context).asaApplicationBusRequired,//"Requiere Bus: ",
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.white,
@@ -209,8 +211,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               ),
               Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? "Lunes"
-                    : "Martes",
+                    ? FdrLocalizations.of(context).monday//"Lunes"
+                    : FdrLocalizations.of(context).tuesday,//"Martes",
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -221,8 +223,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               ),
               Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? "Jueves"
-                    : "Viernes",
+                    ? FdrLocalizations.of(context).thursday//"Jueves"
+                    : FdrLocalizations.of(context).friday,//"Viernes",
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -335,7 +337,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Cancelar",
+                FdrLocalizations.of(context).cancel.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -358,8 +360,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? "Siguiente"
-                    : "Aceptar",
+                    ? FdrLocalizations.of(context).next.toUpperCase()
+                    : FdrLocalizations.of(context).accept.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

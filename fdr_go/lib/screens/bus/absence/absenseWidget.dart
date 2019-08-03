@@ -1,5 +1,6 @@
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/dialogs/range_calendar.dart' as DateRangePicker;
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/student_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -28,7 +29,9 @@ class _AbsencePageState extends State<AbsencePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Comunicar Inasistencia"),
+        title: Text(
+          FdrLocalizations.of(context).absenceTitle,
+        ),
       ),
       backgroundColor: Colors.white,
       body: buildAbsenceWidget(widget.student),
@@ -89,7 +92,8 @@ class _AbsencePageState extends State<AbsencePage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Grado: " + student.grade,
+              FdrLocalizations.of(context).notificationDetailGrade +
+                  student.grade,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -114,7 +118,7 @@ class _AbsencePageState extends State<AbsencePage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Motivo de Inasistencia*",
+              FdrLocalizations.of(context).absenceReason,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -162,7 +166,7 @@ class _AbsencePageState extends State<AbsencePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Fecha Desde *",
+                  FdrLocalizations.of(context).absenceDateFrom,
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 15.0,
@@ -205,7 +209,7 @@ class _AbsencePageState extends State<AbsencePage> {
                 Container(
                   margin: EdgeInsets.only(left: 10.0),
                   child: Text(
-                    "Fecha Hasta *",
+                    FdrLocalizations.of(context).absenceDateTo,
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -259,7 +263,7 @@ class _AbsencePageState extends State<AbsencePage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Cancelar",
+                FdrLocalizations.of(context).cancel.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -281,7 +285,7 @@ class _AbsencePageState extends State<AbsencePage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Aceptar",
+                FdrLocalizations.of(context).ok.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -323,7 +327,7 @@ class _AbsencePageState extends State<AbsencePage> {
       fromDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
       toDateController.text = new DateFormat("dd/MM/yyyy").format(picked[1]);
       _enableSubmitButton();
-    }else if(picked != null && picked.length == 1){
+    } else if (picked != null && picked.length == 1) {
       fromDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
       toDateController.text = new DateFormat("dd/MM/yyyy").format(picked[0]);
       _enableSubmitButton();

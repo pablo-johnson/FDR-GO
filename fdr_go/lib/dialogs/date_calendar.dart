@@ -5,6 +5,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:fdr_go/lang/fdr_localizations.dart' as MyLocalization;
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
 import 'package:fdr_go/util/dialog.dart' as MyDialog;
@@ -1042,7 +1043,9 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
               textColor: Colors.white,
               color: primarySwatch['red'],
               child: Text(
-                "Cancelar",
+                MyLocalization.FdrLocalizations.of(context)
+                    .cancel
+                    .toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -1062,7 +1065,9 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
               textColor: Colors.white,
               color: primarySwatch['blue'],
               child: Text(
-                "Aceptar",
+                MyLocalization.FdrLocalizations.of(context)
+                    .accept
+                    .toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

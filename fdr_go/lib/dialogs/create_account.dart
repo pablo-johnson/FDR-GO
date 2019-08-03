@@ -1,4 +1,5 @@
 import 'package:fdr_go/data/requests/create_account_request.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -48,7 +49,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                 mainAxisSize: MainAxisSize.min, // To make the card compact
                 children: <Widget>[
                   Text(
-                    "Agregar Cuenta",
+                    FdrLocalizations.of(context).createAccountTitle,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
@@ -87,7 +88,9 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                           Radius.circular(Consts.dialogBackgroundRadio)),
                 ),
                 child: Text(
-                  _isDone ? "ACEPTAR" : "ENVIAR",
+                  _isDone
+                      ? FdrLocalizations.of(context).ok.toUpperCase()
+                      : FdrLocalizations.of(context).send.toUpperCase(),
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -125,7 +128,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Correo',
+                  hintText: FdrLocalizations.of(context).createAccountEmailHint,
                 ),
                 style: TextStyle(
                   color: Colors.black,

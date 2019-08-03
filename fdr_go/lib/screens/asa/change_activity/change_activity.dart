@@ -1,7 +1,7 @@
 import 'package:fdr_go/data/activity.dart';
 import 'package:fdr_go/data/requests/save_activity_request.dart';
 import 'package:fdr_go/data/student.dart';
-import 'package:fdr_go/data/transport_request_days.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -52,7 +52,9 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Cambiar ASA"),
+        title: Text(
+          FdrLocalizations.of(context).changeAsaTitle,
+        ), //"Cambiar ASA"),
       ),
       backgroundColor: Colors.white,
       body: _buildChangeActivityWidget(widget.student),
@@ -122,7 +124,8 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            "Grado: " + student.grade,
+            FdrLocalizations.of(context).notificationDetailGrade +
+                student.grade,
             style: TextStyle(
               fontSize: 15.0,
               color: Colors.black,
@@ -228,7 +231,7 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Cancelar",
+                FdrLocalizations.of(context).cancel,
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -250,7 +253,7 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Aceptar",
+                FdrLocalizations.of(context).accept,
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

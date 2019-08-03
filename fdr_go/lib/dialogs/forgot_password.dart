@@ -1,5 +1,5 @@
-import 'package:fdr_go/data/requests/create_account_request.dart';
 import 'package:fdr_go/data/requests/forgot_password_request.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/consts.dart';
@@ -49,7 +49,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
                 mainAxisSize: MainAxisSize.min, // To make the card compact
                 children: <Widget>[
                   Text(
-                    "Recobrar Contraseña",
+                    FdrLocalizations.of(context)
+                        .forgotPasswordTitle, //"Recobrar Contraseña",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
@@ -88,7 +89,9 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
                           Radius.circular(Consts.dialogBackgroundRadio)),
                 ),
                 child: Text(
-                  _isDone ? "ACEPTAR" : "ENVIAR",
+                  _isDone
+                      ? FdrLocalizations.of(context).ok.toUpperCase()
+                      : FdrLocalizations.of(context).send.toUpperCase(),
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -126,7 +129,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Correo',
+                  hintText: FdrLocalizations.of(context).createAccountEmailHint,
                 ),
                 style: TextStyle(
                   color: Colors.black,

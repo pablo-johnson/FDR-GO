@@ -25,6 +25,9 @@ class MyAppState extends State<MyApp> {
     Future<SharedPreferences> prefs = SharedPreferences.getInstance();
     prefs.then((value) {
       languageCode = value.getString("languageCode");
+      if(languageCode==null || languageCode.isEmpty){
+        value.setString("languageCode", "en");
+      }
       countryCode = value.getString("countryCode");
       new FdrLocalizationsDelegate().load(Locale(languageCode, countryCode));
     });

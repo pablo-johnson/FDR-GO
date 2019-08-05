@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:fdr_go/data/requests/create_account_request.dart';
+import 'package:fdr_go/data/requests/fcm_request.dart';
 import 'package:fdr_go/data/requests/forgot_password_request.dart';
 import 'package:fdr_go/data/requests/login_request.dart';
 import 'package:fdr_go/data/responses/common_response.dart';
@@ -70,5 +71,19 @@ Future<CommonResponse> logout(CreateAccountRequest request) async {
         HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: createAccountRequestToJson(request));
+  return commonResponseFromJson(response.body);
+}
+
+Future<CommonResponse> sendToken(String deviceToken) async {
+  FcmRequest request = new FcmRequest();
+  request.deviceToken = deviceToken;
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("authToken");
+  final response = await http.post('$url/education/accounts/devicetoken',
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      },
+      body: fcmRequestToJson(request));
   return commonResponseFromJson(response.body);
 }

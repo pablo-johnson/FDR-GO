@@ -344,7 +344,7 @@ class _NotificationDetailPageState extends State<NotificationDetailPage> {
         disabledColor: primarySwatch['blueDisabled'],
         disabledTextColor: primarySwatch['whiteDisabled'],
         child: Text(
-          FdrLocalizations.of(context).close,
+          FdrLocalizations.of(context).close.toUpperCase(),
           style: TextStyle(
             fontSize: 16.0,
           ),

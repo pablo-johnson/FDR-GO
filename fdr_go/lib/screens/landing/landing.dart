@@ -5,7 +5,9 @@ import 'package:fdr_go/data/responses/login_response.dart';
 import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/asa/services/asa_services.dart';
 import 'package:fdr_go/screens/bus/services/bus_services.dart';
+import 'package:fdr_go/services/account_services.dart';
 import 'package:fdr_go/util/colors.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'menu.dart';
@@ -24,6 +26,7 @@ class _LandingPageState extends State<LandingPage>
   static const int BUS_SERVICE = 0;
   static const int ASA_SERVICE = 1;
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   var _selectedIndex = BUS_SERVICE;
   bool _loading = false;
   List<BusService> services;
@@ -34,6 +37,7 @@ class _LandingPageState extends State<LandingPage>
   @override
   void initState() {
     super.initState();
+    _setUpFcm();
     if (widget.loginResponse != null) {
       services = widget.loginResponse.services;
     }
@@ -92,5 +96,36 @@ class _LandingPageState extends State<LandingPage>
   void afterFirstLayout(BuildContext context) {
     _title = FdrLocalizations.of(context).landingBusTitle;
     setState(() {});
+  }
+
+  void _setUpFcm() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+//        _showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+//        _navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+//        _navigateToItemDetail(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+//      setState(() {
+//        _homeScreenText = ;
+//      });
+      sendToken(token);
+      print("Push Messaging token: $token");
+    });
   }
 }

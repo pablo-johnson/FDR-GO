@@ -7,6 +7,13 @@ import 'lang/fdr_localizations_delegate.dart';
 import 'util/colors.dart';
 
 void main() => runApp(MyApp());
+//void main() {
+//  runApp(
+//    MaterialApp(
+//      home: PushMessagingExample(),
+//    ),
+//  );
+//}
 
 class MyApp extends StatefulWidget {
   MyApp({Key key}) : super(key: key);
@@ -25,7 +32,7 @@ class MyAppState extends State<MyApp> {
     Future<SharedPreferences> prefs = SharedPreferences.getInstance();
     prefs.then((value) {
       languageCode = value.getString("languageCode");
-      if(languageCode==null || languageCode.isEmpty){
+      if (languageCode == null || languageCode.isEmpty) {
         value.setString("languageCode", "en");
       }
       countryCode = value.getString("countryCode");

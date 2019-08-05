@@ -231,7 +231,7 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                FdrLocalizations.of(context).cancel,
+                FdrLocalizations.of(context).cancel.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -253,7 +253,7 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                FdrLocalizations.of(context).accept,
+                FdrLocalizations.of(context).accept.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

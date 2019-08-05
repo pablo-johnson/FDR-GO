@@ -50,10 +50,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
                 accountName: Text(userName),
                 accountEmail: Text(userEmail),
                 currentAccountPicture: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).platform == TargetPlatform.iOS
-                          ? primarySwatch['blue']
-                          : Colors.white,
+                  backgroundColor: Colors.white,
                   child: Text(
                     getShortName(userName),
                     style: TextStyle(fontSize: 30.0),

@@ -145,7 +145,7 @@ class _MenuWidgetPageState extends State<MenuWidget> {
   Widget _buildBusServiceOption(BuildContext context) {
     return ListTile(
       leading: Icon(
-        Icons.directions_bus,
+        Icons.person,
         color: primarySwatch['blue'],
       ),
       title: Align(

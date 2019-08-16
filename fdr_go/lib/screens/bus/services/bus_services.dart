@@ -21,7 +21,7 @@ class BusServicesPage extends StatefulWidget {
 }
 
 class _BusServicesPageState extends State<BusServicesPage> {
-  bool _loading = false;
+  bool _loading = true;
   List<String> goSteps;
   List<BusService> _services = new List();
 
@@ -29,6 +29,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
   void initState() {
     super.initState();
     if (widget.services != null) {
+      _loading = false;
       _services = widget.services;
     } else {
       _refreshData(false);
@@ -44,7 +45,6 @@ class _BusServicesPageState extends State<BusServicesPage> {
     ];
     return Stack(
       children: <Widget>[
-        _loading ? _buildProgressBarWidget() : Container(),
         Container(
           margin: EdgeInsets.all(10.0),
           child: new RefreshIndicator(
@@ -63,6 +63,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
             },
           ),
         ),
+        _loading ? _buildProgressBarWidget() : Container(),
       ],
     );
   }
@@ -287,8 +288,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                FdrLocalizations.of(context)
-                    .busServicesAbsence,
+                FdrLocalizations.of(context).busServicesAbsence,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
@@ -357,28 +357,31 @@ class _BusServicesPageState extends State<BusServicesPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(
-                  left: 30.0,
-                  right: 10.0,
+          Visibility(
+            visible: false,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 30.0,
+                    right: 10.0,
+                  ),
+                  child: Icon(
+                    Icons.directions_bus,
+                    color: primarySwatch['red'],
+                  ),
                 ),
-                child: Icon(
-                  Icons.directions_bus,
-                  color: primarySwatch['red'],
+                Text(
+                  service.statusDescription,
+                  style: TextStyle(
+                    color: primarySwatch['red'],
+                    fontSize: 14.0,
+                  ),
                 ),
-              ),
-              Text(
-                service.statusDescription,
-                style: TextStyle(
-                  color: primarySwatch['red'],
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
             height: 5.0,

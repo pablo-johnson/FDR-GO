@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>97669020024-nlhuf09khqp15dp8l7ojvjlpqjusntg0.apps.googleusercontent.com</string>
+	<string>97669020024-rgok1ttlch6lt7ifc54cpgpljhoa5s1s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.97669020024-nlhuf09khqp15dp8l7ojvjlpqjusntg0</string>
+	<string>com.googleusercontent.apps.97669020024-rgok1ttlch6lt7ifc54cpgpljhoa5s1s</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDGs8f8nm82FrUVN6Pvrz6jtEP1Lwh91vM</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.synergy.fdrGo</string>
+	<string>com.synergy.evercom.fdrGo</string>
 	<key>PROJECT_ID</key>
 	<string>evercom-synergy-app-tra</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:97669020024:ios:f8b5b986299200b4</string>
+	<string>1:97669020024:ios:ac8c090310b1c3d2</string>
 	<key>DATABASE_URL</key>
 	<string>https://evercom-synergy-app-tra.firebaseio.com</string>
 </dict>

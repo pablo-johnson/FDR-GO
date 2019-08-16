@@ -144,7 +144,9 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
           ? _buildChangeAsaServiceWidget(index)
           : Container();
     } else {
-      return _buildAsaServicesInformationWidget(index);
+      return _services[index].activities.length > 0
+          ? _buildAsaServicesInformationWidget(index)
+          : Container();
     }
   }
 

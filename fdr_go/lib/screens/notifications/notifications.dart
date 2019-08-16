@@ -45,7 +45,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
       backgroundColor: primarySwatch['blue'],
       body: Stack(
         children: <Widget>[
-          _loading ? _buildProgressBarWidget() : Container(),
           Container(
             child: new RefreshIndicator(
               child: ListView.separated(
@@ -60,6 +59,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               onRefresh: getBusServices,
             ),
           ),
+          _loading ? _buildProgressBarWidget() : Container(),
         ],
       ),
     );

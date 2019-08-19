@@ -252,9 +252,11 @@ class _BusServicesPageState extends State<BusServicesPage> {
     }
     getBusServices().then((servicesResponse) {
       _services = servicesResponse.services;
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     });
     return null;
   }

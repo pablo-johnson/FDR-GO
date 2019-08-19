@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:fdr_go/screens/sign_in/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'landing/landing.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,10 +15,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 2),
-        () => Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => SignInPage())));
+    SharedPreferences.getInstance().then((prefs) {
+      String token = prefs.getString("authToken");
+      Timer(
+          Duration(seconds: 2),
+          () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => token == null || token.isEmpty
+                  ? SignInPage()
+                  : LandingPage())));
+    });
   }
 
   @override

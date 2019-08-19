@@ -2,7 +2,6 @@ import 'package:fdr_go/data/notification.dart' as MyNotification;
 import 'package:fdr_go/data/notification_menu.dart';
 import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/screens/landing/menu.dart';
-import 'package:fdr_go/services/bus_service_services.dart';
 import 'package:fdr_go/services/notification_services.dart';
 import 'package:fdr_go/util/colors.dart';
 import 'package:fdr_go/util/strings_util.dart';
@@ -56,7 +55,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   return _buildSeparator();
                 },
               ),
-              onRefresh: getBusServices,
+              onRefresh: () {
+                return getNotifications().then((response) {
+                  setState(() {
+                    notifications = response.notifications;
+                  });
+                });
+              },
             ),
           ),
           _loading ? _buildProgressBarWidget() : Container(),

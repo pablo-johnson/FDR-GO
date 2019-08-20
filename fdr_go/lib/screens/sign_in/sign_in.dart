@@ -300,7 +300,7 @@ class _SignInPageState extends State<SignInPage> {
 
   _changeThePage(LoginResponse loginResponse) {
     _savePersonalData(loginResponse);
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LandingPage(loginResponse: loginResponse)));
   }
 

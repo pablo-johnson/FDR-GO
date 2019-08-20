@@ -203,18 +203,30 @@ class _BusServicesPageState extends State<BusServicesPage> {
   Widget _buildAskAbsenceButton(int index) {
     return Align(
       alignment: Alignment.centerRight,
-      child: RaisedButton(
-        color: primarySwatch['red'],
-        textColor: Colors.white,
-        disabledColor: primarySwatch['redDisabled'],
-        disabledTextColor: primarySwatch['whiteDisabled'],
-        splashColor: primarySwatch['redPressed'],
+      child: FlatButton(
+//        color: primarySwatch['red'],
+        textColor: primarySwatch['red'],
+//        disabledColor: primarySwatch['redDisabled'],
+//        disabledTextColor: primarySwatch['whiteDisabled'],
+//        splashColor: primarySwatch['redPressed'],
         onPressed: () => _openAbsencePage(_services[index].student),
-        child: Text(
-          FdrLocalizations.of(context).busServicesAbsenceButton,
-          style: TextStyle(
-            fontSize: 16.0,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              Icons.cancel,
+              size: 20.0,
+              color: primarySwatch['red'],
+            ),
+            Text(
+              FdrLocalizations.of(context).busServicesAbsenceButton,
+              style: TextStyle(
+                fontSize: 16.0,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -360,7 +372,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Visibility(
-            visible: false,
+            visible: true,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,

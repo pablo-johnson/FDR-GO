@@ -9,12 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String url = Consts.busBaseUrl;
 
-Future<NotificationsResponse> getNotifications() async {
+Future<NotificationsResponse> getNotifications(int page) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("authToken");
   String languageCode = prefs.getString("languageCode");
   final response = await http.get(
-    '$url/education/notifications',
+    '$url/education/notifications?page=$page',
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer ' + token,

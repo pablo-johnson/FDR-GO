@@ -44,39 +44,39 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: this._getSavedLocale(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              return CircularProgressIndicator();
-            case ConnectionState.done:
-            default:
-              return MaterialApp(
-                localizationsDelegates: [
-                  // ... app-specific localization delegate[s] here
-                  const FdrLocalizationsDelegate(),
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: [
-                  const Locale('en', 'US'), // English
-                  const Locale('es', 'ES'), // Spanish
-                  // ... other locales the app supports
-                ],
-                locale: snapshot.data,
-                title: 'FDR GO',
-                theme: ThemeData(
-                  primarySwatch:
-                      const MaterialColor(0xFF002664, primaryColorMap),
-                  fontFamily: 'Roboto',
-                ),
-                debugShowCheckedModeBanner: false,
-                home: SplashScreen(),
-              );
-          }
-        });
+      future: this._getSavedLocale(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+          case ConnectionState.active:
+            return CircularProgressIndicator();
+          case ConnectionState.done:
+          default:
+            return MaterialApp(
+              localizationsDelegates: [
+                // ... app-specific localization delegate[s] here
+                const FdrLocalizationsDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: [
+                const Locale('en', 'US'), // English
+                const Locale('es', 'ES'), // Spanish
+                // ... other locales the app supports
+              ],
+              locale: snapshot.data,
+              title: 'FDR GO',
+              theme: ThemeData(
+                primarySwatch: const MaterialColor(0xFF002664, primaryColorMap),
+                fontFamily: 'Roboto',
+              ),
+              debugShowCheckedModeBanner: false,
+              home: SplashScreen(),
+            );
+        }
+      },
+    );
   }
 }

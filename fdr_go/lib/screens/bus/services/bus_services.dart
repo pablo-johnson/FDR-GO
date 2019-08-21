@@ -204,11 +204,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
     return Align(
       alignment: Alignment.centerRight,
       child: FlatButton(
-//        color: primarySwatch['red'],
         textColor: primarySwatch['red'],
-//        disabledColor: primarySwatch['redDisabled'],
-//        disabledTextColor: primarySwatch['whiteDisabled'],
-//        splashColor: primarySwatch['redPressed'],
         onPressed: () => _openAbsencePage(_services[index].student),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,

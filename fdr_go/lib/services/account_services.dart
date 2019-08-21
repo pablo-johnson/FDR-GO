@@ -75,6 +75,7 @@ Future<CommonResponse> logout(CreateAccountRequest request) async {
 }
 
 Future<CommonResponse> sendToken(String deviceToken) async {
+  print('Pablo $deviceToken');
   FcmRequest request = new FcmRequest();
   request.deviceToken = deviceToken;
   SharedPreferences prefs = await SharedPreferences.getInstance();

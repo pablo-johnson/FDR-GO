@@ -285,7 +285,7 @@ class _AbsencePageState extends State<AbsencePage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                FdrLocalizations.of(context).ok.toUpperCase(),
+                FdrLocalizations.of(context).accept.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

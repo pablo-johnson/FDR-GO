@@ -225,6 +225,8 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
     List<Activity> _activities = _services[index].activities;
     return Column(
       mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(
           height: 10.0,

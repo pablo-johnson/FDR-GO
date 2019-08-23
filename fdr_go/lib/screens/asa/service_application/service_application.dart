@@ -3,7 +3,7 @@ import 'package:fdr_go/data/requests/save_activities_request.dart';
 import 'package:fdr_go/data/responses/activities_response.dart';
 import 'package:fdr_go/data/student.dart';
 import 'package:fdr_go/data/transport_request_days.dart';
-import 'package:fdr_go/lang/fdr_localizations.dart';
+import 'package:fdr_go/lang/fdr_localizations.dart' as MyLocalization;
 import 'package:fdr_go/services/asa_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
 import 'package:fdr_go/util/colors.dart';
@@ -79,9 +79,10 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primarySwatch['red'],
-        title: Text(FdrLocalizations.of(context).asaApplicationTitle,)//"Solicitud de Servicio de ASA"),
-      ),
+          backgroundColor: primarySwatch['red'],
+          title: Text(
+            MyLocalization.FdrLocalizations.of(context).asaApplicationTitle,
+          )),
       backgroundColor: Colors.white,
       body: _buildServiceApplicationWidget(widget.student),
     );
@@ -148,7 +149,9 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            FdrLocalizations.of(context).notificationDetailGrade + student.grade,
+            MyLocalization.FdrLocalizations.of(context)
+                    .notificationDetailGrade +
+                student.grade,
             style: TextStyle(
               fontSize: 15.0,
               color: Colors.black,
@@ -161,7 +164,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            FdrLocalizations.of(context).asaApplicationPreferenceDisclaimer,
+            MyLocalization.FdrLocalizations.of(context)
+                .asaApplicationPreferenceDisclaimer,
             //"La preferencia se asignará según el orden de clic que haga sobre las actividades.",
             style: TextStyle(
               fontSize: 12.0,
@@ -180,8 +184,10 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           child: Center(
             child: Text(
               widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                  ? FdrLocalizations.of(context).mon_thur//"Lunes - Jueves"
-                  : FdrLocalizations.of(context).tue_fri,//"Martes - Viernes",
+                  ? MyLocalization.FdrLocalizations.of(context)
+                      .mon_thur //"Lunes - Jueves"
+                  : MyLocalization.FdrLocalizations.of(context)
+                      .tue_fri, //"Martes - Viernes",
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.white,
@@ -199,7 +205,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                FdrLocalizations.of(context).asaApplicationBusRequired,//"Requiere Bus: ",
+                MyLocalization.FdrLocalizations.of(context)
+                    .asaApplicationBusRequired, //"Requiere Bus: ",
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.white,
@@ -211,8 +218,10 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               ),
               Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? FdrLocalizations.of(context).monday//"Lunes"
-                    : FdrLocalizations.of(context).tuesday,//"Martes",
+                    ? MyLocalization.FdrLocalizations.of(context)
+                        .monday //"Lunes"
+                    : MyLocalization.FdrLocalizations.of(context)
+                        .tuesday, //"Martes",
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -223,8 +232,10 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               ),
               Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? FdrLocalizations.of(context).thursday//"Jueves"
-                    : FdrLocalizations.of(context).friday,//"Viernes",
+                    ? MyLocalization.FdrLocalizations.of(context)
+                        .thursday //"Jueves"
+                    : MyLocalization.FdrLocalizations.of(context)
+                        .friday, //"Viernes",
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -337,7 +348,9 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                FdrLocalizations.of(context).cancel.toUpperCase(),
+                MyLocalization.FdrLocalizations.of(context)
+                    .cancel
+                    .toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -360,8 +373,12 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? FdrLocalizations.of(context).next.toUpperCase()
-                    : FdrLocalizations.of(context).accept.toUpperCase(),
+                    ? MyLocalization.FdrLocalizations.of(context)
+                        .next
+                        .toUpperCase()
+                    : MyLocalization.FdrLocalizations.of(context)
+                        .accept
+                        .toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

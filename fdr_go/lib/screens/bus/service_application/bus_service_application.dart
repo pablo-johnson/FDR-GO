@@ -45,7 +45,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primarySwatch['red'],
-        title: Text("Solicitud de Servicio de Bus"),
+        title: Text(FdrLocalizations.of(context).requestBusServiceTitle),
       ),
       backgroundColor: Colors.white,
       body: _buildServiceApplicationWidget(widget.student),
@@ -106,7 +106,8 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              FdrLocalizations.of(context).notificationDetailGrade + student.grade,
+              FdrLocalizations.of(context).notificationDetailGrade +
+                  student.grade,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -130,7 +131,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Solicitado por",
+              FdrLocalizations.of(context).requestBusServiceRequestedBy,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -157,7 +158,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Dirección según enrollment",
+              FdrLocalizations.of(context).requestBusServiceAddress,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -184,7 +185,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "* Si no está de acuerdo con esta dirección comuníquese con el área de transportes.",
+              FdrLocalizations.of(context).requestBusServiceAddressDisclaimer,
               style: TextStyle(
                 fontSize: 11.0,
                 color: primarySwatch['red'],
@@ -199,7 +200,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
               bottom: 5.0,
             ),
             child: Text(
-              "Modalidad *",
+              FdrLocalizations.of(context).requestBusServiceMode,
               style: TextStyle(
                 fontSize: 15.0,
                 color: Colors.black,
@@ -219,7 +220,8 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
                 value: _selectedMode,
                 hint: Padding(
                   padding: EdgeInsets.all(5.0),
-                  child: Text(FdrLocalizations.of(context).busServiceChooseMode),
+                  child:
+                      Text(FdrLocalizations.of(context).busServiceChooseMode),
                 ),
                 items: _modes.map((ServiceMode dropDownItem) {
                   return DropdownMenuItem<ServiceMode>(
@@ -249,7 +251,6 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
               ),
             ),
           ),
-//          _buildActionButtons(),
         ],
       ),
     );
@@ -282,7 +283,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Fecha de Solicitud *",
+                  FdrLocalizations.of(context).requestBusServiceRequestDate,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15.0,
@@ -315,7 +316,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
                 Container(
                   margin: EdgeInsets.only(left: 10.0),
                   child: Text(
-                    "Fecha Requerida *",
+                    FdrLocalizations.of(context).requestBusServiceRequiredDate,
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -372,7 +373,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
               disabledColor: primarySwatch['redDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Cancelar",
+                FdrLocalizations.of(context).cancel.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -394,7 +395,7 @@ class _BusServiceApplicationPageState extends State<BusServiceApplicationPage> {
               disabledColor: primarySwatch['blueDisabled'],
               disabledTextColor: primarySwatch['whiteDisabled'],
               child: Text(
-                "Enviar",
+                FdrLocalizations.of(context).send.toUpperCase(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

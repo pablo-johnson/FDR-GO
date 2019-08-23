@@ -198,8 +198,43 @@ class FdrLocalizations {
         name: 'busServicesInProcess',
       );
 
+  String get requestBusServiceTitle => Intl.message(
+    'Bus Service Request',
+    name: 'requestBusServiceTitle',
+  );
+
+  String get requestBusServiceRequestedBy => Intl.message(
+    'Requested by',
+    name: 'requestBusServiceRequestedBy',
+  );
+
+  String get requestBusServiceAddress => Intl.message(
+    'Bus Service Request',
+    name: 'requestBusServiceAddress',
+  );
+
+  String get requestBusServiceAddressDisclaimer => Intl.message(
+    'Bus Service Request',
+    name: 'requestBusServiceAddressDisclaimer',
+  );
+
+  String get requestBusServiceMode => Intl.message(
+    'Bus Service Request',
+    name: 'requestBusServiceMode',
+  );
+
+  String get requestBusServiceRequestDate => Intl.message(
+    'Bus Service Request',
+    name: 'requestBusServiceRequestDate',
+  );
+
+  String get requestBusServiceRequiredDate => Intl.message(
+    'Fecha Requerida *',
+    name: 'requestBusServiceRequiredDate',
+  );
+
   String get termsTitle => Intl.message(
-        'Bus Service Request',
+        'Contract',
         name: 'termsTitle',
       );
 
@@ -285,7 +320,7 @@ class FdrLocalizations {
 
   String get accept => Intl.message(
         'Accept',
-        name: 'Accept',
+        name: 'accept',
       );
 
   String get confirm => Intl.message(

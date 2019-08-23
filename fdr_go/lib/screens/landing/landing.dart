@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:fdr_go/data/bus_service.dart';
 import 'package:fdr_go/data/notification_menu.dart';
@@ -42,7 +44,9 @@ class _LandingPageState extends State<LandingPage>
   void initState() {
     super.initState();
     _setUpFcm();
-    _setUpLocalNotifications();
+//    if (Platform.isAndroid) {
+      _setUpLocalNotifications();
+//    }
     if (widget.loginResponse != null) {
       services = widget.loginResponse.services;
     }
@@ -145,11 +149,15 @@ class _LandingPageState extends State<LandingPage>
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(presentAlert: true);
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(0, notification["notification"]["title"],
-        notification["notification"]["body"], platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.show(
+        0,
+        notification["notification"]["title"],
+        notification["notification"]["body"],
+        platformChannelSpecifics,
         payload: 'item x');
   }
 

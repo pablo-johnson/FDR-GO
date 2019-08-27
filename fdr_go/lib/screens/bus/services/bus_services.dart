@@ -434,7 +434,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
     double width = 250;
     double routeStateSize = 24;
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 360) {
+    if (screenWidth <= 360) {
       width = 200;
       routeStateSize = 20;
     }
@@ -520,24 +520,9 @@ class _BusServicesPageState extends State<BusServicesPage> {
                     width: routeStateSize,
                     height: routeStateSize,
                     decoration: new BoxDecoration(
-                      color: service.locationStatus != null &&
-                              service.locationStatus.isNotEmpty
-                          ? primarySwatch[service.locationStatus ==
-                                      enumName(LocationStatus.GO) ||
-                                  service.locationStatus ==
-                                      enumName(LocationStatus.SC) ||
-                                  service.locationStatus ==
-                                      enumName(LocationStatus.SB)
-                              ? 'red'
-                              : 'blue']
-                          : Colors.white,
+                      color: _getColorForSecondStepCircle(service),
                       shape: BoxShape.circle,
-                      border: service.locationStatus != null &&
-                              service.locationStatus.isNotEmpty
-                          ? null
-                          : Border.all(
-                              color: primarySwatch['serviceStateBorder'],
-                            ),
+                      border: _getBorderForSecondStepCircle(service),
                     ),
                     child: Visibility(
                       visible: service.locationStatus ==
@@ -560,22 +545,10 @@ class _BusServicesPageState extends State<BusServicesPage> {
                     width: routeStateSize,
                     height: routeStateSize,
                     decoration: new BoxDecoration(
-                      color: service.locationStatus != null &&
-                              service.locationStatus.isNotEmpty
-                          ? service.locationStatus ==
-                                  enumName(LocationStatus.GO)
-                              ? Colors.white
-                              : primarySwatch['blue']
-                          : Colors.white,
+                      color: _getColorForThirdStepCircle(service),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: service.locationStatus != null &&
-                                service.locationStatus.isNotEmpty
-                            ? primarySwatch[service.locationStatus ==
-                                    enumName(LocationStatus.GO)
-                                ? 'serviceStateBorder'
-                                : 'blue']
-                            : primarySwatch['serviceStateBorder'],
+                        color: _getBorderColorForThirdStepCircle(service),
                       ),
                     ),
                     child: Visibility(
@@ -614,17 +587,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
                       child: Text(
                         goSteps[1],
                         style: TextStyle(
-                          color: service.locationStatus != null &&
-                                  service.locationStatus.isNotEmpty
-                              ? primarySwatch[service.locationStatus ==
-                                          enumName(LocationStatus.GO) ||
-                                      service.locationStatus ==
-                                          enumName(LocationStatus.SC) ||
-                                      service.locationStatus ==
-                                          enumName(LocationStatus.SB)
-                                  ? 'red'
-                                  : 'blue']
-                              : primarySwatch['serviceStateBorder'],
+                          color: _getColorForSecondStepLabel(service),
                         ),
                       ),
                     ),
@@ -634,13 +597,7 @@ class _BusServicesPageState extends State<BusServicesPage> {
                             ? 2
                             : 0],
                         style: TextStyle(
-                          color: service.locationStatus != null &&
-                                  service.locationStatus.isNotEmpty
-                              ? primarySwatch[service.locationStatus ==
-                                      enumName(LocationStatus.GO)
-                                  ? 'serviceStateBorder'
-                                  : 'blue']
-                              : primarySwatch['serviceStateBorder'],
+                          color: _getColorForThirdStepLabel(service),
                         ),
                       ),
                     ),
@@ -652,5 +609,111 @@ class _BusServicesPageState extends State<BusServicesPage> {
         ],
       ),
     );
+  }
+
+  Color _getColorForSecondStepLabel(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return primarySwatch['serviceStateBorder'];
+      }
+      if (service.locationStatus == enumName(LocationStatus.GO) ||
+          service.locationStatus == enumName(LocationStatus.SC) ||
+          service.locationStatus == enumName(LocationStatus.SB)) {
+        return primarySwatch['red'];
+      } else {
+        return primarySwatch['blue'];
+      }
+    } else {
+      return primarySwatch['serviceStateBorder'];
+    }
+  }
+
+  Color _getColorForThirdStepLabel(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return primarySwatch['serviceStateBorder'];
+      }
+      if (service.locationStatus == enumName(LocationStatus.GO)) {
+        return primarySwatch['serviceStateBorder'];
+      } else {
+        return primarySwatch['blue'];
+      }
+    } else {
+      return primarySwatch['serviceStateBorder'];
+    }
+  }
+
+  Color _getColorForSecondStepCircle(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return Colors.white;
+      }
+      if (service.locationStatus == enumName(LocationStatus.GO) ||
+          service.locationStatus == enumName(LocationStatus.SC) ||
+          service.locationStatus == enumName(LocationStatus.SB)) {
+        return primarySwatch['red'];
+      } else {
+        return primarySwatch['blue'];
+      }
+    } else {
+      return Colors.white;
+    }
+  }
+
+  BoxBorder _getBorderForSecondStepCircle(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return Border.all(
+          color: primarySwatch['serviceStateBorder'],
+        );
+      }
+      return null;
+    } else {
+      return Border.all(
+        color: primarySwatch['serviceStateBorder'],
+      );
+    }
+  }
+
+  Color _getColorForThirdStepCircle(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return Colors.white;
+      }
+      if (service.locationStatus == enumName(LocationStatus.GO)) {
+        return Colors.white;
+      } else {
+        return primarySwatch['blue'];
+      }
+    } else {
+      return Colors.white;
+    }
+  }
+
+  Color _getBorderColorForThirdStepCircle(BusService service) {
+    if (service.locationStatus != null && service.locationStatus.isNotEmpty) {
+      if (service.route.typeTrip == enumName(RouteType.R) &&
+          service.locationStatus != null &&
+          service.locationStatus == enumName(LocationStatus.SC)) {
+        return primarySwatch['serviceStateBorder'];
+      }
+      if (service.locationStatus == enumName(LocationStatus.GO)) {
+        return primarySwatch['serviceStateBorder'];
+      } else {
+        return primarySwatch['blue'];
+      }
+    } else {
+      return primarySwatch['serviceStateBorder'];
+    }
   }
 }

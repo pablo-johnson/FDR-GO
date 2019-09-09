@@ -64,10 +64,11 @@ Future<LoginResponse> login(String username, String password) async {
 Future<CommonResponse> logout(CreateAccountRequest request) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String languageCode = prefs.getString("languageCode");
+  String token = prefs.getString("authToken");
   final response = await http.post('$url/education/accounts/logout',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: '',
+        HttpHeaders.authorizationHeader: 'Bearer $token',
         HttpHeaders.acceptLanguageHeader: languageCode
       },
       body: createAccountRequestToJson(request));

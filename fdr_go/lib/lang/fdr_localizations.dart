@@ -138,6 +138,11 @@ class FdrLocalizations {
         name: 'notificationDetailMessage',
       );
 
+  String get notificationsEmptyMessage => Intl.message(
+        'Do not have\nnotifications',
+        name: 'notificationsEmptyMessage',
+      );
+
   String get absenceTitle => Intl.message(
         'Absence Note',
         name: 'absenceTitle',

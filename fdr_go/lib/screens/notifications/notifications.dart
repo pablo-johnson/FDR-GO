@@ -23,6 +23,9 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
   bool _loading = true;
+  bool _showEmptyScreen = false;
+
+//  bool _loadMore = false;
   List<MyNotification.Notification> notifications = new List();
 
   NotificationMenu notificationMenu;
@@ -103,6 +106,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
             _loading ? _buildProgressBarWidget() : Container(),
+            _showEmptyScreen ? _emptyScreen() : Container(),
           ],
         ),
       ),
@@ -217,10 +221,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
       });
     }
     getNotifications(paging.pageNumber + 1).then((notificationsResponse) {
-      if (notificationsResponse.paging.pageNumber > paging.pageNumber) {
+      if (notifications.length == 0 &&
+          notificationsResponse.notifications.length == 0) {
+        _showEmptyScreen = true;
+      } else if (notificationsResponse.paging.pageNumber > paging.pageNumber) {
         notifications.addAll(notificationsResponse.notifications);
-        paging = notificationsResponse.paging;
-        _loading = false;
+      }
+      paging = notificationsResponse.paging;
+      _loading = false;
+      if (mounted) {
         setState(() {});
       }
     }).catchError((error) {
@@ -271,5 +280,34 @@ class _NotificationsPageState extends State<NotificationsPage> {
         text = "";
     }
     return text;
+  }
+
+  Widget _emptyScreen() {
+    return Container(
+      color: Color(0xffF4F4F4),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.notifications_off,
+              color: primarySwatch['red'],
+              size: 100,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              FdrLocalizations.of(context).notificationsEmptyMessage,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: primarySwatch['red'],
+                fontSize: 26.0,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

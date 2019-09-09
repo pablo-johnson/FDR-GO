@@ -48,7 +48,7 @@ Future<CommonResponse> saveAsaActivities(int studentId, int frequency,
   String token = prefs.getString("authToken");
   String languageCode = prefs.getString("languageCode");
   final response = await http.post(
-      '$url/afterschool/services/$studentId/applications/$frequency',
+      '$url/afterschool/services/$studentId/registration/$frequency',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $token',

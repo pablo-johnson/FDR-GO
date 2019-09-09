@@ -206,17 +206,20 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         SizedBox(
           height: 10.0,
         ),
-        Visibility(
-          visible: _activities.length > 1,
-          child: _buildAsaServiceInformationWidget(index, _activities[1]),
-        ),
-        Visibility(
-          visible: _activities.length > 1,
-          child: _buildChangeAsaServiceButton(index, _activities[1]),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
+        if (_activities.length > 1)
+          Visibility(
+            visible: _activities.length > 1,
+            child: _buildAsaServiceInformationWidget(index, _activities[1]),
+          ),
+        if (_activities.length > 1)
+          Visibility(
+            visible: _activities.length > 1,
+            child: _buildChangeAsaServiceButton(index, _activities[1]),
+          ),
+        if (_activities.length > 1)
+          SizedBox(
+            height: 10.0,
+          ),
       ],
     );
   }
@@ -238,13 +241,15 @@ class _AsaServicesPageState extends State<AsaServicesPage> {
         SizedBox(
           height: 10.0,
         ),
-        Visibility(
-          visible: _activities.length > 1,
-          child: _buildAsaServiceInformationWidget(index, _activities[1]),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
+        if (_activities.length > 1)
+          Visibility(
+            visible: _activities.length > 1,
+            child: _buildAsaServiceInformationWidget(index, _activities[1]),
+          ),
+        if (_activities.length > 1)
+          SizedBox(
+            height: 10.0,
+          ),
       ],
     );
   }

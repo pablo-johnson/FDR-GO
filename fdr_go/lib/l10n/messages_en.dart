@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notificationDetailActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
     "notificationDetailCoach" : MessageLookupByLibrary.simpleMessage("Coach"),
     "notificationDetailMessage" : MessageLookupByLibrary.simpleMessage("Message"),
+    "notificationsEmptyMessage" : MessageLookupByLibrary.simpleMessage("Do not have\nnotifications"),
     "absenceTitle" : MessageLookupByLibrary.simpleMessage("Absence Note"),
     "absenceReason" : MessageLookupByLibrary.simpleMessage("Reason of the absence *"),
     "absenceDateFrom" : MessageLookupByLibrary.simpleMessage("From *"),

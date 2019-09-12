@@ -36,8 +36,9 @@ class ActivitiesResponse {
       new ActivitiesResponse(
         activities: new List<Activity>.from(
             json["activities"].map((x) => Activity.fromJson(x))),
-        transportRequestDays:
-            TransportRequestDays.fromJson(json["transportRequestDays"]),
+        transportRequestDays: json["transportRequestDays"] != null
+            ? TransportRequestDays.fromJson(json["transportRequestDays"])
+            : null,
         error: json["error"],
         success: json["success"],
         successful: json["successful"],

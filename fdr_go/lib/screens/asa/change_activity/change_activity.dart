@@ -37,7 +37,7 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
   }
 
   void _getActivities(Student student) {
-    getAsaActivities(student.id, widget.frequency).then((activitiesResponse) {
+    getRegisteredAsaActivities(student.id, widget.frequency).then((activitiesResponse) {
       if (activitiesResponse.success) {
         setState(() {
           _loading = false;

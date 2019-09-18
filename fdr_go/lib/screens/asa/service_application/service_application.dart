@@ -30,9 +30,11 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
   bool _isContinueButtonEnabled = false;
   bool _day1 = false;
   bool _day2 = false;
+  bool _noBus = false;
+  String _disclaimer = "";
 
   List<Activity> _activities = new List();
-  TransportRequestDays _tranportRequestDays;
+  TransportRequestDays _transportRequestDays;
 
   List<Activity> _selectedActivities = new List();
 
@@ -51,6 +53,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           _initSelectedActivities();
           _enableContinueButton();
           _initTransportCheckboxes(serviceModesResponse);
+          _disclaimer = serviceModesResponse.instructions;
         });
       }
     });
@@ -72,7 +75,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
     _day2 = widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
         ? serviceModesResponse.transportRequestDays.thursday == "S"
         : serviceModesResponse.transportRequestDays.friday == "S";
-    _tranportRequestDays = serviceModesResponse.transportRequestDays;
+    _noBus = serviceModesResponse.transportRequestDays.none == "S";
+    _transportRequestDays = serviceModesResponse.transportRequestDays;
   }
 
   @override
@@ -164,9 +168,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            MyLocalization.FdrLocalizations.of(context)
-                .asaApplicationPreferenceDisclaimer,
-            //"La preferencia se asignará según el orden de clic que haga sobre las actividades.",
+            _disclaimer,
             style: TextStyle(
               fontSize: 12.0,
             ),
@@ -204,24 +206,14 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                MyLocalization.FdrLocalizations.of(context)
-                    .asaApplicationBusRequired, //"Requiere Bus: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.white,
-                ),
-              ),
               new Checkbox(
                 value: _day1,
                 onChanged: _day1Changed,
               ),
               Text(
                 widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? MyLocalization.FdrLocalizations.of(context)
-                        .monday //"Lunes"
-                    : MyLocalization.FdrLocalizations.of(context)
-                        .tuesday, //"Martes",
+                    ? MyLocalization.FdrLocalizations.of(context).monday
+                    : MyLocalization.FdrLocalizations.of(context).tuesday,
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -236,6 +228,16 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
                         .thursday //"Jueves"
                     : MyLocalization.FdrLocalizations.of(context)
                         .friday, //"Viernes",
+                style: new TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              new Checkbox(
+                value: _noBus,
+                onChanged: _noBusChanged,
+              ),
+              Text(
+                "No Bus",
                 style: new TextStyle(
                   color: Colors.white,
                 ),
@@ -397,7 +399,7 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
   }
 
   void _enableContinueButton() {
-    _isContinueButtonEnabled = _selectedActivities.length >= 1;
+    _isContinueButtonEnabled = _selectedActivities.length >= 3;
   }
 
   _dismiss(bool refresh) {
@@ -458,31 +460,45 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
     });
   }
 
-  void _day1Changed(bool value) => setState(() => _day1 = value);
+  void _day1Changed(bool value) => setState(() {
+        _day1 = value;
+        _noBus = false;
+      });
 
-  void _day2Changed(bool value) => setState(() => _day2 = value);
+  void _day2Changed(bool value) => setState(() {
+        _day2 = value;
+        _noBus = false;
+      });
+
+  void _noBusChanged(bool value) => setState(() {
+        _day1 = false;
+        _day2 = false;
+        _noBus = value;
+      });
 
   TransportRequestDays _getTransportRequestDays() {
-    _tranportRequestDays.monday = "";
-    _tranportRequestDays.tuesday = "";
-    _tranportRequestDays.wednesday = "";
-    _tranportRequestDays.thursday = "";
-    _tranportRequestDays.friday = "";
+    _transportRequestDays.monday = "";
+    _transportRequestDays.tuesday = "";
+    _transportRequestDays.wednesday = "";
+    _transportRequestDays.thursday = "";
+    _transportRequestDays.friday = "";
+    _transportRequestDays.none = "";
     if (widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ) {
       _day1
-          ? _tranportRequestDays.monday = "S"
-          : _tranportRequestDays.monday = "";
+          ? _transportRequestDays.monday = "S"
+          : _transportRequestDays.monday = "";
       _day2
-          ? _tranportRequestDays.thursday = "S"
-          : _tranportRequestDays.thursday = "";
+          ? _transportRequestDays.thursday = "S"
+          : _transportRequestDays.thursday = "";
     } else {
       _day1
-          ? _tranportRequestDays.tuesday = "S"
-          : _tranportRequestDays.tuesday = "";
+          ? _transportRequestDays.tuesday = "S"
+          : _transportRequestDays.tuesday = "";
       _day2
-          ? _tranportRequestDays.friday = "S"
-          : _tranportRequestDays.friday = "";
+          ? _transportRequestDays.friday = "S"
+          : _transportRequestDays.friday = "";
     }
-    return _tranportRequestDays;
+    _noBus ? _transportRequestDays.none = "S" : _transportRequestDays.none = "";
+    return _transportRequestDays;
   }
 }

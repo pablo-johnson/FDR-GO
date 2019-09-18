@@ -4,6 +4,7 @@ class TransportRequestDays {
   String wednesday;
   String thursday;
   String friday;
+  String none;
 
   TransportRequestDays({
     this.monday,
@@ -11,6 +12,7 @@ class TransportRequestDays {
     this.wednesday,
     this.thursday,
     this.friday,
+    this.none,
   });
 
   factory TransportRequestDays.fromJson(Map<String, dynamic> json) =>
@@ -20,6 +22,7 @@ class TransportRequestDays {
         wednesday: json["wednesday"],
         thursday: json["thursday"],
         friday: json["friday"],
+        none: json["none"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,5 +31,6 @@ class TransportRequestDays {
         "wednesday": wednesday,
         "thursday": thursday,
         "friday": friday,
+        "none": none,
       };
 }

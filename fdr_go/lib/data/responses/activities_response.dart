@@ -4,8 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:fdr_go/data/error.dart';
+
 import '../activity.dart';
-import '../error.dart';
 import '../successful.dart';
 import '../transport_request_days.dart';
 
@@ -22,6 +23,7 @@ class ActivitiesResponse {
   bool success;
   Successful successful;
   String targetUrl;
+  String instructions;
 
   ActivitiesResponse({
     this.activities,
@@ -30,6 +32,7 @@ class ActivitiesResponse {
     this.success,
     this.successful,
     this.targetUrl,
+    this.instructions,
   });
 
   factory ActivitiesResponse.fromJson(Map<String, dynamic> json) =>
@@ -39,10 +42,11 @@ class ActivitiesResponse {
         transportRequestDays: json["transportRequestDays"] != null
             ? TransportRequestDays.fromJson(json["transportRequestDays"])
             : null,
-        error: json["error"],
+        error: json["error"] != null ? Error.fromJson(json["error"]) : null,
         success: json["success"],
         successful: json["successful"],
         targetUrl: json["targetUrl"],
+        instructions: json["instructions"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,5 +57,6 @@ class ActivitiesResponse {
         "success": success,
         "successful": successful,
         "targetUrl": targetUrl,
+        "instructions": instructions,
       };
 }

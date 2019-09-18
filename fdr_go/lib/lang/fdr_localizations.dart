@@ -299,22 +299,22 @@ class FdrLocalizations {
       );
 
   String get monday => Intl.message(
-        'Monday',
+        'Bus Monday',
         name: 'monday',
       );
 
   String get tuesday => Intl.message(
-        'Tuesday',
+        'Bus Tuesday',
         name: 'tuesday',
       );
 
   String get thursday => Intl.message(
-        'Thursday',
+        'Bus Thursday',
         name: 'thursday',
       );
 
   String get friday => Intl.message(
-        'Friday',
+        'Bus Friday',
         name: 'friday',
       );
 

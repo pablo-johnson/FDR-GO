@@ -188,6 +188,8 @@ class _MenuWidgetPageState extends State<MenuWidget> {
 
   Future _deleteCache() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String languageCode = prefs.getString("languageCode");
     await prefs.clear();
+    prefs.setString("languageCode", languageCode);
   }
 }

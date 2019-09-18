@@ -1,6 +1,7 @@
 import 'package:fdr_go/data/activity.dart';
 import 'package:fdr_go/data/requests/save_activity_request.dart';
 import 'package:fdr_go/data/student.dart';
+import 'package:fdr_go/dialogs/custom_alert.dart';
 import 'package:fdr_go/lang/fdr_localizations.dart';
 import 'package:fdr_go/services/asa_service_services.dart';
 import 'package:fdr_go/util/ToastUtil.dart';
@@ -37,13 +38,23 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
   }
 
   void _getActivities(Student student) {
-    getRegisteredAsaActivities(student.id, widget.frequency).then((activitiesResponse) {
+    getRegisteredAsaActivities(student.id, widget.frequency)
+        .then((activitiesResponse) {
       if (activitiesResponse.success) {
         setState(() {
           _loading = false;
           _activities = activitiesResponse.activities;
         });
+      } else {
+        setState(() {
+          _loading = false;
+          _showNoVacancyAlertDialog(activitiesResponse.error.detail, true);
+        });
       }
+    }).catchError((onError) {
+      setState(() {
+        _loading = false;
+      });
     });
   }
 
@@ -295,6 +306,11 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
           _loading = false;
         });
         _dismiss(true);
+      } else {
+        setState(() {
+          _loading = false;
+          _showNoVacancyAlertDialog(response.error.detail, false);
+        });
       }
     }).catchError((error) {
       setState(() {
@@ -308,5 +324,22 @@ class _ChangeActivityPageState extends State<ChangeActivityPage> {
   void _changeState(Activity activity, bool _checked) {
     _selectedActivity = activity;
     _checked = !_checked;
+  }
+
+  Future _showNoVacancyAlertDialog(String message, bool dismissScreen) async {
+    await showDialog(
+      context: context,
+      builder: (_) => CustomAlertDialog(
+        message: message,
+      ),
+    );
+    if (dismissScreen) {
+      Navigator.pop(context);
+    } else {
+      setState(() {
+        _loading = true;
+      });
+      _getActivities(widget.student);
+    }
   }
 }

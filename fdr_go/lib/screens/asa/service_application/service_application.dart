@@ -201,48 +201,61 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           width: double.infinity,
           color: primarySwatch['textFieldBorder'],
           padding: EdgeInsets.symmetric(
-            horizontal: 10.0,
+            horizontal: 5.0,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Checkbox(
-                value: _day1,
-                onChanged: _day1Changed,
-              ),
-              Text(
-                widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? MyLocalization.FdrLocalizations.of(context).monday
-                    : MyLocalization.FdrLocalizations.of(context).tuesday,
-                style: new TextStyle(
-                  color: Colors.white,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "BUS: ",
+                  style: new TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              new Checkbox(
-                value: _day2,
-                onChanged: _day2Changed,
-              ),
-              Text(
-                widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
-                    ? MyLocalization.FdrLocalizations.of(context)
-                        .thursday //"Jueves"
-                    : MyLocalization.FdrLocalizations.of(context)
-                        .friday, //"Viernes",
-                style: new TextStyle(
-                  color: Colors.white,
+                new Checkbox(
+                  value: _day1,
+                  onChanged: _day1Changed,
                 ),
-              ),
-              new Checkbox(
-                value: _noBus,
-                onChanged: _noBusChanged,
-              ),
-              Text(
-                "No Bus",
-                style: new TextStyle(
-                  color: Colors.white,
+                Text(
+                  widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
+                      ? MyLocalization.FdrLocalizations.of(context).monday
+                      : MyLocalization.FdrLocalizations.of(context).tuesday,
+                  style: new TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ],
+                new Checkbox(
+                  value: _day2,
+                  onChanged: _day2Changed,
+                ),
+                Text(
+                  widget.frequency == AsaServiceApplicationPage.LUN_JUE_FREQ
+                      ? MyLocalization.FdrLocalizations.of(context)
+                          .thursday //"Jueves"
+                      : MyLocalization.FdrLocalizations.of(context)
+                          .friday, //"Viernes",
+                  style: new TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                ),
+                new Checkbox(
+                  value: _noBus,
+                  onChanged: _noBusChanged,
+                ),
+                Text(
+                  "No Bus",
+                  style: new TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -399,7 +412,8 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
   }
 
   void _enableContinueButton() {
-    _isContinueButtonEnabled = _selectedActivities.length >= 3;
+    _isContinueButtonEnabled =
+        _selectedActivities.length >= 3 && (_day1 || _day2 || _noBus);
   }
 
   _dismiss(bool refresh) {
@@ -463,17 +477,20 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
   void _day1Changed(bool value) => setState(() {
         _day1 = value;
         _noBus = false;
+        _enableContinueButton();
       });
 
   void _day2Changed(bool value) => setState(() {
         _day2 = value;
         _noBus = false;
+        _enableContinueButton();
       });
 
   void _noBusChanged(bool value) => setState(() {
         _day1 = false;
         _day2 = false;
         _noBus = value;
+        _enableContinueButton();
       });
 
   TransportRequestDays _getTransportRequestDays() {

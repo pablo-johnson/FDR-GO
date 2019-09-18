@@ -82,7 +82,7 @@ class _LandingPageState extends State<LandingPage>
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.local_activity),
-          title: Text('ASA'),
+          title: Text('ES ASA'),
         ),
       ],
       currentIndex: _selectedIndex,

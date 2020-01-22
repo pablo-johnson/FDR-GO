@@ -51,9 +51,9 @@ class _AsaServiceApplicationPageState extends State<AsaServiceApplicationPage> {
           _loading = false;
           _activities = serviceModesResponse.activities;
           _initSelectedActivities();
-          _enableContinueButton();
           _initTransportCheckboxes(serviceModesResponse);
           _disclaimer = serviceModesResponse.instructions;
+          _enableContinueButton();
         });
       }
     });

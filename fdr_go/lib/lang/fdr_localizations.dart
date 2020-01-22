@@ -194,7 +194,7 @@ class FdrLocalizations {
       );
 
   String get busServicesAbsence => Intl.message(
-        'Absence',
+        'Not riding bus',
         name: 'busServicesAbsence',
       );
 
